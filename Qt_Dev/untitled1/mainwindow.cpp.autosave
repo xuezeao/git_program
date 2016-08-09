@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->lineEdit_password->setEchoMode(QLineEdit::PasswordEchoOnEdit);
-//    ui->lineEdit_account
+    ui->lineEdit_password->setEchoMode(QLineEdit::Password);
+  //  ui->lineEdit_account
     
 
 }
