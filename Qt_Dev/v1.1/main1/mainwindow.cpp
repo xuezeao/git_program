@@ -33,6 +33,7 @@ void MainWindow::createStatusBar()
     statusBar()->addWidget(formulaLabel,1);
 
     connect(timer,SIGNAL(timeout()),this,SLOT(updateStatusBar()));
+    timer->start(500);
     updateStatusBar();
 }
 void MainWindow::updateStatusBar()
