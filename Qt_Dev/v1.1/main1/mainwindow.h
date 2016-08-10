@@ -5,7 +5,7 @@
 
 class QAction;
 class QLabel;
-
+class QTimer;
 
 namespace Ui {
 class MainWindow;
@@ -20,12 +20,15 @@ public:
     ~MainWindow();
 private slots:
     void updateStatusBar();
-
+signals:
+    void timeout();
 private:
     Ui::MainWindow *ui;
     QLabel *locationLabel;
     QLabel *formulaLabel;
+    QTimer *timer;
     void createStatusBar();
+
 };
 
 #endif // MAINWINDOW_H
