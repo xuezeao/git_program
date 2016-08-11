@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>testComAndHttp</class>
+ <widget class="QWidget" name="testComAndHttp">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>741</width>
+    <height>448</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>741</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QTabWidget" name="test">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="com">
+       <attribute name="title">
+        <string>com</string>
+       </attribute>
+       <widget class="QComboBox" name="comboBox_ChoiceCom">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>50</y>
+          <width>161</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>楷体</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>COM1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM8</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>COM10</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>50</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>串口:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_OpenCom">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>50</y>
+          <width>150</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>打开串口</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_BackMainUi">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>20</y>
+          <width>75</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>返回</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="listWidget_Com">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>100</y>
+          <width>439</width>
+          <height>269</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="http">
+       <attribute name="title">
+        <string>http</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>30</y>
+          <width>271</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>HTTP</string>
+        </property>
+        <widget class="QPushButton" name="pushButton_httpGet">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Get</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_httpPost">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>30</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Post</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QTextEdit" name="textEditPostText">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>130</y>
+          <width>289</width>
+          <height>209</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -7,6 +7,8 @@ second::second(QWidget *parent) :
 {
     ui->setupUi(this);
 
+// this->showFullScreen();//主屏幕最大化
+
 }
 
 second::~second()
@@ -18,3 +20,4 @@ void second::on_pushButton_clicked()
 {
     emit page2Exit();
 }
+

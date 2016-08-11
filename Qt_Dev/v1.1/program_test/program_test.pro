@@ -5,6 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += serialport
+QT       += network
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,12 +18,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     first.cpp \
-    second.cpp
+    second.cpp \
+    testcomandhttp.cpp
 
 HEADERS  += mainwindow.h \
     first.h \
-    second.h
+    second.h \
+    testcomandhttp.h
 
 FORMS    += mainwindow.ui \
     first.ui \
-    second.ui
+    second.ui \
+    testcomandhttp.ui

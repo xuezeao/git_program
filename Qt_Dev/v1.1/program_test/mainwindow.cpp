@@ -14,11 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     page1 = new first();
     page2 = new second();
+    testpage = new testComAndHttp();
 
     createStatusBar();
 //    this->showFullScreen();//主屏幕最大化
     connect(page1,SIGNAL(page1Exit()),this,SLOT(page1ReturnMainUi()));
     connect(page2,SIGNAL(page2Exit()),this,SLOT(page2ReturnMainUi()));
+    connect(testpage,SIGNAL(testPageExit()),this,SLOT(testpageReturnMainUi()));
 
 }
 void MainWindow::createStatusBar()
@@ -36,19 +38,21 @@ void MainWindow::createStatusBar()
     statusBar()->addWidget(locationLabel);
     statusBar()->addWidget(webStatusLabel,1);//拉伸长度
 
-    connect(timer,SIGNAL(timeout()),this,SLOT(updatetime()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(updataTime()));
 
     timer->start(500);
-    updatetime();
+    updataTime();
 
 }
 
-void MainWindow::updatetime()
+void MainWindow::updataTime()
 {
     QDateTime time = QDateTime::currentDateTime();
     QString str = time.toString("yyyy-MM-dd  hh:mm ddd");//时间格式设定
     locationLabel->setText("Status:");//状态显示
     webStatusLabel->setText("Time: "+str);//时间显示
+//    page1->updataTime(str);
+//    page2->updataTime(str);
 
 }
 
@@ -61,23 +65,35 @@ void MainWindow::on_pushButton_2_clicked()
 {
 
     page2->show();
-    this->close();
+    this->hide();
 
 }
 
 void MainWindow::on_pushButton_clicked()
 {
     page1->show();
-    this->close();
+    this->hide();
 
 }
 void MainWindow::page1ReturnMainUi()
 {
     this->show();
-  page1->close();
+     page1->close();
 }
 void MainWindow::page2ReturnMainUi()
 {
     this->show();
- page2->close();
+    page2->close();
+}
+
+void MainWindow::on_pushButton_EnterTestpage_clicked()
+{
+    this->close();
+    testpage->show();
+
+}
+void MainWindow::testpageReturnMainUi()
+{
+    testpage->close();
+    this->show();
 }
