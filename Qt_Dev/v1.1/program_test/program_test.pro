@@ -7,6 +7,7 @@
 QT       += core gui
 QT       += serialport
 QT       += network
+QT       += core sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     testcomandhttp.h \
     signin.h \
     first.h \
-    placereagent.h
+    placereagent.h \
+    connection.h
 
 FORMS    += mainwindow.ui \
     first.ui \
