@@ -5,9 +5,10 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += core sql
 QT       += serialport
 QT       += network
-QT       += core sql
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +22,9 @@ SOURCES += main.cpp\
     second.cpp \
     testcomandhttp.cpp \
     signin.cpp \
-    placereagent.cpp
+    placereagent.cpp \
+    relationaltablemodel.cpp \
+    mysqlquerymodel.cpp
 
 HEADERS  += mainwindow.h \
     second.h \
@@ -29,11 +32,14 @@ HEADERS  += mainwindow.h \
     signin.h \
     first.h \
     placereagent.h \
-    connection.h
+    connection.h \
+    relationaltablemodel.h \
+    mysqlquerymodel.h
 
 FORMS    += mainwindow.ui \
     first.ui \
     second.ui \
     testcomandhttp.ui \
     signin.ui \
-    placereagent.ui
+    placereagent.ui \
+    relationaltablemodel.ui

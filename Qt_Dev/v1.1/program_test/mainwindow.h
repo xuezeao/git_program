@@ -4,6 +4,8 @@
 #include "second.h"
 #include "signin.h"
 #include "testcomandhttp.h"
+#include "placereagent.h"
+
 #include <QMainWindow>
 
 
