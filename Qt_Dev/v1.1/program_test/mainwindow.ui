@@ -55,23 +55,17 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_EnterTestpage">
+   <widget class="QPushButton" name="pushButton_testComAndHttp">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>290</y>
-      <width>81</width>
-      <height>41</height>
+      <x>400</x>
+      <y>320</y>
+      <width>75</width>
+      <height>23</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Agency FB</family>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
     <property name="text">
-     <string>Test</string>
+     <string>测试</string>
     </property>
    </widget>
   </widget>

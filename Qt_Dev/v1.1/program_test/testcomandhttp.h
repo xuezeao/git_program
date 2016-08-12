@@ -19,7 +19,7 @@ public:
     explicit testComAndHttp(QWidget *parent = 0);
     ~testComAndHttp();
 signals:
-    void testPageExit();
+    void testPageExit();//关闭页面
 private slots:
     void on_pushButton_BackMainUi_clicked();
 

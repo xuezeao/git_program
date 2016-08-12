@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <QLabel>
+#include <QDialog>
 namespace Ui {
 class first;
 }

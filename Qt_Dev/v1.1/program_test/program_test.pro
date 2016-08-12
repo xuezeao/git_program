@@ -8,7 +8,6 @@ QT       += core gui
 QT       += serialport
 QT       += network
 
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = program_test
@@ -19,14 +18,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     first.cpp \
     second.cpp \
-    testcomandhttp.cpp
+    testcomandhttp.cpp \
+    signin.cpp \
+    placereagent.cpp
 
 HEADERS  += mainwindow.h \
-    first.h \
     second.h \
-    testcomandhttp.h
+    testcomandhttp.h \
+    signin.h \
+    first.h \
+    placereagent.h
 
 FORMS    += mainwindow.ui \
     first.ui \
     second.ui \
-    testcomandhttp.ui
+    testcomandhttp.ui \
+    signin.ui \
+    placereagent.ui

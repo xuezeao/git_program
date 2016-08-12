@@ -15,12 +15,14 @@ MainWindow::MainWindow(QWidget *parent) :
     page1 = new first();
     page2 = new second();
     testpage = new testComAndHttp();
+    signinPage = new signIn();
 
     createStatusBar();
 //    this->showFullScreen();//主屏幕最大化
     connect(page1,SIGNAL(page1Exit()),this,SLOT(page1ReturnMainUi()));
     connect(page2,SIGNAL(page2Exit()),this,SLOT(page2ReturnMainUi()));
-    connect(testpage,SIGNAL(testPageExit()),this,SLOT(testpageReturnMainUi()));
+    connect(testpage,SIGNAL(testPageExit()),this,SLOT(testPageReturnMainUi()));
+
 
 }
 void MainWindow::createStatusBar()
@@ -86,14 +88,15 @@ void MainWindow::page2ReturnMainUi()
     page2->close();
 }
 
-void MainWindow::on_pushButton_EnterTestpage_clicked()
+/**********************测试界面操作******************/
+void MainWindow::on_pushButton_testComAndHttp_clicked()
 {
-    this->close();
     testpage->show();
-
+    this->close();
 }
-void MainWindow::testpageReturnMainUi()
+
+void MainWindow::testPageReturnMainUi()
 {
-    testpage->close();
     this->show();
+    testpage->close();
 }
