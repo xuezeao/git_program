@@ -8,11 +8,15 @@
 #include <QTableView>
 #include <QMessageBox>
 #include "mysqlquerymodel.h"
+#include <QTimer>
 
 placeReagent::placeReagent(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::placeReagent)
 {
+    model = new QSqlTableModel(this);
+    timer = new QTimer(this);
+
     ui->setupUi(this);
     model = new QSqlTableModel(this);
     model->setTable("student");
@@ -23,8 +27,11 @@ placeReagent::placeReagent(QWidget *parent) :
     ui->tableView->setModel(model);
     //使其不可编辑
     //ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  //  connect(timer,SIGNAL(timeout()),this,SLOT(auto_AddRow()));
+   // timer->start(1000);
 
 }
+
 
 placeReagent::~placeReagent()
 {
@@ -90,6 +97,8 @@ void placeReagent::on_pushButton_downOrder_clicked()
 
 void placeReagent::on_pushButton_delCheckedRow_clicked()
 {
+     QSqlQuery query;
+     int rowNum=model->rowCount();
     int curRow = ui->tableView->currentIndex().row();
     model->removeRow(curRow);
     int ok = QMessageBox::warning(this,tr("删除当前行！"),tr("你确定删除当前行"),QMessageBox::Yes,QMessageBox::No);
@@ -97,14 +106,65 @@ void placeReagent::on_pushButton_delCheckedRow_clicked()
     {
         model->revertAll();
     }
-    else model->submitAll();
-}
+    else
+    {
+        model->submitAll();
 
+
+
+
+    }
+    query.exec("select rowid from student");//选中表格中最后一行并执行操作exec，没有经过exec的都是没有执行
+    query.last();
+    int id = query.value(0).toInt();//用rowid就可以了不需要自己设一个id
+    qDebug() << id ;
+
+
+//    query.prepare("update student set id = :id where id = :id");
+
+//    query.bindValue(":id",1);
+
+//    model->submitAll();
+}
 void placeReagent::on_pushButton_addOption_clicked()
 {
       int rowNum = model->rowCount(); //获得表的行数
-       int id = 10;
+    //   int id = 10;
        model->insertRow(rowNum); //添加一行
-       model->setData(model->index(rowNum,0),id);
+    //   model->setData(model->index(rowNum,0),id);
        //model->submitAll(); //可以直接提交
+}
+
+
+void placeReagent::auto_AddRow()//自增行数
+{
+
+    int rowNum = model->rowCount();//获得表的行数
+//    QModelIndex namevalue = model->index(rowNum,3);
+//    QModelIndex namePreviousValue = model->index(rowNum-1,1);
+
+//    qDebug()<< namevalue.data();
+
+    QSqlQuery query;
+//    int id = rowNum;
+    query.exec(QString("select * from student where id =%1")//从id=rownum中选中所有属性 '*' /也可指定 'name'
+               .arg(rowNum));//选中表格中最后一行并执行操作exec，没有经过exec的都是没有执行
+
+    query.next();//指向下一行表格
+
+    QString nameNowValue = query.value(1).toString();//名字
+    QString modelNowValue = query.value(2).toString();//规格
+    int mlNowValue = query.value(3).toInt();//容量
+
+    if(nameNowValue >="A")//只有当名字、规格和容量都输入之后才会自动加一行&&mlNowValue>=1&&modelNowValue>="A"
+     {
+        qDebug() << "OK";
+        model->insertRow(rowNum); //添加一行
+        model->setData(model->index(rowNum,0),rowNum+1);//id 已经设为关键字段，自增一行
+    }
+    else
+        qDebug()<< "NO" ;
+
+
+
 }
