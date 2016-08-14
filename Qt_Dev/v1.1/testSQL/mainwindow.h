@@ -24,6 +24,8 @@ private slots:
     void on_pushButton_newRow_clicked();
     void auto_AddRow();//自增一行
 
+    void on_pushButton_del_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSqlTableModel* model;
