@@ -15,10 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mysqlquerymodel.cpp
+    popuppage.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
-    mysqlquerymodel.h
+    popuppage.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    popuppage.ui

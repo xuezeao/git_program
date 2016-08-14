@@ -24,19 +24,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_newRow">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>440</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>新增一行</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_del">
     <property name="geometry">
      <rect>
@@ -48,6 +35,19 @@
     </property>
     <property name="text">
      <string>删除</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_placeChest">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>440</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>入柜</string>
     </property>
    </widget>
   </widget>
