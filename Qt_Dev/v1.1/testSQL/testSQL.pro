@@ -15,11 +15,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    popuppage.cpp
+    popuppage.cpp \
+    searchwindow.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
-    popuppage.h
+    popuppage.h \
+    searchwindow.h
 
 FORMS    += mainwindow.ui \
-    popuppage.ui
+    popuppage.ui \
+    searchwindow.ui

@@ -27,7 +27,7 @@ private:
     Ui::popupPage *ui;
     QSqlTableModel *model;
 
-    int rowAllNum;//获取总的row数
+
     void showNeedPlaceReagent();
     void showReagentTableView();
 };

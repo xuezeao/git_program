@@ -33,7 +33,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSqlTableModel* model;
+    QSqlRelationalTableModel* model;
     QTimer* timer;
     popupPage* popupwindow;
     void getSheetAddShow();//获取新建表格、保存和更新显示

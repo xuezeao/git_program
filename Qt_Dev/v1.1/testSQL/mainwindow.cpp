@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     popupwindow = new popupPage(this);
-    model = new QSqlTableModel(this);
+    model = new QSqlRelationalTableModel(this);
     timer = new QTimer(this);
 //    popupPage = new popupWindow(this);
     ui->setupUi(this);
@@ -64,19 +64,20 @@ void MainWindow::auto_AddRow()//自增行数
 
     query.last();//指向下一行表格
 
-    QString nameNowValue = query.value(0).toString();//名字
-    QString modelNowValue = query.value(4).toString();//规格
-    int mlNowValue = query.value(2).toInt();//容量
+    QString nameNowValue = query.value(1).toString();//名字
+    QString modelNowValue = query.value(5).toString();//规格
+    int mlNowValue = query.value(3).toInt();//容量
 
     qDebug()<<nameNowValue<<"  "<<modelNowValue<<"   "<<mlNowValue;
 
-
+//    int curRow = ui->tableView_showEnter->currentIndex().row();
+//     qDebug()<<curRow;
     if(nameNowValue >="A"&&mlNowValue>=1&&modelNowValue>="1")//只有当名字、规格和容量都输入之后才会自动加一行
      {
         qDebug() << "OK";
         model->insertRow(rowNum); //添加一行
-        model->setData(model->index(rowNum,5),str);//id 已经设为关键字段，自增一行
-        model->setData(model->index(rowNum,6),"未放");//id 已经设为关键字段，自增一行
+        model->setData(model->index(rowNum,6),str);//id 已经设为关键字段，自增一行
+        model->setData(model->index(rowNum,7),"未放");//id 已经设为关键字段，自增一行
 //         model->submitAll();
     }
     else
@@ -96,7 +97,7 @@ void MainWindow::getSheetAddShow()
     model->setEditStrategy(QSqlTableModel::OnFieldChange);//自保持模式
     model->select(); //选取整个表的所有行
     //不显示name属性列,如果这时添加记录，则该属性的值添加不上
-     model->removeColumn(1);
+     model->removeColumn(2);
     ui->tableView_showEnter->setModel(model);
     //使其不可编辑
     //ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -110,12 +111,16 @@ void MainWindow::on_pushButton_del_clicked()
 {
     //获取选中的行
 //       QSqlQuery query;
+//    model->setTable("placeDurg");
+//     model->removeColumn(1);
       model->setEditStrategy(QSqlTableModel::OnManualSubmit);//进入不提交不保存模式
       timer->stop();
-       int curRow = ui->tableView_showEnter->currentIndex().row();
 
+//     model->select(); //选取整个表的所有行
+       int curRow = ui->tableView_showEnter->currentIndex().row();
+//        qDebug()<<curRow;
        //删除该行
-     model->removeRow(curRow);
+        model->removeRow(curRow);
 
        int ok = QMessageBox::warning(this,tr("删除当前行!"),tr("你确定"
                                                     "删除当前行吗？"),
