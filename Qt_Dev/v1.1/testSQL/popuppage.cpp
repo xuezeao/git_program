@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QMessageBox>
 #include <QDebug>
+#include <QString>
 
 
 popupPage::popupPage(QWidget *parent) :
@@ -40,9 +41,10 @@ void popupPage::on_pushButton_backPreviousOption_clicked()//返回入柜编辑�
 void popupPage::showNeedPlaceReagent()
 {
     QSqlQuery query;
+    QString table="placeDurg";
     static int acount=1;
-        query.exec(QString("select * from placeDurg where rowid = '%1'")//从id=rownum中选中所有属性 '*' /也可指定 'name'
-                 .arg(acount));//选中表格中最后一行并执行操作exec，没有经过exec的都是没有执行
+        query.exec(QString("select * from '%1' where rowid = '%2'")//从id=rownum中选中所有属性 '*' /也可指定 'name'
+                 .arg(table).arg(acount));//选中表格中最后一行并执行操作exec，没有经过exec的都是没有执行
         query.next();//指向下一行表格
         model->setFilter(QString("rowid = '%1'").arg(acount));//取得所要显示的信息
         model->select();
@@ -56,21 +58,22 @@ void popupPage::showNeedPlaceReagent()
         ui->textBrowser_showReagentVolume->setText(showVolume);
         ui->textBrowser_showReagentlocation->setText(showLocation);
 
-         acount++;
 
-        if(showName=="")
- {
+
+        if(showName==""&&acount!=1)
+        {
             int ok = QMessageBox::warning(this,tr("摆放完成"),tr("ok"),QMessageBox::Yes,QMessageBox::No);
             if(ok==QMessageBox::Yes)
              emit backplacepage();
         }
 
-
+         acount++;
 }
 
 void popupPage::on_pushButton_placedNext_clicked()
 {
-
+    QString a="placeDurg";
+    model->setTable(QString("%1").arg(a));
     model->setData(model->index(0,4),"已放");//更改状态
 //  model->setData(model->index(rowNumIndex-1,3),"已放");//为自增位置预留位置
     showNeedPlaceReagent();

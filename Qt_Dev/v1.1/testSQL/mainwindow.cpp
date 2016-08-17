@@ -9,7 +9,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QDateTime>
-
+#include <QSqlRelationalDelegate>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     getSheetAddShow();
     connect(timer,SIGNAL(timeout()),this,SLOT(auto_AddRow()));
     connect(popupwindow,SIGNAL(backplacepage()),this,SLOT(returnBack()));
+
+
     timer->start(1000);
 
 }
@@ -93,15 +95,29 @@ void MainWindow::getSheetAddShow()
 
 //    int rowNum = model->rowCount(); //获得表的行数
 
-    model->setTable("placeDurg");
+
     model->setEditStrategy(QSqlTableModel::OnFieldChange);//自保持模式
-    model->select(); //选取整个表的所有行
+  //  model->select(); //选取整个表的所有行
+    model->setTable("placeDurg");
     //不显示name属性列,如果这时添加记录，则该属性的值添加不上
-     model->removeColumn(2);
+    model->removeColumn(2);
+
+//    model->setRelation(3,QSqlRelation("reagentType","id","id"));
+//    model->setRelation(10,QSqlRelation("reagentModel","id","id"));
+//    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+//    model->setHeaderData(1,Qt::Horizontal,QObject::tr("试剂名称"));
+//    model->setHeaderData(2,Qt::Horizontal,QObject::tr("容量 ml"));
+//    model->setHeaderData(6,Qt::Horizontal,QObject::tr("类型"));
+//    model->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂规格"));
+//    model->setHeaderData(5,Qt::Horizontal,QObject::tr("失效日期"));
+//    model->setHeaderData(6,Qt::Horizontal,QObject::tr("入柜日期"));
+//    model->setHeaderData(7,Qt::Horizontal,QObject::tr("状态"));
+
+    model->select();
     ui->tableView_showEnter->setModel(model);
     //使其不可编辑
-    //ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+   // ui->tableView_showEnter->setEditTriggers(QAbstractItemView::NoEditTriggers);
+//    ui->tableView_showEnter->setItemDelegate(new QSqlRelationalDelegate(ui->tableView_showEnter));
 
 
 

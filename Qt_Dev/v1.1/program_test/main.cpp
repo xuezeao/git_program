@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
 
     if(!createConnection())
         return 1;
-    placeReagent w;
+//    placeReagent w;
     //MainWindow w;
-//  relationalTableModel w;
+  relationalTableModel w;
     w.show();
     return a.exec();
 //    QApplication a(argc, argv);

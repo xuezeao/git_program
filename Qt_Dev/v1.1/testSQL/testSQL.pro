@@ -16,13 +16,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     popuppage.cpp \
-    searchwindow.cpp
+    searchwindow.cpp \
+    mouseeventtest.cpp \
+    test.cpp \
+    form123.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
     popuppage.h \
-    searchwindow.h
+    searchwindow.h \
+    mouseeventtest.h \
+    test.h \
+    form123.h
 
 FORMS    += mainwindow.ui \
     popuppage.ui \
-    searchwindow.ui
+    searchwindow.ui \
+    mouseeventtest.ui \
+    form123.ui

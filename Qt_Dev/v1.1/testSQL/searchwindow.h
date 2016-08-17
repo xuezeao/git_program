@@ -19,12 +19,17 @@ public:
 private slots:
     void on_pushButton_searchNews_clicked();
 
-    void on_pushButton_addChoiceReagent_clicked();
+    void on_pushButton_delThisNews_clicked();
 
 private:
     Ui::searchWindow *ui;
     QSqlTableModel *model;
     QSqlTableModel *applyNews;
+
+    void addNewsToApplySheet();//把数据添加到执行框
+    bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
+    void deleteNewsFromApplySheet();//从执行框中删除添加的信息
+
 
 };
 

@@ -23,45 +23,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_search">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>290</y>
-     <width>281</width>
-     <height>51</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>290</y>
-     <width>71</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Agency FB</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>查询:</string>
-   </property>
-  </widget>
-  <widget class="QTableView" name="tableView_showNeedReagent">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>811</width>
-     <height>221</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_delThisNews">
    <property name="geometry">
     <rect>
@@ -100,6 +61,16 @@
      <string>确认并申请</string>
     </property>
    </widget>
+   <widget class="QTableView" name="tableView_showNeedReagent">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>811</width>
+      <height>191</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
@@ -113,29 +84,10 @@
    <property name="title">
     <string>GroupBox</string>
    </property>
-   <widget class="QPushButton" name="pushButton_addChoiceReagent">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>20</y>
-      <width>181</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Agency FB</family>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>添加选中信息</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_searchNews">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>360</x>
       <y>20</y>
       <width>181</width>
       <height>51</height>
@@ -151,13 +103,38 @@
      <string>查询</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit_search">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>20</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="accessibleName">
+     <string/>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>请输入试剂名</string>
+    </property>
+   </widget>
   </widget>
   <zorder>groupBox</zorder>
   <zorder>groupBox_2</zorder>
   <zorder>tableView_showSearch</zorder>
-  <zorder>lineEdit_search</zorder>
-  <zorder>label</zorder>
-  <zorder>tableView_showNeedReagent</zorder>
   <zorder>pushButton_delThisNews</zorder>
  </widget>
  <resources/>

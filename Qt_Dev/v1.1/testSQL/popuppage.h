@@ -15,6 +15,7 @@ signals:
 public:
     explicit popupPage(QWidget *parent = 0);
     ~popupPage();
+     void showReagentTableView();
 
 private slots:
     void on_pushButton_backPreviousOption_clicked();
@@ -27,9 +28,8 @@ private:
     Ui::popupPage *ui;
     QSqlTableModel *model;
 
-
     void showNeedPlaceReagent();
-    void showReagentTableView();
+
 };
 
 #endif // POPUPPAGE_H

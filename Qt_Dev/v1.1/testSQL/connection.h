@@ -22,6 +22,15 @@ static bool createConnection()
        query.exec(QString("insert into placeDurg values (3,'酒精','3-1',500,'管制','大','2016.10.12','2016.8.9','未放')"));
        query.exec(QString("insert into placeDurg values (4,'酒精','1-2',500,'管制','大','2016.10.12','2016.8.9','未放')"));
 
+//       query.exec(QString("create table reagentType (id varchar)"));
+//       query.exec(QString("insert into reagentType values('管制')"));
+//       query.exec(QString("insert into reagentType values('非管制')"));
+
+//       query.exec(QString("create table reagentModel (id varchar"));
+//       query.exec(QString("insert into reagentModel values ('大')"));
+//       query.exec(QString("insert into reagentModel values ('中')"));
+//       query.exec(QString("insert into reagentModel values ('小')"));
+
        return true;
 }
 #endif // CONNECTION_H
