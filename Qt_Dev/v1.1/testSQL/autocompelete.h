@@ -2,7 +2,8 @@
 #define AUTOCOMPELETE_H
 
 #include <QWidget>
-
+#include <QLineEdit>
+#include <QStringListModel>
 namespace Ui {
 class autocompelete;
 }
@@ -17,6 +18,11 @@ public:
 
 private:
     Ui::autocompelete *ui;
+    void editComplete();
+    QLineEdit *search_list_edit;
+     QStringListModel *word_list;
+      QCompleter *completer;
+      QStringListModel *string_list_model;
 };
 
 #endif // AUTOCOMPELETE_H

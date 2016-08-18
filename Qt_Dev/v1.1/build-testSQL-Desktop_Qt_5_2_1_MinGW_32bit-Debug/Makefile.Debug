@@ -46,16 +46,32 @@ OBJECTS_DIR   = debug/
 SOURCES       = ../testSQL/main.cpp \
 		../testSQL/mainwindow.cpp \
 		../testSQL/popuppage.cpp \
-		../testSQL/searchwindow.cpp debug/moc_mainwindow.cpp \
+		../testSQL/searchwindow.cpp \
+		../testSQL/mouseeventtest.cpp \
+		../testSQL/test.cpp \
+		../testSQL/form123.cpp \
+		../testSQL/autocompelete.cpp debug/moc_mainwindow.cpp \
 		debug/moc_popuppage.cpp \
-		debug/moc_searchwindow.cpp
+		debug/moc_searchwindow.cpp \
+		debug/moc_mouseeventtest.cpp \
+		debug/moc_test.cpp \
+		debug/moc_form123.cpp \
+		debug/moc_autocompelete.cpp
 OBJECTS       = debug/main.o \
 		debug/mainwindow.o \
 		debug/popuppage.o \
 		debug/searchwindow.o \
+		debug/mouseeventtest.o \
+		debug/test.o \
+		debug/form123.o \
+		debug/autocompelete.o \
 		debug/moc_mainwindow.o \
 		debug/moc_popuppage.o \
-		debug/moc_searchwindow.o
+		debug/moc_searchwindow.o \
+		debug/moc_mouseeventtest.o \
+		debug/moc_test.o \
+		debug/moc_form123.o \
+		debug/moc_autocompelete.o
 
 DIST          = 
 QMAKE_TARGET  = testSQL
@@ -84,8 +100,8 @@ DESTDIR_TARGET = debug/testSQL.exe
 first: all
 all: Makefile.Debug  $(DESTDIR_TARGET)
 
-$(DESTDIR_TARGET): ui_mainwindow.h ui_popuppage.h ui_searchwindow.h $(OBJECTS) 
-	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
+$(DESTDIR_TARGET): ui_mainwindow.h ui_popuppage.h ui_searchwindow.h ui_mouseeventtest.h ui_form123.h ui_autocompelete.h $(OBJECTS) 
+	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.testSQL.Debug  $(LIBS)
 
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ CONFIG+=debug CONFIG+=declarative_debug CONFIG+=qml_debug -o Makefile.Debug ../testSQL/testSQL.pro
@@ -96,7 +112,7 @@ dist:
 	$(ZIP) testSQL.zip $(SOURCES) $(DIST) ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qdevice.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/device_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/common/shell-unix.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qconfig.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bootstrap_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_clucene_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designercomponents_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_platformsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmldevtools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quickparticles_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_functions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g++/qmake.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resolve_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/build_pass.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qml_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/declarative_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/rtti.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/warn_on.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resources.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/moc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/opengl.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/uic.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/windows.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/testcase_targets.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exceptions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/yacc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/lex.prf ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Widgetsd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Sqld.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Guid.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Cored.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug/main.o debug/mainwindow.o debug/popuppage.o debug/searchwindow.o debug/moc_mainwindow.o debug/moc_popuppage.o debug/moc_searchwindow.o
+	-$(DEL_FILE) debug/main.o debug/mainwindow.o debug/popuppage.o debug/searchwindow.o debug/mouseeventtest.o debug/test.o debug/form123.o debug/autocompelete.o debug/moc_mainwindow.o debug/moc_popuppage.o debug/moc_searchwindow.o debug/moc_mouseeventtest.o debug/moc_test.o debug/moc_form123.o debug/moc_autocompelete.o
 
 distclean: clean
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -110,9 +126,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp
+compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_form123.cpp debug/moc_autocompelete.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp
+	-$(DEL_FILE) debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_form123.cpp debug/moc_autocompelete.cpp
 debug/moc_mainwindow.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMainWindow \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
@@ -473,14 +489,574 @@ debug/moc_searchwindow.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QW
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		../testSQL/test.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
 		../testSQL/searchwindow.h
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/searchwindow.h -o debug/moc_searchwindow.cpp
 
+debug/moc_mouseeventtest.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTableModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqltablemodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqldatabase.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		../testSQL/mouseeventtest.h
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/mouseeventtest.h -o debug/moc_mouseeventtest.cpp
+
+debug/moc_test.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		../testSQL/test.h
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/test.h -o debug/moc_test.cpp
+
+debug/moc_form123.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTableModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqltablemodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqldatabase.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		../testSQL/form123.h
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/form123.h -o debug/moc_form123.cpp
+
+debug/moc_autocompelete.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QStringListModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlistmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		../testSQL/autocompelete.h
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/autocompelete.h -o debug/moc_autocompelete.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_popuppage.h ui_searchwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_popuppage.h ui_searchwindow.h ui_mouseeventtest.h ui_form123.h ui_autocompelete.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_popuppage.h ui_searchwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_popuppage.h ui_searchwindow.h ui_mouseeventtest.h ui_form123.h ui_autocompelete.h
 ui_mainwindow.h: ../testSQL/mainwindow.ui
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/uic.exe ../testSQL/mainwindow.ui -o ui_mainwindow.h
 
@@ -489,6 +1065,15 @@ ui_popuppage.h: ../testSQL/popuppage.ui
 
 ui_searchwindow.h: ../testSQL/searchwindow.ui
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/uic.exe ../testSQL/searchwindow.ui -o ui_searchwindow.h
+
+ui_mouseeventtest.h: ../testSQL/mouseeventtest.ui
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/uic.exe ../testSQL/mouseeventtest.ui -o ui_mouseeventtest.h
+
+ui_form123.h: ../testSQL/form123.ui
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/uic.exe ../testSQL/form123.ui -o ui_form123.h
+
+ui_autocompelete.h: ../testSQL/autocompelete.ui
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/uic.exe ../testSQL/autocompelete.ui -o ui_autocompelete.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -643,7 +1228,51 @@ debug/main.o: ../testSQL/main.cpp ../testSQL/mainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlError \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlerror.h \
 		../testSQL/searchwindow.h \
-		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		../testSQL/test.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		../testSQL/mouseeventtest.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		../testSQL/form123.h \
+		../testSQL/autocompelete.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QStringListModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlistmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QPushButton \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qpushbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/main.o ../testSQL/main.cpp
 
 debug/mainwindow.o: ../testSQL/mainwindow.cpp ../testSQL/mainwindow.h \
@@ -818,7 +1447,12 @@ debug/mainwindow.o: ../testSQL/mainwindow.cpp ../testSQL/mainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDateTime \
-		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatetime.h
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatetime.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlRelationalDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlrelationaldelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlistview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/mainwindow.o ../testSQL/mainwindow.cpp
 
 debug/popuppage.o: ../testSQL/popuppage.cpp ../testSQL/popuppage.h \
@@ -989,7 +1623,8 @@ debug/popuppage.o: ../testSQL/popuppage.cpp ../testSQL/popuppage.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlDatabase \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
-		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/popuppage.o ../testSQL/popuppage.cpp
 
 debug/searchwindow.o: ../testSQL/searchwindow.cpp ../testSQL/searchwindow.h \
@@ -1107,8 +1742,722 @@ debug/searchwindow.o: ../testSQL/searchwindow.cpp ../testSQL/searchwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
-		ui_searchwindow.h
+		../testSQL/test.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		ui_searchwindow.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qactiongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QButtonGroup \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qbuttongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGroupBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgroupbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QPushButton \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qpushbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlRecord \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlrecord.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQueryModel
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/searchwindow.o ../testSQL/searchwindow.cpp
+
+debug/mouseeventtest.o: ../testSQL/mouseeventtest.cpp ../testSQL/mouseeventtest.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTableModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqltablemodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqldatabase.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		ui_mouseeventtest.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qactiongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QButtonGroup \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qbuttongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QCheckBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcheckbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractbutton.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/mouseeventtest.o ../testSQL/mouseeventtest.cpp
+
+debug/test.o: ../testSQL/test.cpp ../testSQL/test.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItem \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QPushButton \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qpushbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyleOptionButton
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/test.o ../testSQL/test.cpp
+
+debug/form123.o: ../testSQL/form123.cpp ../testSQL/form123.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QStandardItemModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qstandarditemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTableModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqltablemodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqldatabase.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		ui_form123.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qactiongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QButtonGroup \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qbuttongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QTableView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtableview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QPushButton \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qpushbutton.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractbutton.h \
+		../testSQL/test.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QStyledItemDelegate \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleditemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QSpinBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QComboBox \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcombobox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/form123.o ../testSQL/form123.cpp
+
+debug/autocompelete.o: ../testSQL/autocompelete.cpp ../testSQL/autocompelete.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QWidget \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QLineEdit \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qlineedit.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextformat.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QStringListModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlistmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		ui_autocompelete.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qactiongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdesktopwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qguiapplication.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QButtonGroup \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qbuttongroup.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyleoption.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractspinbox.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvalidator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregularexpression.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractslider.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qstyle.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabbar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qrubberband.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QCompleter \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qcompleter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/autocompelete.o ../testSQL/autocompelete.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_mainwindow.o debug/moc_mainwindow.cpp
@@ -1118,6 +2467,18 @@ debug/moc_popuppage.o: debug/moc_popuppage.cpp
 
 debug/moc_searchwindow.o: debug/moc_searchwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_searchwindow.o debug/moc_searchwindow.cpp
+
+debug/moc_mouseeventtest.o: debug/moc_mouseeventtest.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_mouseeventtest.o debug/moc_mouseeventtest.cpp
+
+debug/moc_test.o: debug/moc_test.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_test.o debug/moc_test.cpp
+
+debug/moc_form123.o: debug/moc_form123.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_form123.o debug/moc_form123.cpp
+
+debug/moc_autocompelete.o: debug/moc_autocompelete.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_autocompelete.o debug/moc_autocompelete.cpp
 
 ####### Install
 

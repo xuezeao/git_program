@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSqlTableModel>
+#include "test.h"
 
 namespace Ui {
 class searchWindow;
@@ -15,7 +16,9 @@ class searchWindow : public QWidget
 public:
     explicit searchWindow(QWidget *parent = 0);
     ~searchWindow();
-
+public slots:
+      void addNewsToApplySheet();//把数据添加到执行框
+       void testslot();
 private slots:
     void on_pushButton_searchNews_clicked();
 
@@ -25,9 +28,10 @@ private:
     Ui::searchWindow *ui;
     QSqlTableModel *model;
     QSqlTableModel *applyNews;
+    test *teapage;
 
-    void addNewsToApplySheet();//把数据添加到执行框
-    bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
+
+ bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
     void deleteNewsFromApplySheet();//从执行框中删除添加的信息
 
 

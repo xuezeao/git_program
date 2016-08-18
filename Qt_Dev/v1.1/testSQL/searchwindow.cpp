@@ -9,11 +9,13 @@
 #include <QSqlQueryModel>
 #include <QComboBox>
 #include <QPushButton>
+
 searchWindow::searchWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::searchWindow)
 {
     ui->setupUi(this);
+      teapage = new test(this);
     model = new QSqlTableModel(this);
 
     model->setTable("placeDurg");
@@ -23,6 +25,8 @@ searchWindow::searchWindow(QWidget *parent) :
     ui->tableView_showSearch->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
     ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 
+  ui->tableView_showSearch->horizontalHeader()->setStretchLastSection(true);
+  ui-> tableView_showSearch->setItemDelegateForColumn(0, new test);
 
     applyNews = new QSqlTableModel(this);//关联数据库，设置为自动保存，窗口不可编辑
     applyNews->setTable("choiceReagent");
@@ -32,13 +36,19 @@ searchWindow::searchWindow(QWidget *parent) :
 //    comBox->addItem("F");
 //    comBox->addItem("M");
 //    ui->tableView_showSearch->setIndexWidget(model->index(0,0),comBox);
-    QPushButton *pushbutton = new QPushButton();
-    ui->tableView_showSearch->setIndexWidget(model->index(0,0),pushbutton);
-    ui->tableView_showNeedReagent->setModel(applyNews);
+    //可实现在表中显示部分按钮
+//    QPushButton *pushbutton = new QPushButton();
+//    ui->tableView_showSearch->setIndexWidget(model->index(0,0),pushbutton);
+//    ui->tableView_showNeedReagent->setModel(applyNews);
     ui->tableView_showNeedReagent->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 
+//    connect(teapage,SIGNAL(send()),this,SLOT(testslot()));
+}
 
+void searchWindow::testslot()
+{
+    qDebug()<<"sended";
 }
 
 searchWindow::~searchWindow()
@@ -78,6 +88,7 @@ void searchWindow::addNewsToApplySheet()//将选定信息添加到执行框
     applyNews->setTable("choiceReagent");
 
     applyNews->select();
+    ui->tableView_showNeedReagent->setModel(applyNews);
 
    //  int getRowNum = applyNews->rowCount();//获得行数
  //    applyNews->insertRow(getRowNum);
@@ -107,15 +118,15 @@ void searchWindow::on_pushButton_delThisNews_clicked()
 }
 bool searchWindow::eventFilter(QObject * watched, QEvent * event)
 {
-   if(event->type() == QEvent::MouseButtonDblClick)
+  if(event->type() == QEvent::MouseButtonDblClick)
    {
 
 
             addNewsToApplySheet();
-             qDebug()<<"a";
+            qDebug()<<"a";
 
-            on_pushButton_delThisNews_clicked();
-            qDebug()<<"111111111111111111111111111111";
+////            on_pushButton_delThisNews_clicked();
+////            qDebug()<<"111111111111111111111111111111";
    }
 
 

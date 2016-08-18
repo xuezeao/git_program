@@ -21,6 +21,7 @@ signals:
 private:
     Ui::Form123 *ui;
     QStandardItemModel* model;
+    void test1();
 };
 
 #endif // FORM123_H

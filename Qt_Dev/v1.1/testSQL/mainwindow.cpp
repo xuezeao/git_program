@@ -64,11 +64,13 @@ void MainWindow::auto_AddRow()//自增行数
     query.exec(QString("select * from placeDurg where rowid")//从id=rownum中选中所有属性 '*' /也可指定 'name'
                );//选中表格中最后一行并执行操作exec，没有经过exec的都是没有执行
 
-    query.last();//指向下一行表格
+    query.next();//指向最后表格
 
     QString nameNowValue = query.value(1).toString();//名字
     QString modelNowValue = query.value(5).toString();//规格
     int mlNowValue = query.value(3).toInt();//容量
+
+
 
     qDebug()<<nameNowValue<<"  "<<modelNowValue<<"   "<<mlNowValue;
 
@@ -100,21 +102,25 @@ void MainWindow::getSheetAddShow()
   //  model->select(); //选取整个表的所有行
     model->setTable("placeDurg");
     //不显示name属性列,如果这时添加记录，则该属性的值添加不上
-    model->removeColumn(2);
 
-//    model->setRelation(3,QSqlRelation("reagentType","id","id"));
-//    model->setRelation(10,QSqlRelation("reagentModel","id","id"));
+
+    model->setRelation(4,QSqlRelation("reagentType","id","id"));
+    model->setRelation(5,QSqlRelation("reagentModel","id","id"));
+//    ui->tableView_showEnter->setModel(model);
+   // model->select();
+
 //    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
 //    model->setHeaderData(1,Qt::Horizontal,QObject::tr("试剂名称"));
 //    model->setHeaderData(2,Qt::Horizontal,QObject::tr("容量 ml"));
 //    model->setHeaderData(6,Qt::Horizontal,QObject::tr("类型"));
-//    model->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂规格"));
-//    model->setHeaderData(5,Qt::Horizontal,QObject::tr("失效日期"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂规格"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("容量 ml"));
 //    model->setHeaderData(6,Qt::Horizontal,QObject::tr("入柜日期"));
 //    model->setHeaderData(7,Qt::Horizontal,QObject::tr("状态"));
-
+  model->removeColumn(2);
     model->select();
     ui->tableView_showEnter->setModel(model);
+    ui->tableView_showEnter->setItemDelegate(new QSqlRelationalDelegate(ui->tableView_showEnter));
     //使其不可编辑
    // ui->tableView_showEnter->setEditTriggers(QAbstractItemView::NoEditTriggers);
 //    ui->tableView_showEnter->setItemDelegate(new QSqlRelationalDelegate(ui->tableView_showEnter));
@@ -152,7 +158,7 @@ void MainWindow::on_pushButton_del_clicked()
 
        }
           model->setEditStrategy(QSqlTableModel::OnFieldChange);//恢复原来自保持模式
-          timer->start(1000);
+          timer->start();
 }
 
 

@@ -8,17 +8,19 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include "form123.h"
+#include "autocompelete.h"
 #include <QPushButton>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     if(!createConnection())
         return 1;
- //   MainWindow w;
- //  searchWindow w;
+//    MainWindow w;
+   searchWindow w;
    // mouseEventTest w;
-
-    Form123 w;
+//autocompelete w;
+//    Form123 w;
     w.show();
 
 
@@ -58,6 +60,47 @@ int main(int argc, char *argv[])
 
 //        tableView.horizontalHeader()->setStretchLastSection(true);
 //        tableView.show();
+
+
+//      QApplication a(argc, argv);
+
+//         VIPModel *model = new  VIPModel(5, 5);
+//        QTableView *tableView = new QTableView;
+
+//        //把表格的背景调成黄蓝相间
+//        //这种方法是在网上看到的，用起来还真方便啊
+//        tableView->setAlternatingRowColors(true);
+//        tableView->setStyleSheet("QTableView{background-color: rgb(250, 250, 115);"
+//            "alternate-background-color: rgb(141, 163, 215);}");
+
+//        tableView->setWindowTitle("VIP List");
+//        tableView->resize(700, 400);
+//        tableView->setModel(model);
+//        QStringList headerList;
+//        headerList << "No." << "ID" << "Name" << "Age" << "Sex" << "Show";
+//        model->setHorizontalHeaderLabels(headerList);
+//        tableView->verticalHeader()->setVisible(false);
+//        tableView->horizontalHeader()->setStretchLastSection(true);
+
+//        //为每一列加载委托
+//        ReadOnlyDelegate readOnlyDelegate;
+//        tableView->setItemDelegateForColumn(0, &readOnlyDelegate);
+//        UserIDDelegate userIDDelegate;
+//        tableView->setItemDelegateForColumn(1, &userIDDelegate);
+//        AgeDelegate spinBoxDelegate;
+//        tableView->setItemDelegateForColumn(3, &spinBoxDelegate);
+//        SexDelegate comboBoxDelegate;
+//        tableView->setItemDelegateForColumn(4, &comboBoxDelegate);
+//        IconDelegate iconDelegate;
+//        tableView->setItemDelegateForColumn(5, &iconDelegate);
+
+//        for(int i=0; i<10; i++)
+//        {
+//            QModelIndex index = model->index(1, 0, QModelIndex());
+//            model->setData(index, 1);
+//        }
+
+//        tableView->show();
 
     return a.exec();
 }

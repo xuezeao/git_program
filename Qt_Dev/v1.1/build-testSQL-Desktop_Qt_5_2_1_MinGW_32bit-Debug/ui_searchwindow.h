@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableView>
@@ -27,15 +26,13 @@ class Ui_searchWindow
 {
 public:
     QTableView *tableView_showSearch;
-    QLineEdit *lineEdit_search;
-    QLabel *label;
-    QTableView *tableView_showNeedReagent;
     QPushButton *pushButton_delThisNews;
     QGroupBox *groupBox;
     QPushButton *pushButton_sureNewsApply;
+    QTableView *tableView_showNeedReagent;
     QGroupBox *groupBox_2;
-    QPushButton *pushButton_addChoiceReagent;
     QPushButton *pushButton_searchNews;
+    QLineEdit *lineEdit_search;
 
     void setupUi(QWidget *searchWindow)
     {
@@ -45,19 +42,6 @@ public:
         tableView_showSearch = new QTableView(searchWindow);
         tableView_showSearch->setObjectName(QStringLiteral("tableView_showSearch"));
         tableView_showSearch->setGeometry(QRect(80, 360, 801, 191));
-        lineEdit_search = new QLineEdit(searchWindow);
-        lineEdit_search->setObjectName(QStringLiteral("lineEdit_search"));
-        lineEdit_search->setGeometry(QRect(160, 290, 281, 51));
-        label = new QLabel(searchWindow);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(90, 290, 71, 51));
-        QFont font;
-        font.setFamily(QStringLiteral("Agency FB"));
-        font.setPointSize(20);
-        label->setFont(font);
-        tableView_showNeedReagent = new QTableView(searchWindow);
-        tableView_showNeedReagent->setObjectName(QStringLiteral("tableView_showNeedReagent"));
-        tableView_showNeedReagent->setGeometry(QRect(20, 20, 811, 221));
         pushButton_delThisNews = new QPushButton(searchWindow);
         pushButton_delThisNews->setObjectName(QStringLiteral("pushButton_delThisNews"));
         pushButton_delThisNews->setGeometry(QRect(850, 60, 75, 23));
@@ -67,23 +51,26 @@ public:
         pushButton_sureNewsApply = new QPushButton(groupBox);
         pushButton_sureNewsApply->setObjectName(QStringLiteral("pushButton_sureNewsApply"));
         pushButton_sureNewsApply->setGeometry(QRect(840, 210, 75, 23));
+        tableView_showNeedReagent = new QTableView(groupBox);
+        tableView_showNeedReagent->setObjectName(QStringLiteral("tableView_showNeedReagent"));
+        tableView_showNeedReagent->setGeometry(QRect(10, 10, 811, 191));
         groupBox_2 = new QGroupBox(searchWindow);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         groupBox_2->setGeometry(QRect(10, 270, 921, 291));
-        pushButton_addChoiceReagent = new QPushButton(groupBox_2);
-        pushButton_addChoiceReagent->setObjectName(QStringLiteral("pushButton_addChoiceReagent"));
-        pushButton_addChoiceReagent->setGeometry(QRect(660, 20, 181, 51));
-        pushButton_addChoiceReagent->setFont(font);
         pushButton_searchNews = new QPushButton(groupBox_2);
         pushButton_searchNews->setObjectName(QStringLiteral("pushButton_searchNews"));
-        pushButton_searchNews->setGeometry(QRect(460, 20, 181, 51));
+        pushButton_searchNews->setGeometry(QRect(360, 20, 181, 51));
+        QFont font;
+        font.setFamily(QStringLiteral("Agency FB"));
+        font.setPointSize(20);
         pushButton_searchNews->setFont(font);
+        lineEdit_search = new QLineEdit(groupBox_2);
+        lineEdit_search->setObjectName(QStringLiteral("lineEdit_search"));
+        lineEdit_search->setGeometry(QRect(70, 20, 281, 51));
+        lineEdit_search->setFont(font);
         groupBox->raise();
         groupBox_2->raise();
         tableView_showSearch->raise();
-        lineEdit_search->raise();
-        label->raise();
-        tableView_showNeedReagent->raise();
         pushButton_delThisNews->raise();
 
         retranslateUi(searchWindow);
@@ -94,13 +81,19 @@ public:
     void retranslateUi(QWidget *searchWindow)
     {
         searchWindow->setWindowTitle(QApplication::translate("searchWindow", "Form", 0));
-        label->setText(QApplication::translate("searchWindow", "\346\237\245\350\257\242:", 0));
         pushButton_delThisNews->setText(QApplication::translate("searchWindow", "\345\210\240\351\231\244\351\200\211\344\270\255\344\277\241\346\201\257", 0));
         groupBox->setTitle(QApplication::translate("searchWindow", "GroupBox", 0));
         pushButton_sureNewsApply->setText(QApplication::translate("searchWindow", "\347\241\256\350\256\244\345\271\266\347\224\263\350\257\267", 0));
         groupBox_2->setTitle(QApplication::translate("searchWindow", "GroupBox", 0));
-        pushButton_addChoiceReagent->setText(QApplication::translate("searchWindow", "\346\267\273\345\212\240\351\200\211\344\270\255\344\277\241\346\201\257", 0));
         pushButton_searchNews->setText(QApplication::translate("searchWindow", "\346\237\245\350\257\242", 0));
+#ifndef QT_NO_STATUSTIP
+        lineEdit_search->setStatusTip(QString());
+#endif // QT_NO_STATUSTIP
+#ifndef QT_NO_ACCESSIBILITY
+        lineEdit_search->setAccessibleName(QString());
+#endif // QT_NO_ACCESSIBILITY
+        lineEdit_search->setInputMask(QString());
+        lineEdit_search->setPlaceholderText(QApplication::translate("searchWindow", "\350\257\267\350\276\223\345\205\245\350\257\225\345\211\202\345\220\215", 0));
     } // retranslateUi
 
 };
