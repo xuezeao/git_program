@@ -16,9 +16,8 @@ searchWindow::searchWindow(QWidget *parent) :
     ui(new Ui::searchWindow)
 {
     ui->setupUi(this);
-    teapage = new additionNews(this);
+      teapage = new test(this);
     model = new QSqlTableModel(this);
-    delFunction = new delNews(this);
 
     model->setTable("placeDurg");
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -28,7 +27,7 @@ searchWindow::searchWindow(QWidget *parent) :
     ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 
   ui->tableView_showSearch->horizontalHeader()->setStretchLastSection(true);
-  ui-> tableView_showSearch->setItemDelegateForColumn(0, new additionNews);
+  ui-> tableView_showSearch->setItemDelegateForColumn(0, new test);
 
     applyNews = new QSqlTableModel(this);//关联数据库，设置为自动保存，窗口不可编辑
     applyNews->setTable("choiceReagent");
@@ -44,17 +43,16 @@ searchWindow::searchWindow(QWidget *parent) :
 //    ui->tableView_showNeedReagent->setModel(applyNews);
     ui->tableView_showNeedReagent->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView_showNeedReagent->viewport()->installEventFilter(this);
-    ui->tableView_showNeedReagent->setItemDelegateForColumn(0,new delNews);
 
     ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 
 //    connect(teapage,SIGNAL(send()),this,SLOT(testslot()));
 }
 
-//void searchWindow::testslot()
-//{
-//    qDebug()<<"sended";
-//}
+void searchWindow::testslot()
+{
+    qDebug()<<"sended";
+}
 
 searchWindow::~searchWindow()
 {
@@ -101,21 +99,6 @@ void searchWindow::addNewsToApplySheet()//将选定信息添加到执行框
 
 }
 
-void searchWindow::delNewsFromApplySheet()
-{
-//    applyNews->setTable("choiceReagent");
-
-//    applyNews->select();
-//    ui->tableView_showNeedReagent->setModel(applyNews);
-
-    //获取选中的行
-    int curRow = ui->tableView_showNeedReagent->currentIndex().row();
-
-    //删除该行
-    applyNews->removeRow(curRow);
-    applyNews->submitAll(); //否则提交，在数据库中删除该行
-
-}
 
 void searchWindow::on_pushButton_delThisNews_clicked()
 
@@ -125,17 +108,15 @@ void searchWindow::on_pushButton_delThisNews_clicked()
 
     //删除该行
     applyNews->removeRow(curRow);
-
 //    qDebug()<<"--------------------------"<<curRow;
-  //  int ok = QMessageBox::warning(this,tr("删除当前行!"),tr("你确定"
-//                                                       "删除当前行吗？"),
-//                                  QMessageBox::Yes,QMessageBox::No);
-//    if(ok == QMessageBox::No)
-//    {
-//        applyNews->revertAll(); //如果不删除，则撤销
-//    }
-//    else
-    applyNews->submitAll(); //否则提交，在数据库中删除该行
+    int ok = QMessageBox::warning(this,tr("删除当前行!"),tr("你确定"
+                                                       "删除当前行吗？"),
+                                  QMessageBox::Yes,QMessageBox::No);
+    if(ok == QMessageBox::No)
+    {
+        applyNews->revertAll(); //如果不删除，则撤销
+    }
+    else applyNews->submitAll(); //否则提交，在数据库中删除该行
 
 }
 bool searchWindow::eventFilter(QObject * obj, QEvent * event)
@@ -143,57 +124,21 @@ bool searchWindow::eventFilter(QObject * obj, QEvent * event)
     QMouseEvent *e = (QMouseEvent *) event;
     int clickX =e->x();
     int clickY =e->y();
-
-//    qDebug()<<clickX;
-//    qDebug()<<clickY;
-//    qDebug()<<"局部-------------------";
-
-
-//    int globalX=e->globalX();//获取全局变量
-//    int globalY=e->globalY();
+    int globalX=e->globalX();
+    int globalY=e->globalY();
 //    if(obj == ui->tableView_showSearch)
-//    qDebug()<<globalX;
-//    qDebug()<<globalY+"全局---------------------";
 
-    if(obj==ui->tableView_showSearch->viewport())
-    {
-//        qDebug()<<"OK sending";
-        if(event->type() == QEvent::MouseButtonPress)
-      {
-            int rowAllAAcount = model->rowCount();
-            int tableAW = ui->tableView_showSearch->columnWidth(0);
-            int tableAH = ui->tableView_showSearch->rowHeight(0);
-            if(clickX > 0 && clickX < tableAW)
-            {
-                if(clickY > 0 && clickY < rowAllAAcount*tableAH)
-                {
-                    qDebug()<<"one OK";
-                   addNewsToApplySheet();
-                }
-            }
+ if(event->type() == QEvent::MouseButtonDblClick)
+ {
+        qDebug()<<clickX;
+        qDebug()<<clickY;
+        qDebug()<<"局部-------------------";
+        qDebug()<<globalX;
+        qDebug()<<globalY;
+                  qDebug()<<"全局---------------------";
 
-       }
 
-    }
-    if(obj==ui->tableView_showNeedReagent->viewport())
-    {
-         if(event->type() == QEvent::MouseButtonPress)
-       {
-             int rowAllBAcount = applyNews->rowCount();
-             int tableBW = ui->tableView_showNeedReagent->columnWidth(0);
-             int tableBH = ui->tableView_showNeedReagent->rowHeight(0);
-             if(clickX > 0 && clickX < tableBW)
-             {
-                 if(clickY > 0 && clickY < rowAllBAcount*tableBH)
-                 {
-                     qDebug()<<"two OK ";
-                     delNewsFromApplySheet();
-
-                 }
-             }
-
-        }
-    }
+ }
 
 }
 

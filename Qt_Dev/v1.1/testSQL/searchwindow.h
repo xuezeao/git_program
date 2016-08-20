@@ -18,7 +18,8 @@ public:
     ~searchWindow();
 public slots:
       void addNewsToApplySheet();//把数据添加到执行框
-       void testslot();
+      void delNewsFromApplySheet();//把数据从执行框删除
+//       void testslot();
 private slots:
     void on_pushButton_searchNews_clicked();
 
@@ -28,13 +29,14 @@ private:
     Ui::searchWindow *ui;
     QSqlTableModel *model;
     QSqlTableModel *applyNews;
-    test *teapage;
+    additionNews *teapage;
+    delNews *delFunction;
 
-
- bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
+bool eventFilter(QObject * obj, QEvent * event);
+// bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
     void deleteNewsFromApplySheet();//从执行框中删除添加的信息
 
-
+    void mou();
 };
 
 #endif // SEARCHWINDOW_H

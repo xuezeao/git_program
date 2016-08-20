@@ -15,11 +15,12 @@
 #include <QLineEdit>
 
 
-class test : public QItemDelegate //继承QItemDelegate这个才是关键
+class additionNews : public QItemDelegate //继承QItemDelegate这个才是关键
 {
     Q_OBJECT
 public:
-    explicit test(QObject *parent = 0);
+//    /*explicit */additionNews(QObject *parent = 0);
+    additionNews(QObject *parent = 0): QItemDelegate(parent) { }
 
 ////    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 //    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
@@ -34,13 +35,25 @@ public:
 //    void hope();
 
 
-      void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-      bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
+      void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                 const QModelIndex &index) const;
+
+      //      bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 
-signals:
-      void send();
-public slots:
+
+};
+
+
+class delNews : public QItemDelegate //继承QItemDelegate这个才是关键
+{
+    Q_OBJECT
+public:
+//    explicit delNews(QObject *parent = 0);
+     delNews(QObject *parent = 0): QItemDelegate(parent) { }
+
+      void paint(QPainter *painter, const QStyleOptionViewItem &option,const QModelIndex &index) const;
+      //      bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 };
 ////编号列，只读委托
