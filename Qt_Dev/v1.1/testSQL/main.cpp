@@ -7,10 +7,13 @@
 #include <QHeaderView>
 #include <QStandardItemModel>
 #include <QTableView>
-#include "form123.h"
-#include "autocompelete.h"
+
+
 #include <QPushButton>
 #include "mainui.h"
+#include <QDebug>
+#include <QCoreApplication>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -23,6 +26,52 @@ int main(int argc, char *argv[])
 //autocompelete w;
 //    Form123 w;
     w.show();
+
+//    QDomDocument doc;//新建对象
+//    QFile file("my.xml");//建立指向  文件的对象
+//    if(!file.open(QIODevice::ReadOnly))return 0;//只读
+//    if(!doc.setContent(&file))//读取到doc中
+//    {
+//        file.close();
+//        return 0;
+//    }
+//    file.close();
+//    QDomNode firstNode = doc.firstChild();//获取一个doc节点，即XML说明
+//    qDebug()<<qPrintable(firstNode.nodeName())
+//           <<qPrintable(firstNode.nodeValue());
+
+
+//    QDomElement docElem = doc.documentElement();//返回根元素
+//    QDomNode n= docElem.firstChild();//返回根节点的第一个子节点
+
+//    //如果节点不为空
+//    while(!n.isNull())
+//    {
+//        if (n.isElement())  //如果节点是元素
+//        {
+//            QDomElement e = n.toElement();
+//            qDebug() << qPrintable(e.tagName())
+//                     << qPrintable(e.attribute("id"));
+//            // 获得元素e的所有子节点的列表
+//            QDomNodeList list = e.childNodes();
+//            // 遍历该列表
+//            for(int i=0; i<list.count(); i++)
+//            {
+//                QDomNode node = list.at(i);
+//                if(node.isElement())
+//                    qDebug() << "   " << qPrintable(node.toElement().tagName())
+//                                     <<qPrintable(node.toElement().text());
+//            }
+//        }
+
+//        n = n.nextSibling();
+//    }
+
+
+
+
+
+
     return a.exec();
 
 

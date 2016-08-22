@@ -11,6 +11,9 @@
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QHeaderView>
+
+QString searchModel;
+QString needModel;
 searchWindow::searchWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::searchWindow)
@@ -19,40 +22,35 @@ searchWindow::searchWindow(QWidget *parent) :
     createArray();
     qDebug()<<NeedSheet[10];
     qDebug()<<searchSheet[10];
+    GPage_SEA = new popupPage;
     teapage = new additionNews(this);
     model = new QSqlTableModel(this);
     delFunction = new delNews(this);
 
-    model->setTable("placeDurg");
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->select();
-    ui->tableView_showSearch->setModel(model);
-    ui->tableView_showSearch->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
-    ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 
-  ui->tableView_showSearch->horizontalHeader()->setStretchLastSection(true);
-  ui-> tableView_showSearch->setItemDelegateForColumn(0, new additionNews);
-
-    applyNews = new QSqlTableModel(this);//关联数据库，设置为自动保存，窗口不可编辑
-    applyNews->setTable("choiceReagent");
-    applyNews->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    applyNews->select();
-//    QComboBox *comBox = new QComboBox();
-//    comBox->addItem("F");
-//    comBox->addItem("M");
-//    ui->tableView_showSearch->setIndexWidget(model->index(0,0),comBox);
-    //可实现在表中显示部分按钮
-//    QPushButton *pushbutton = new QPushButton();
-//    ui->tableView_showSearch->setIndexWidget(model->index(0,0),pushbutton);
-//    ui->tableView_showNeedReagent->setModel(applyNews);
-    ui->tableView_showNeedReagent->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableView_showNeedReagent->viewport()->installEventFilter(this);
-    ui->tableView_showNeedReagent->setItemDelegateForColumn(0,new delNews);
-
-    ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
 //    addCheckBox(model,1);
 
 //    connect(teapage,SIGNAL(send()),this,SLOT(testslot()));
+
+    connect(GPage_SEA,SIGNAL(backGPage()),this,SLOT(operatePage_To_SEA()));
+//    QString ad="ad";
+//    ui->label_title->setText(QString("%1").arg(ad));//
+
+
+
+}
+void searchWindow::searchSelect(int num)
+{
+    switch (num) {
+    case 1 :searchModel="placeDurg";needModel="取试剂";qDebug()<<needModel;break;
+    case 2 :searchModel="BackReagent";needModel="归还试剂";qDebug()<<needModel;break;
+    default:
+        break;
+    }
+
+
+     ui->label_title->setText(QString("%1").arg(needModel));
+     mainUI();
 }
 
 //void searchWindow::testslot()
@@ -107,10 +105,11 @@ void searchWindow::addNewsToApplySheet()//将选定信息添加到执行框
 {
      int curRow = ui->tableView_showSearch->currentIndex().row();
      qDebug()<<"*********************"<<curRow;
+//     model->setTable(QString("%1").arg(searchModel));
      QSqlRecord record = model->record(curRow);//获取指定行的记录
     qDebug()<<record;
     QSqlQuery query;
-    query.exec(QString("insert into choiceReagent select * from placeDurg where rowid='%1'").arg(curRow+1));//将A表向b添加选中记录
+    query.exec(QString("insert into choiceReagent select * from %1 where rowid='%2'").arg(searchModel).arg(curRow+1));//将A表向b添加选中记录
   //  query.next();   //作用同上面这句函数效果一致
 //    QSqlRecord record1 = applyNews->record(1);
 //    qDebug()<<"12312312"<<record1;
@@ -256,10 +255,58 @@ bool searchWindow::eventFilter(QObject * obj, QEvent * event)
 
 
 //        return searchWindow::eventFilter(watched,event);
+void searchWindow::mainUI()
+{
 
+//    model->setTable("placeDurg");
+
+    model->setTable(QString("%1").arg(searchModel));
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->select();
+    ui->tableView_showSearch->setModel(model);
+    ui->tableView_showSearch->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
+    ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
+
+    ui->tableView_showSearch->horizontalHeader()->setStretchLastSection(true);
+    ui-> tableView_showSearch->setItemDelegateForColumn(0, new additionNews);
+
+
+
+    applyNews = new QSqlTableModel(this);//关联数据库，设置为自动保存，窗口不可编辑
+    applyNews->setTable("choiceReagent");
+    applyNews->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    applyNews->select();
+//    QComboBox *comBox = new QComboBox();
+//    comBox->addItem("F");
+//    comBox->addItem("M");
+//    ui->tableView_showSearch->setIndexWidget(model->index(0,0),comBox);
+    //可实现在表中显示部分按钮
+//    QPushButton *pushbutton = new QPushButton();
+//    ui->tableView_showSearch->setIndexWidget(model->index(0,0),pushbutton);
+//    ui->tableView_showNeedReagent->setModel(applyNews);
+    ui->tableView_showNeedReagent->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableView_showNeedReagent->viewport()->installEventFilter(this);
+    ui->tableView_showNeedReagent->setItemDelegateForColumn(0,new delNews);
+
+    ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
+
+}
 
 
 void searchWindow::on_commandLinkButton_clicked()
 {
     emit GPageToMainUi();
+}
+
+void searchWindow::operatePage_To_SEA()
+{
+    this->show();
+    GPage_SEA->close();
+}
+
+void searchWindow::on_pushButton_sureNewsApply_clicked()
+{
+    this->close();
+    GPage_SEA->selectModel(2);
+    GPage_SEA->show();
 }

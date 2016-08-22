@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     popupwindow = new popupPage(this);
     model = new QSqlRelationalTableModel(this);
-    timer = new QTimer(this);
+    timer = new QTimer;
 //    popupPage = new popupWindow(this);
     ui->setupUi(this);
 
@@ -166,6 +166,7 @@ void MainWindow::on_pushButton_del_clicked()
 void MainWindow::on_pushButton_placeChest_clicked()
 {
     this->close();
+    popupwindow->selectModel(1);
     popupwindow->show();
     timer->stop();
 }

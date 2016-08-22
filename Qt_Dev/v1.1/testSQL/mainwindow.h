@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QTimer* timer;
 signals:
     void timeout();//试剂列有字段自增一行
     void toMainChoice();
@@ -36,7 +37,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSqlRelationalTableModel* model;
-    QTimer* timer;
+
     popupPage* popupwindow;
     void getSheetAddShow();//获取新建表格、保存和更新显示
 
