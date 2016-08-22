@@ -20,7 +20,7 @@ public:
     ~MainWindow();
 signals:
     void timeout();//试剂列有字段自增一行
-
+    void toMainChoice();
 private slots:
 
     void auto_AddRow();//自增一行
@@ -30,6 +30,8 @@ private slots:
 
     void on_pushButton_placeChest_clicked();
     void returnBack();
+
+    void on_commandLinkButton_clicked();
 
 private:
     Ui::MainWindow *ui;

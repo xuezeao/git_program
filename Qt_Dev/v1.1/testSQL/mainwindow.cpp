@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(popupwindow,SIGNAL(backplacepage()),this,SLOT(returnBack()));
 
 
-    timer->start(1000);
+//    timer->start(1000);
 
 }
 
@@ -177,4 +177,10 @@ void MainWindow::returnBack()
     model->removeColumn(1);
     model->select();
     timer->start();
+}
+
+void MainWindow::on_commandLinkButton_clicked()
+{
+    emit toMainChoice();
+    timer->stop();
 }

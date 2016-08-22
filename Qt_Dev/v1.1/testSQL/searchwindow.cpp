@@ -10,12 +10,15 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QMouseEvent>
-
+#include <QHeaderView>
 searchWindow::searchWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::searchWindow)
 {
     ui->setupUi(this);
+    createArray();
+    qDebug()<<NeedSheet[10];
+    qDebug()<<searchSheet[10];
     teapage = new additionNews(this);
     model = new QSqlTableModel(this);
     delFunction = new delNews(this);
@@ -47,6 +50,7 @@ searchWindow::searchWindow(QWidget *parent) :
     ui->tableView_showNeedReagent->setItemDelegateForColumn(0,new delNews);
 
     ui->tableView_showSearch->viewport()->installEventFilter(this);//设置窗口鼠标事件
+//    addCheckBox(model,1);
 
 //    connect(teapage,SIGNAL(send()),this,SLOT(testslot()));
 }
@@ -61,6 +65,28 @@ searchWindow::~searchWindow()
     delete ui;
 }
 
+void searchWindow::addCheckBox(QSqlTableModel *modelName,int modelAB)
+{
+    int adf=modelAB;
+    choiceModel = modelName;
+    int nRow = choiceModel->rowCount();
+    for(int i=0;i<nRow;++i)
+    {
+//        QCheckBox *((searchSheet[i]))= new QCheckBox(this);
+//        ui->tableView_showSearch->setIndexWidget(choiceModel->index(i,0),searchSheet[i]);
+    }
+}
+void searchWindow::createArray()
+{
+    for(int i=0;i<255;++i)
+    {
+        QString oneSheet=(QString("a%1").arg(i));
+        QString twoSheet=(QString("b%1").arg(i));
+        searchSheet[i]=oneSheet;
+        NeedSheet[i]=twoSheet;
+
+    }
+}
 
 void searchWindow::on_pushButton_searchNews_clicked()
 {
@@ -232,3 +258,8 @@ bool searchWindow::eventFilter(QObject * obj, QEvent * event)
 //        return searchWindow::eventFilter(watched,event);
 
 
+
+void searchWindow::on_commandLinkButton_clicked()
+{
+    emit GPageToMainUi();
+}

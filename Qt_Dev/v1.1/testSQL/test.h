@@ -15,12 +15,12 @@
 #include <QLineEdit>
 
 
-class additionNews : public QItemDelegate //继承QItemDelegate这个才是关键
+class additionNews : public QStyledItemDelegate //继承QItemDelegate这个才是关键
 {
     Q_OBJECT
 public:
 //    /*explicit */additionNews(QObject *parent = 0);
-    additionNews(QObject *parent = 0): QItemDelegate(parent) { }
+    additionNews(QObject *parent = 0): QStyledItemDelegate(parent) { }
 
 ////    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 //    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
@@ -45,17 +45,61 @@ public:
 };
 
 
-class delNews : public QItemDelegate //继承QItemDelegate这个才是关键
+class delNews : public QStyledItemDelegate //继承QItemDelegate这个才是关键
 {
     Q_OBJECT
 public:
 //    explicit delNews(QObject *parent = 0);
-     delNews(QObject *parent = 0): QItemDelegate(parent) { }
+     delNews(QObject *parent = 0): QStyledItemDelegate(parent) { }
 
       void paint(QPainter *painter, const QStyleOptionViewItem &option,const QModelIndex &index) const;
       //      bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 };
+
+//class checkBoxTest : public QStyledItemDelegate
+//{
+//    Q_OBJECT
+
+//public:
+//    checkBoxTest(QObject *parent = 0): QStyledItemDelegate(parent){}
+//    QWidget *createEditor(QWidget * parent, const QStyleOptionViewItem & option, const QModelIndex & index) const;
+
+//    bool editorEvent(QEvent * event, QAbstractItemModel * model,
+//                     const QStyleOptionViewItem & option, const QModelIndex & index) ;
+
+//    QVariant QAbstractItemModel::data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+//    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+//};
+
+//class tableWidget01 : public QMainWindow
+//{
+// Q_OBJECT
+
+//public:
+// tableWidget01(QWidget *parent = 0, Qt::WFlags flags = 0);
+// ~tableWidget01();
+// private slots:
+//  void onBtnSlectAllClicked();
+//  void onBtnSendClicked();
+//  void onBtnCancleClicked();
+//private:
+// void intit();
+
+
+//private:
+// Ui::tableWidget01Class ui;
+//};
+
+
+
+
+
+
+
+
+
 ////编号列，只读委托
 ////这个方法我还真想不到，呵呵
 //class ReadOnlyDelegate : public QItemDelegate

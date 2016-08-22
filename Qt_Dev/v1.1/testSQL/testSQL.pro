@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     mouseeventtest.cpp \
     test.cpp \
     form123.cpp \
-    autocompelete.cpp
+    autocompelete.cpp \
+    mainui.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
@@ -29,11 +30,13 @@ HEADERS  += mainwindow.h \
     mouseeventtest.h \
     test.h \
     form123.h \
-    autocompelete.h
+    autocompelete.h \
+    mainui.h
 
 FORMS    += mainwindow.ui \
     popuppage.ui \
     searchwindow.ui \
     mouseeventtest.ui \
     form123.ui \
-    autocompelete.ui
+    autocompelete.ui \
+    mainui.ui

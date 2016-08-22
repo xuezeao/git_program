@@ -6,28 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>378</height>
+    <width>508</width>
+    <height>357</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTableView" name="tableView">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>20</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_placedNext">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>250</y>
+     <x>280</x>
+     <y>260</y>
      <width>101</width>
      <height>31</height>
     </rect>
@@ -39,8 +29,8 @@
   <widget class="QPushButton" name="pushButton_jumpThisOption">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>250</y>
+     <x>180</x>
+     <y>260</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -52,8 +42,8 @@
   <widget class="QPushButton" name="pushButton_backPreviousOption">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>250</y>
+     <x>80</x>
+     <y>260</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -65,8 +55,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>30</y>
+     <x>100</x>
+     <y>40</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -78,8 +68,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>100</y>
+     <x>100</x>
+     <y>110</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -91,8 +81,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>170</y>
+     <x>100</x>
+     <y>180</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -104,8 +94,8 @@
   <widget class="QTextBrowser" name="textBrowser_showReagentName">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>20</y>
+     <x>190</x>
+     <y>30</y>
      <width>171</width>
      <height>31</height>
     </rect>
@@ -114,8 +104,8 @@
   <widget class="QTextBrowser" name="textBrowser_showReagentVolume">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>90</y>
+     <x>190</x>
+     <y>100</y>
      <width>171</width>
      <height>31</height>
     </rect>
@@ -124,8 +114,8 @@
   <widget class="QTextBrowser" name="textBrowser_showReagentlocation">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>160</y>
+     <x>190</x>
+     <y>170</y>
      <width>171</width>
      <height>31</height>
     </rect>

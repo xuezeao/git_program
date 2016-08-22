@@ -10,18 +10,20 @@
 #include "form123.h"
 #include "autocompelete.h"
 #include <QPushButton>
-
+#include "mainui.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     if(!createConnection())
         return 1;
-//    MainWindow w;
-   searchWindow w;
-   // mouseEventTest w;
+//   MainWindow w;
+//   searchWindow w;
+    MainUI w;
+    // mouseEventTest w;
 //autocompelete w;
 //    Form123 w;
     w.show();
+    return a.exec();
 
 
 //    QStandardItemModel model(4, 2);
@@ -102,5 +104,5 @@ int main(int argc, char *argv[])
 
 //        tableView->show();
 
-    return a.exec();
+
 }

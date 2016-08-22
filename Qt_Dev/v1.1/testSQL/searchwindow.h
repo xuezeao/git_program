@@ -5,6 +5,7 @@
 #include <QSqlTableModel>
 #include "test.h"
 
+
 namespace Ui {
 class searchWindow;
 }
@@ -19,18 +20,29 @@ public:
 public slots:
       void addNewsToApplySheet();//把数据添加到执行框
       void delNewsFromApplySheet();//把数据从执行框删除
+
 //       void testslot();
 private slots:
     void on_pushButton_searchNews_clicked();
 
     void on_pushButton_delThisNews_clicked();
 
+    void on_commandLinkButton_clicked();
+signals:
+    void GPageToMainUi();
 private:
     Ui::searchWindow *ui;
     QSqlTableModel *model;
     QSqlTableModel *applyNews;
+    QSqlTableModel *choiceModel;
     additionNews *teapage;
     delNews *delFunction;
+    void addCheckBox(QSqlTableModel *modelName,int modelAB);
+    void createArray();//自动创建255个字段用于给Checkout命名
+    QString searchSheet[255];
+    QString NeedSheet[255];
+
+
 
 bool eventFilter(QObject * obj, QEvent * event);
 // bool eventFilter(QObject * watched, QEvent * event);//设置鼠标活动
