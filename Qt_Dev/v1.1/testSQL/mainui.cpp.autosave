@@ -28,8 +28,10 @@ MainUI::MainUI(QWidget *parent) :
 //    QString cd="def";
 //    QString ac=bc+cd;
 //    qDebug()<<ac;
-    QSqlQuery query;
-    query.exec(QString("delete from placeDurg"));
+//    QSqlQuery query;
+//    query.exec(QString("delete from placeDurg"));//删除所有数据
+    
+    
 }
 
 MainUI::~MainUI()

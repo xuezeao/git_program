@@ -39,5 +39,7 @@ private:
     searchWindow *reagentGPage;
     MainWindow *reagentPPage;
     QNetworkAccessManager *accessManager;
+    void MessageSaveTOsql(QString a);
+    void switchStyle(QString b);
 };
 #endif // MAINUI_H
