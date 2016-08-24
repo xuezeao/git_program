@@ -42,8 +42,8 @@ searchWindow::searchWindow(QWidget *parent) :
 void searchWindow::searchSelect(int num)
 {
     switch (num) {
-    case 1 :searchModel="placeDurg";needModel="取试剂";qDebug()<<needModel;break;
-    case 2 :searchModel="BackReagent";needModel="归还试剂";qDebug()<<needModel;break;
+    case 1 :searchModel="T_Task";needModel="取试剂";qDebug()<<needModel;break;
+    case 2 :searchModel="T_Task";needModel="归还试剂";qDebug()<<needModel;break;
     default:
         break;
     }
@@ -109,13 +109,13 @@ void searchWindow::addNewsToApplySheet()//将选定信息添加到执行框
      QSqlRecord record = model->record(curRow);//获取指定行的记录
     qDebug()<<record;
     QSqlQuery query;
-    query.exec(QString("insert into choiceReagent select * from %1 where rowid='%2'").arg(searchModel).arg(curRow+1));//将A表向b添加选中记录
+    query.exec(QString("insert into T_Task_Operate select * from %1 where rowid='%2'").arg(searchModel).arg(curRow+1));//将A表向b添加选中记录
   //  query.next();   //作用同上面这句函数效果一致
 //    QSqlRecord record1 = applyNews->record(1);
 //    qDebug()<<"12312312"<<record1;
 //    QSqlRecord record21 = applyNews->record(0);
 //    qDebug()<<"12312312"<<record21;
-    applyNews->setTable("choiceReagent");
+    applyNews->setTable("T_Task_Operate");
 
     applyNews->select();
     ui->tableView_showNeedReagent->setModel(applyNews);
@@ -309,4 +309,5 @@ void searchWindow::on_pushButton_sureNewsApply_clicked()
     this->close();
     GPage_SEA->selectModel(2);
     GPage_SEA->show();
+    GPage_SEA->acount=1;
 }

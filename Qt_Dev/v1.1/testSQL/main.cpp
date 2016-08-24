@@ -14,6 +14,16 @@
 #include <QDebug>
 #include <QCoreApplication>
 
+
+
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QJsonObject>
+#include <QDebug>
+#include <QString>
+#include <QByteArray>
+#include <QVariant>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -26,6 +36,28 @@ int main(int argc, char *argv[])
 //autocompelete w;
 //    Form123 w;
     w.show();
+
+
+//      QByteArray  jsonstr="{\"success\":true,\"errorMessage\":\"位置分配成功。\",\"positionNo\":3,\"positionName\":\"特殊3\",\"positionId\":8,\"drawerNo\":2,\"drawerName\":\"特殊试剂柜\"}";
+//        auto json=QJsonDocument::fromJson(jsonstr);
+//        qDebug() << json.isNull();
+//        qDebug() << json.isArray();
+
+//        auto ary=json.array();
+//        for(auto a : ary) {
+//            qDebug() << a.toObject()["errorMessage"].toString();
+//            qDebug() << a.toObject()["positionNo"].toInt();
+//        }
+
+//        QJsonObject obj;
+//        obj.insert("name",QJsonValue(QString("menghui")));
+//        obj.insert("age",QJsonValue(34));
+//        ary.insert(2,obj);
+//        QJsonDocument jo(ary);
+//        qDebug() << jo.toJson() << endl;
+
+
+
 
 //    QDomDocument doc;//新建对象
 //    QFile file("my.xml");//建立指向  文件的对象
