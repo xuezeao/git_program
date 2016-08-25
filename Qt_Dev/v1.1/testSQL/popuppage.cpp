@@ -122,6 +122,7 @@ void popupPage::showNeedPlaceReagent()
             postHttp_P(1,json_str);
             modelSwitch=0;
              waitTaskInfo();
+             qDebug()<<"*************************";
 //            QTimer::singleShot(300,&eventloop,SLOT(quit()));
 //            eventloop.exec();
             postStash_P(0);
@@ -302,12 +303,12 @@ void popupPage::finished(QNetworkReply *reply)
     {
 //        QTextCodec *codec = QTextCodec::codecForName("GBK");//显示中文
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
-        QString all = codec->toUnicode(reply->readAll());
+
 //        QByteArray bytes=codec->toUnicode(reply->readAll());
 //        QByteArray bytes=codec->toUnicode(reply->readAll());
 //        QByteArray bytes=reply->readAll();
 //        qDebug<<bytes;
-
+        QString all = codec->toUnicode(reply->readAll());
         QJsonDocument all_switch=QJsonDocument::fromJson(all.toUtf8());
         postS_GetPosition(all_switch,modelSwitch);
 
@@ -342,7 +343,10 @@ void popupPage::postS_GetPosition(QJsonDocument t,char t1)
 //    qDebug()<<subobj.toString();
 //    QJsonArray test=item["imp"].toArray();
 //    qDebug()<< test[1].toString();
-
+//    QJsonParseError *json_error;
+//       QJsonDocument parse_doucment = QJsonDocument::fromJson(str,json_error);
+//       if(json_error->error==QJsonParseError::NoError)
+//       {
 
     if(t1==0)
     {

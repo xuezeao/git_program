@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QModelIndex>
+#include <QVariantMap>
 int sheetOperate_Model;//选择发送模式
 //uint count_sheet;
 //QString sheetOperate_SwitchData;//存储处理信息
@@ -18,7 +19,7 @@ MainUI::MainUI(QWidget *parent) :
     reagentPPage = new MainWindow;
     accessManager =new QNetworkAccessManager(this);
 
-
+//    this->showFullScreen();//主屏幕最大化
     connect(accessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(finished(QNetworkReply*)));
     connect(reagentGPage,SIGNAL(GPageToMainUi()),this,SLOT(GPage_To_this()));
     connect(reagentPPage,SIGNAL(toMainChoice()),this,SLOT(PPage_To_this()));
@@ -37,7 +38,9 @@ MainUI::MainUI(QWidget *parent) :
 //    query.exec(QString("delete from placeDurg"));//删除所有数据
 
 //postHttp(0);
-//    getHttp();
+    getHttp();
+    ModelOperate=0;
+
 }
 
 MainUI::~MainUI()
@@ -91,14 +94,15 @@ void MainUI::postHttp(int num,QString postStr)
     QString address;
 
     switch (num) {
-    case 0 :address="postTest";
+    case 0 :address="postTest";//测试地址
         break;
-    case 1 :address="putIn";
+    case 1 :address="login";//登入地址
         break;
-    case 2 :address="allocPosition";
+    case 2 :address="agentiaTypeList";//获取试剂类型列表
         break;
-    case 3 :address="disablePosition";
+    case 3 :address="availableAgentiaList";//获取再位试剂列表
         break;
+    case 4 :address="occupiedAgentiaList";//获取带归还试剂列表
     default:
         break;
     }
@@ -124,9 +128,15 @@ void MainUI::finished(QNetworkReply *reply)
     {
 //        QTextCodec *codec = QTextCodec::codecForName("GBK");//显示中文
          QTextCodec *codec = QTextCodec::codecForName("utf-8");
+//        QString all = codec->toUnicode(reply->readAll());
+//        MessageAnayle(all);
+
         QString all = codec->toUnicode(reply->readAll());
-        MessageAnayle(all);
-//        qDebug()<<all;
+        QJsonDocument all_switch_MainUi=QJsonDocument::fromJson(all.toUtf8());
+        agentiaNewsGet(all_switch_MainUi,ModelOperate);
+
+
+        qDebug()<<all;
 //        ui->textEdit->setText(all);
 //        msgBox->setText(QObject::tr(reply->readAll()));
 //        QByteArray bytes = reply->readAll();
@@ -144,92 +154,56 @@ void MainUI::finished(QNetworkReply *reply)
 //    msgBox->exec();
 }
 
-void MainUI::MessageAnayle(QString a)
+void MainUI::agentiaNewsGet(QJsonDocument str, char t)
 {
-    uint i=0;
-    uint locationFlag=0;//
-    uint newsFlag=0;
-    uint sheetNews=0;
-    QString store;
-    uint count_sheet=0;
-    while(a[i]!='\0')
+    QJsonObject sett1=str.object();
+
+    if(t==0)
     {
-        if(a[i]=='\"'||a[i]==':'||a[i]==','||a[i]=='{'||a[i]=='}'||a[i]=='['||a[i]==']')
+        QJsonValue i1=sett1["cabinetName"].toString();
+        qDebug()<<i1.toString();
+        stash_M[0]=i1.toString();
+
+        QJsonValue i2=sett1["groupId"].toInt();
+        qDebug()<<QString::number(i2.toInt());
+        stash_M[1]=QString::number(i2.toInt());
+
+        QJsonValue i3=sett1["groupName"].toString();
+        qDebug()<<i3.toString();
+        stash_M[2]=i3.toString();
+
+        QJsonValue i4=sett1["drawerAmount"].toInt();
+        message_Acount=i4.toInt();
+        qDebug()<<QString::number(i4.toInt());
+        stash_M[3]=QString::number(i4.toInt());
+
+        QJsonArray i5=sett1["drawerList"].toArray();
+        for(int i=0;i<message_Acount;i++)
         {
-            if(a[i]==':'&&a[i+2]=='{'&&a[i+1]=='[')
-            {
-                sheetNews=1;
-                i+=2;
-            }
-            if(a[i]=='}'&&a[i+1]==']'&&a[i+2]=='}')
-            {
-                sheetNews=0;
-                i+=2;
-            }
+            QJsonObject i6=i5[i].toObject();
+            QJsonValue i7=i6["drawerNo"].toInt();
+            stash_M[4+i*5]=QString::number(i7.toInt());
 
-            i+=1;
-        }else{
-            newsFlag=i;//指向正式数据第一位
-            if(sheetNews!=0)//记录数据位便于存储
-            {
-                sheetNews+=1;//记录非显示内容   单数为内容，双数为字段  1进入数据库类存储  0退出数据类存储
-            }else{
-                locationFlag+=1;//记录非显示内容   单数为字段，双数为内容
-            }
-            while(a[i]!='\"')
-            {
-                i+=1;
-                if(a[i]==','||a[i]==':'||a[i]=='{'||a[i]=='}'||a[i]=='['||a[i]==']')
-                {
-                    break;
-                }
-            }
+            QJsonValue i8=i6["drawerName"].toString();
+            stash_M[5+i*5]=i8.toString();
 
-            store=a.mid(newsFlag,i-newsFlag);//获取数据字段
-            qDebug()<<store;
-//            sheetOperate_SwitchData=store;
-            stash[count_sheet]=store;
-            count_sheet++;
-            i+=1;//下一个字符
+            QJsonValue i9=i6["drawerSize"].toString();
+            stash_M[6+i*5]=i9.toString();
+
+            QJsonValue i10=i6["positionAmount"].toInt();
+            stash_M[7+i*5]=QString::number(i10.toInt());
+
+            QJsonValue i11=i6["attribte"].toInt();
+            stash_M[8+i*5]=QString::number(i11.toInt());
+            qDebug()<<i7<<"-------"<<i8<<"----"<<i9<<"-------"<<i10<<"----------"<<i11;
+
 
         }
     }
-    postSwitch(0);
 
 }
-void MainUI::switchStyle(QString b)
+
+void MainUI::on_pushButton_clicked()
 {
-
-}
-void MainUI::postSwitch(int num)
-{
-   int this_count=0;
-   QSqlQuery query;
-    if(num==0)//柜子信息
-    {
-        query.prepare("insert into T_CabinetInfo (cabinetName,groupId,groupName,drawerAmout) values (?,?,?,?)");
-        query.addBindValue(stash[1]);
-        query.addBindValue(stash[3]);
-        query.addBindValue(stash[5]);
-        query.addBindValue(stash[7]);
-        query.exec();
-        for(int i=9;i<1000;++i)
-        {
-            if(stash[i]=="drawerNo")
-            {
-                query.prepare("insert into T_DrawerList (drawerNo,drawerName,drawerSize,positionAmout,attribute) values (?,?,?,?,?)");
-                query.addBindValue(stash[i+=1]);
-                query.addBindValue(stash[i+=2]);
-                query.addBindValue(stash[i+=2]);
-                query.addBindValue(stash[i+=2]);
-                query.addBindValue(stash[i+=2]);
-                query.exec();
-
-            }
-            else{
-                break;
-            }
-        }
-
-    }
+    this->close();
 }
