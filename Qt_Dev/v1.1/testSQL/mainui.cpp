@@ -134,7 +134,7 @@ void MainUI::finished(QNetworkReply *reply)
         QString all = codec->toUnicode(reply->readAll());
         QJsonDocument all_switch_MainUi=QJsonDocument::fromJson(all.toUtf8());
         agentiaNewsGet(all_switch_MainUi,ModelOperate);
-
+        infoSave_To_Sql(ModelOperate);
 
         qDebug()<<all;
 //        ui->textEdit->setText(all);
@@ -152,6 +152,15 @@ void MainUI::finished(QNetworkReply *reply)
     }
     reply->deleteLater();
 //    msgBox->exec();
+}
+void MainUI::infoSave_To_Sql(char t)
+{
+    if(t==0)
+    {
+//        query.prepare("insert into T_CabinetInfo (cabinetName,groupId,groupName,drawerAmount) values (?,?,?,?)");
+//        query.addBindValue(stash_M[0]);
+//        query.addBindValue(stash_M[1]);
+    }
 }
 
 void MainUI::agentiaNewsGet(QJsonDocument str, char t)

@@ -14,6 +14,8 @@
 #include <QJsonValue>
 #include <QElapsedTimer>
 #include  <QSqlQuery>
+
+#include "threadread.h"
 namespace Ui {
 class popupPage;
 }
@@ -47,6 +49,8 @@ private slots:
 
 
 
+    void on_pushButton_clicked();
+
 private:
     Ui::popupPage *ui;
 //    QJsonObject json;
@@ -76,8 +80,12 @@ private:
     void waitTaskInfo();//系统等待反馈
     void creatPostInfo(int a);//用于选择生成发送的信息0入柜位置申请 1完成一个入柜任务
 
-
-
+    ThreadRead threadRead;
+    void createSerialPort(const QString &portName, unsigned int baudRate);
+    int IntoCabinet(int DID);
 };
 
+    void waitTaskInfo();
+
+int IntoCabinet(int DID);
 #endif // POPUPPAGE_H

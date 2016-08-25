@@ -16,12 +16,12 @@ static bool createConnection()
        if(!db.open()) return false;
        QSqlQuery query;
 
-       query.exec(QString("create table T_CabinetInfo ([cabinetName] varchar,[groupId] varchar,[groupName] varchar,[drawerAmout] varchar,[cabinetStatue] varchar)"));
+       query.exec(QString("create table T_CabinetInfo ([cabinetName] varchar,[groupId] varchar,[groupName] varchar,[drawerAmount] varchar,[cabinetStatue] varchar)"));
        //长期存放柜子信息
 
-       query.exec(QString("create table T_DrawerList ([drawerNo] varchar,[drawerName] varchar,[drawerSize] varchar,[positionAmout] varchar,[attribute] varchar,[drawerStatus] varchar)"));
+       query.exec(QString("create table T_DrawerList ([drawerNo] varchar,[drawerName] varchar,[drawerSize] varchar,[positionAmount] varchar,[attribute] varchar,[drawerStatus] varchar)"));
        //长期抽屉信息
-       query.exec(QString("create table T_AgentiaInBox (id int primary key,[checkBox] varchar,[agentiaTypeId] varchar,[bottleCapacity] varchar,[dose] varchar,[expiryDate] varchar,[drawerName] varchar,[drawerNo] varchar,[positionNo] varchar,[positionName] varchar,[attribute] varchar)"));
+       query.exec(QString("create table T_AgentiaInBox (id int primary key,[checkBox] varchar,[agentiaId] varchar,[bottleCapacity] varchar,[dose] varchar,[expiryDate] varchar,[drawerName] varchar,[drawerNo] varchar,[positionNo] varchar,[positionName] varchar,[attribute] varchar)"));
        //在柜信息
        query.exec(QString("create table T_AgentiaTypeList (id int primary key,[checkBox] varchar,[agentiaTypeId] varchar,[agentiaName] varchar,[abbreviation] varchar,[chemicalFormula] varchar,[specification] varchar,[factory] varchar,[itemNo] varcahr,[attribute] varchar)"));
        //试剂类型

@@ -33,6 +33,7 @@ public:
     QTextBrowser *textBrowser_showReagentName;
     QTextBrowser *textBrowser_showReagentVolume;
     QTextBrowser *textBrowser_showReagentlocation;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *popupPage)
     {
@@ -72,6 +73,9 @@ public:
         textBrowser_showReagentlocation = new QTextBrowser(popupPage);
         textBrowser_showReagentlocation->setObjectName(QStringLiteral("textBrowser_showReagentlocation"));
         textBrowser_showReagentlocation->setGeometry(QRect(190, 170, 251, 61));
+        pushButton = new QPushButton(popupPage);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(410, 300, 75, 23));
 
         retranslateUi(popupPage);
 
@@ -87,6 +91,7 @@ public:
         label->setText(QApplication::translate("popupPage", "\350\257\225\345\211\202\345\220\215\347\247\260\357\274\232", 0));
         label_2->setText(QApplication::translate("popupPage", "\350\257\225\345\211\202\345\256\271\351\207\217\357\274\232", 0));
         label_3->setText(QApplication::translate("popupPage", "\346\221\206\346\224\276\344\275\215\347\275\256\357\274\232", 0));
+        pushButton->setText(QApplication::translate("popupPage", "PushButton", 0));
     } // retranslateUi
 
 };

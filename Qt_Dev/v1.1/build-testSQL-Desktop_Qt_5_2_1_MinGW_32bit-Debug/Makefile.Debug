@@ -11,13 +11,13 @@ MAKEFILE      = Makefile.Debug
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -DQT_WIDGETS_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -DQT_WIDGETS_LIB -DQT_SERIALPORT_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I../testSQL -I'D:/work/q5.2.1/5.2.1/mingw48_32/include' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore' -I'debug' -I'.' -I'.' -I'D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g++'
+INCPATH       = -I../testSQL -I'D:/work/q5.2.1/5.2.1/mingw48_32/include' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui' -I'D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore' -I'debug' -I'.' -I'.' -I'D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g++'
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -lqtmaind -LD:\work\q5.2.1\5.2.1\mingw48_32\lib -lQt5Widgetsd -lQt5Networkd -lQt5Sqld -lQt5Guid -lQt5Cored 
+LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -lqtmaind -LD:\work\q5.2.1\5.2.1\mingw48_32\lib -lQt5Widgetsd -lQt5SerialPortd -lQt5Networkd -lQt5Sqld -lQt5Guid -lQt5Cored 
 QMAKE         = D:/work/q5.2.1/5.2.1/mingw48_32/bin/qmake.exe
 IDC           = idc
 IDL           = midl
@@ -49,12 +49,14 @@ SOURCES       = ../testSQL/main.cpp \
 		../testSQL/searchwindow.cpp \
 		../testSQL/mouseeventtest.cpp \
 		../testSQL/test.cpp \
-		../testSQL/mainui.cpp debug/moc_mainwindow.cpp \
+		../testSQL/mainui.cpp \
+		../testSQL/uart4stm.cpp debug/moc_mainwindow.cpp \
 		debug/moc_popuppage.cpp \
 		debug/moc_searchwindow.cpp \
 		debug/moc_mouseeventtest.cpp \
 		debug/moc_test.cpp \
-		debug/moc_mainui.cpp
+		debug/moc_mainui.cpp \
+		debug/moc_threadread.cpp
 OBJECTS       = debug/main.o \
 		debug/mainwindow.o \
 		debug/popuppage.o \
@@ -62,12 +64,14 @@ OBJECTS       = debug/main.o \
 		debug/mouseeventtest.o \
 		debug/test.o \
 		debug/mainui.o \
+		debug/uart4stm.o \
 		debug/moc_mainwindow.o \
 		debug/moc_popuppage.o \
 		debug/moc_searchwindow.o \
 		debug/moc_mouseeventtest.o \
 		debug/moc_test.o \
-		debug/moc_mainui.o
+		debug/moc_mainui.o \
+		debug/moc_threadread.o
 
 DIST          = 
 QMAKE_TARGET  = testSQL
@@ -105,10 +109,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) testSQL.zip $(SOURCES) $(DIST) ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qdevice.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/device_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/common/shell-unix.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qconfig.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bootstrap_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_clucene_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designercomponents_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_platformsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmldevtools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quickparticles_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_functions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g++/qmake.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resolve_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/build_pass.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qml_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/declarative_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/rtti.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/warn_on.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resources.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/moc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/opengl.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/uic.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/windows.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/testcase_targets.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exceptions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/yacc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/lex.prf ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Widgetsd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Networkd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Sqld.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Guid.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Cored.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
+	$(ZIP) testSQL.zip $(SOURCES) $(DIST) ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qdevice.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/device_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/common/shell-unix.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/qconfig.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axbase_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axcontainer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_axserver_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bluetooth_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_bootstrap_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_clucene_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_concurrent_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_core_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_declarative_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designer_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_designercomponents_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_gui_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_help_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimedia_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_network_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_nfc_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_opengl_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_openglextensions_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_platformsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_positioning_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_printsupport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmldevtools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qmltest_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quick_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_quickparticles_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_script_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_scripttools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sensors_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_serialport_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_sql_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_svg_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_testlib_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_uitools_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkit_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_widgets_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_winextras_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xml_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_functions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g++/qmake.conf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/spec_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/default_pre.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resolve_config.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exclusive_builds_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/default_post.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/build_pass.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qml_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/declarative_debug.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/rtti.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/warn_on.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/qt.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/resources.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/moc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/opengl.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/uic.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/win32/windows.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/testcase_targets.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/exceptions.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/yacc.prf D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/lex.prf ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Widgetsd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5SerialPortd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Networkd.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Sqld.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Guid.prl D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Cored.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug/main.o debug/mainwindow.o debug/popuppage.o debug/searchwindow.o debug/mouseeventtest.o debug/test.o debug/mainui.o debug/moc_mainwindow.o debug/moc_popuppage.o debug/moc_searchwindow.o debug/moc_mouseeventtest.o debug/moc_test.o debug/moc_mainui.o
+	-$(DEL_FILE) debug/main.o debug/mainwindow.o debug/popuppage.o debug/searchwindow.o debug/mouseeventtest.o debug/test.o debug/mainui.o debug/uart4stm.o debug/moc_mainwindow.o debug/moc_popuppage.o debug/moc_searchwindow.o debug/moc_mouseeventtest.o debug/moc_test.o debug/moc_mainui.o debug/moc_threadread.o
 
 distclean: clean
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -122,9 +126,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_mainui.cpp
+compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_mainui.cpp debug/moc_threadread.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_mainui.cpp
+	-$(DEL_FILE) debug/moc_mainwindow.cpp debug/moc_popuppage.cpp debug/moc_searchwindow.cpp debug/moc_mouseeventtest.cpp debug/moc_test.cpp debug/moc_mainui.cpp debug/moc_threadread.cpp
 debug/moc_mainwindow.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMainWindow \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
@@ -286,6 +290,9 @@ debug/moc_mainwindow.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMai
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		../testSQL/mainwindow.h
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/mainwindow.h -o debug/moc_mainwindow.cpp
 
@@ -443,6 +450,9 @@ debug/moc_popuppage.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTable
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		../testSQL/popuppage.h
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/popuppage.h -o debug/moc_popuppage.cpp
 
@@ -644,6 +654,9 @@ debug/moc_searchwindow.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QW
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		../testSQL/searchwindow.h
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/searchwindow.h -o debug/moc_searchwindow.cpp
 
@@ -1087,6 +1100,9 @@ debug/moc_mainui.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessage
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		../testSQL/searchwindow.h \
 		../testSQL/test.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
@@ -1133,6 +1149,67 @@ debug/moc_mainui.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessage
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QJsonParseError \
 		../testSQL/mainui.h
 	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/mainui.h -o debug/moc_mainui.cpp
+
+debug/moc_threadread.cpp: D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		../testSQL/threadread.h
+	D:/work/q5.2.1/5.2.1/mingw48_32/bin/moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ../testSQL/threadread.h -o debug/moc_threadread.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1331,6 +1408,9 @@ debug/main.o: ../testSQL/main.cpp ../testSQL/mainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
@@ -1556,6 +1636,9 @@ debug/mainwindow.o: ../testSQL/mainwindow.cpp ../testSQL/mainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		ui_mainwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
@@ -1764,6 +1847,9 @@ debug/popuppage.o: ../testSQL/popuppage.cpp ../testSQL/popuppage.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		ui_popuppage.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
@@ -1815,7 +1901,13 @@ debug/popuppage.o: ../testSQL/popuppage.cpp ../testSQL/popuppage.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QTextCodec \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextcodec.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QJsonArray \
-		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qjsonarray.h
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qjsonarray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/QSerialPort \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialport.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialportglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/QSerialPortInfo \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialportinfo.h \
+		../testSQL/uart4stm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/popuppage.o ../testSQL/popuppage.cpp
 
 debug/searchwindow.o: ../testSQL/searchwindow.cpp ../testSQL/searchwindow.h \
@@ -2017,6 +2109,9 @@ debug/searchwindow.o: ../testSQL/searchwindow.cpp ../testSQL/searchwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		ui_searchwindow.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qaction.h \
@@ -2530,6 +2625,9 @@ debug/mainui.o: ../testSQL/mainui.cpp ../testSQL/mainui.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
 		../testSQL/searchwindow.h \
 		../testSQL/test.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/QMouseEvent \
@@ -2588,8 +2686,176 @@ debug/mainui.o: ../testSQL/mainui.cpp ../testSQL/mainui.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QTextCodec \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextcodec.h \
 		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlDatabase \
-		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QModelIndex
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QModelIndex \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariantMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/mainui.o ../testSQL/mainui.cpp
+
+debug/uart4stm.o: ../testSQL/uart4stm.cpp D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/QSerialPort \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialport.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsystemdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qprocessordetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcompilerdetection.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qglobalstatic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qgenericatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_msvc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_integrity.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_power.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_alpha.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv7.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv6.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_armv5.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_bfin.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_ia64.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_mips.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_s390.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_sparc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_x86.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_gcc.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qatomic_unix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmutex.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlogging.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qflags.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvarlengtharray.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontainerfwd.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qisenum.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qobject_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialportglobal.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/QSerialPortInfo \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSerialPort/qserialportinfo.h \
+		../testSQL/popuppage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlTableModel \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqltablemodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqldatabase.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsql.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquerymodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvariant.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qlocale.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qshareddata.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qvector.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qpoint.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qset.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcontiguouscache.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringlist.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatastream.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qregexp.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qstringmatcher.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/QDialog \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qwidget.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qmargins.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qrect.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsize.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpaintdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpalette.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcolor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qrgb.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qbrush.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qmatrix.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpolygon.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qregion.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qline.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtransform.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpainterpath.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qimage.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qpixmap.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfont.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontmetrics.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qfontinfo.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qcursor.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qkeysequence.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qevent.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qurlquery.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfile.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qfiledevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qvector2d.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtGui/qtouchdevice.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QTimer \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qtimer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qbasictimer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/QNetworkAccessManager \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QObject \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/QSslConfiguration \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qsslconfiguration.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qsslsocket.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qtcpsocket.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qabstractsocket.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qsslerror.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qsslcertificate.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qcryptographichash.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qdatetime.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qssl.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QFlags \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/QNetworkReply \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qnetworkreply.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QIODevice \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QString \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/QNetworkRequest \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtNetwork/qnetworkrequest.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QSharedDataPointer \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QUrl \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QEventLoop \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qeventloop.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QJsonObject \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qjsonobject.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qjsonvalue.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QJsonDocument \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qjsondocument.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QByteArray \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QJsonValue \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QElapsedTimer \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qelapsedtimer.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/QSqlQuery \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtSql/qsqlquery.h \
+		../testSQL/threadread.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QThread \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/qthread.h \
+		../testSQL/uart4stm.h \
+		D:/work/q5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/uart4stm.o ../testSQL/uart4stm.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_mainwindow.o debug/moc_mainwindow.cpp
@@ -2608,6 +2874,9 @@ debug/moc_test.o: debug/moc_test.cpp
 
 debug/moc_mainui.o: debug/moc_mainui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_mainui.o debug/moc_mainui.cpp
+
+debug/moc_threadread.o: debug/moc_threadread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_threadread.o debug/moc_threadread.cpp
 
 ####### Install
 

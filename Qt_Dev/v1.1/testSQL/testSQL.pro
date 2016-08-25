@@ -8,6 +8,7 @@ QT       += core gui
 QT       += core sql
 std        +=c++11
 QT       += network
+QT       +=serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +22,8 @@ SOURCES += main.cpp\
     searchwindow.cpp \
     mouseeventtest.cpp \
     test.cpp \
-    mainui.cpp
+    mainui.cpp \
+    uart4stm.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
@@ -29,7 +31,9 @@ HEADERS  += mainwindow.h \
     searchwindow.h \
     mouseeventtest.h \
     test.h \
-    mainui.h
+    mainui.h \
+    threadread.h \
+    uart4stm.h
 
 FORMS    += mainwindow.ui \
     popuppage.ui \
