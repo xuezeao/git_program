@@ -14,6 +14,16 @@ class reagentGPage : public QWidget
 public:
     explicit reagentGPage(QWidget *parent = 0);
     ~reagentGPage();
+signals:
+    void closeGPage_To_Main();
+private slots:
+    void on_pushButton_searchNews_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_commandLinkButton_clicked();
 
 private:
     Ui::reagentGPage *ui;

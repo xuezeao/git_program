@@ -14,6 +14,14 @@ class reagentPPage : public QWidget
 public:
     explicit reagentPPage(QWidget *parent = 0);
     ~reagentPPage();
+signals:
+    void closePPage_To_Main();
+private slots:
+    void on_commandLinkButton_B_clicked();
+
+    void on_pushButton_Preagent_clicked();
+
+    void on_pushButton_Dreagent_clicked();
 
 private:
     Ui::reagentPPage *ui;

@@ -16,7 +16,9 @@
 #include <QtWidgets/QCommandLinkButton>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,6 +32,10 @@ public:
     QPushButton *pushButton_deletReagentPlace;
     QPushButton *pushButton_sureOperate;
     QCommandLinkButton *commandLinkButton_fromPlaceToChoicePage;
+    QTableView *tableView_operateWindow;
+    QLineEdit *lineEdit;
+    QPushButton *pushButton_3;
+    QTableView *tableView_searchWindow;
 
     void setupUi(QWidget *reagentPlace)
     {
@@ -52,17 +58,17 @@ public:
         label_2->setFont(font1);
         label_3 = new QLabel(reagentPlace);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(360, 80, 61, 41));
+        label_3->setGeometry(QRect(360, 40, 61, 41));
         QFont font2;
         font2.setFamily(QStringLiteral("Agency FB"));
         font2.setPointSize(22);
         label_3->setFont(font2);
         pushButton_deletReagentPlace = new QPushButton(reagentPlace);
         pushButton_deletReagentPlace->setObjectName(QStringLiteral("pushButton_deletReagentPlace"));
-        pushButton_deletReagentPlace->setGeometry(QRect(240, 490, 75, 23));
+        pushButton_deletReagentPlace->setGeometry(QRect(710, 200, 75, 23));
         pushButton_sureOperate = new QPushButton(reagentPlace);
         pushButton_sureOperate->setObjectName(QStringLiteral("pushButton_sureOperate"));
-        pushButton_sureOperate->setGeometry(QRect(450, 490, 75, 23));
+        pushButton_sureOperate->setGeometry(QRect(710, 140, 75, 23));
         commandLinkButton_fromPlaceToChoicePage = new QCommandLinkButton(reagentPlace);
         commandLinkButton_fromPlaceToChoicePage->setObjectName(QStringLiteral("commandLinkButton_fromPlaceToChoicePage"));
         commandLinkButton_fromPlaceToChoicePage->setGeometry(QRect(10, 60, 81, 41));
@@ -70,6 +76,18 @@ public:
         font3.setFamily(QStringLiteral("Segoe UI"));
         font3.setPointSize(14);
         commandLinkButton_fromPlaceToChoicePage->setFont(font3);
+        tableView_operateWindow = new QTableView(reagentPlace);
+        tableView_operateWindow->setObjectName(QStringLiteral("tableView_operateWindow"));
+        tableView_operateWindow->setGeometry(QRect(20, 100, 681, 201));
+        lineEdit = new QLineEdit(reagentPlace);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(20, 310, 231, 41));
+        pushButton_3 = new QPushButton(reagentPlace);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(270, 310, 71, 41));
+        tableView_searchWindow = new QTableView(reagentPlace);
+        tableView_searchWindow->setObjectName(QStringLiteral("tableView_searchWindow"));
+        tableView_searchWindow->setGeometry(QRect(20, 370, 681, 151));
 
         retranslateUi(reagentPlace);
 
@@ -85,6 +103,7 @@ public:
         pushButton_deletReagentPlace->setText(QApplication::translate("reagentPlace", "\345\210\240\351\231\244", 0));
         pushButton_sureOperate->setText(QApplication::translate("reagentPlace", "\347\241\256\350\256\244\346\211\247\350\241\214", 0));
         commandLinkButton_fromPlaceToChoicePage->setText(QApplication::translate("reagentPlace", "\350\277\224\345\233\236", 0));
+        pushButton_3->setText(QApplication::translate("reagentPlace", "\346\243\200\347\264\242", 0));
     } // retranslateUi
 
 };

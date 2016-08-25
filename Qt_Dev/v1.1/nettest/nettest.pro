@@ -13,8 +13,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    reagentppage.cpp \
+    dialog_p.cpp \
+    reagentgpage.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    reagentppage.h \
+    dialog_p.h \
+    reagentgpage.h \
+    connection.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    reagentppage.ui \
+    dialog_p.ui \
+    reagentgpage.ui

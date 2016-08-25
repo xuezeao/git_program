@@ -18,25 +18,25 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_test_t {
+struct qt_meta_stringdata_additionNews_t {
     QByteArrayData data[1];
-    char stringdata0[5];
+    char stringdata0[13];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_test_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_additionNews_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_test_t qt_meta_stringdata_test = {
+static const qt_meta_stringdata_additionNews_t qt_meta_stringdata_additionNews = {
     {
-QT_MOC_LITERAL(0, 0, 4) // "test"
+QT_MOC_LITERAL(0, 0, 12) // "additionNews"
 
     },
-    "test"
+    "additionNews"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_test[] = {
+static const uint qt_meta_data_additionNews[] = {
 
  // content:
        7,       // revision
@@ -52,7 +52,7 @@ static const uint qt_meta_data_test[] = {
        0        // eod
 };
 
-void test::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void additionNews::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -60,26 +60,94 @@ void test::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     Q_UNUSED(_a);
 }
 
-const QMetaObject test::staticMetaObject = {
-    { &QStyledItemDelegate::staticMetaObject, qt_meta_stringdata_test.data,
-      qt_meta_data_test,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject additionNews::staticMetaObject = {
+    { &QStyledItemDelegate::staticMetaObject, qt_meta_stringdata_additionNews.data,
+      qt_meta_data_additionNews,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *test::metaObject() const
+const QMetaObject *additionNews::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *test::qt_metacast(const char *_clname)
+void *additionNews::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_test.stringdata0))
-        return static_cast<void*>(const_cast< test*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_additionNews.stringdata0))
+        return static_cast<void*>(const_cast< additionNews*>(this));
     return QStyledItemDelegate::qt_metacast(_clname);
 }
 
-int test::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int additionNews::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QStyledItemDelegate::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    return _id;
+}
+struct qt_meta_stringdata_delNews_t {
+    QByteArrayData data[1];
+    char stringdata0[8];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_delNews_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_delNews_t qt_meta_stringdata_delNews = {
+    {
+QT_MOC_LITERAL(0, 0, 7) // "delNews"
+
+    },
+    "delNews"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_delNews[] = {
+
+ // content:
+       7,       // revision
+       0,       // classname
+       0,    0, // classinfo
+       0,    0, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+       0        // eod
+};
+
+void delNews::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    Q_UNUSED(_o);
+    Q_UNUSED(_id);
+    Q_UNUSED(_c);
+    Q_UNUSED(_a);
+}
+
+const QMetaObject delNews::staticMetaObject = {
+    { &QStyledItemDelegate::staticMetaObject, qt_meta_stringdata_delNews.data,
+      qt_meta_data_delNews,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+};
+
+
+const QMetaObject *delNews::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *delNews::qt_metacast(const char *_clname)
+{
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_delNews.stringdata0))
+        return static_cast<void*>(const_cast< delNews*>(this));
+    return QStyledItemDelegate::qt_metacast(_clname);
+}
+
+int delNews::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QStyledItemDelegate::qt_metacall(_c, _id, _a);
     if (_id < 0)

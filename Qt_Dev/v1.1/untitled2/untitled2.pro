@@ -13,8 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    tablemodel.cpp \
+    checkboxdelegate.cpp \
+    tableheaderview.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    tablemodel.h \
+    checkboxdelegate.h \
+    tableheaderview.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    show.qss

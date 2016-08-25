@@ -12,3 +12,19 @@ dialog_P::~dialog_P()
 {
     delete ui;
 }
+
+void dialog_P::on_pushButton_backPreviousOption_clicked()
+{
+
+}
+
+void dialog_P::on_pushButton_jumpThisOption_clicked()
+{
+
+}
+
+void dialog_P::on_pushButton_placedNext_clicked()
+{
+
+
+}

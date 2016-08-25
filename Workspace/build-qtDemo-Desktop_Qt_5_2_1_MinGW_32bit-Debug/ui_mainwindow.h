@@ -58,7 +58,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 30, 780, 580));
+        tabWidget->setGeometry(QRect(2, 12, 780, 580));
         tabUartTest = new QWidget();
         tabUartTest->setObjectName(QStringLiteral("tabUartTest"));
         treeWidgetUartList = new QTreeWidget(tabUartTest);
@@ -74,7 +74,7 @@ public:
         treeWidgetUartList->header()->setCascadingSectionResizes(false);
         groupBoxUartSetting = new QGroupBox(tabUartTest);
         groupBoxUartSetting->setObjectName(QStringLiteral("groupBoxUartSetting"));
-        groupBoxUartSetting->setGeometry(QRect(20, 10, 251, 80));
+        groupBoxUartSetting->setGeometry(QRect(10, 10, 251, 80));
         groupBoxUartSetting->setStyleSheet(QStringLiteral(""));
         groupBoxUartSetting->setFlat(true);
         layoutWidget = new QWidget(groupBoxUartSetting);

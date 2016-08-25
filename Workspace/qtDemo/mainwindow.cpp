@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << "Name : " << info.portName();
         qDebug() << "Description : " << info.description();
         qDebug() << "Manufacturer: " << info.manufacturer();
-        qDebug() << "Serial Number: " << info.serialNumber();
+//        qDebug() << "Serial Number: " << info.serialNumber();
         qDebug() << "System Location: " << info.systemLocation();
     }
     accessManager = new QNetworkAccessManager(this);
@@ -91,9 +91,9 @@ void MainWindow::finished(QNetworkReply *reply)
 void MainWindow::on_pushButtonHttpPost_clicked()
 {
     QNetworkRequest *request = new QNetworkRequest();
-    request->setUrl(QUrl("http://localhost:9090/testurl?key=value "));
-    request->setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
-    QByteArray postData = ui->textEditPostText->toPlainText().toUtf8();
+    request->setUrl(QUrl("http://121.41.78.9:3000/arm/postTest"));
+    request->setHeader(QNetworkRequest::ContentLengthHeader,"application/json");
+    QByteArray postData =ui->textEditPostText->toPlainText().toUtf8();
     qDebug()<<QObject::tr(postData);
     accessManager->post(*request, postData);
 }

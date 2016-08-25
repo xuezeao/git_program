@@ -5,11 +5,11 @@ INPUT(
 ./debug/searchwindow.o
 ./debug/mouseeventtest.o
 ./debug/test.o
-./debug/form123.o
+./debug/mainui.o
 ./debug/moc_mainwindow.o
 ./debug/moc_popuppage.o
 ./debug/moc_searchwindow.o
 ./debug/moc_mouseeventtest.o
 ./debug/moc_test.o
-./debug/moc_form123.o
+./debug/moc_mainui.o
 );

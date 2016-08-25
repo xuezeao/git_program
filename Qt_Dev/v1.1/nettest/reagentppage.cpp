@@ -12,3 +12,18 @@ reagentPPage::~reagentPPage()
 {
     delete ui;
 }
+
+void reagentPPage::on_commandLinkButton_B_clicked()
+{
+    emit closePPage_To_Main();
+}
+
+void reagentPPage::on_pushButton_Preagent_clicked()
+{
+
+}
+
+void reagentPPage::on_pushButton_Dreagent_clicked()
+{
+
+}

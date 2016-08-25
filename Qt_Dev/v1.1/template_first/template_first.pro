@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT       += core sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = template_first
@@ -47,7 +47,8 @@ HEADERS  += mainwindow.h \
     dialog_replacereagent.h \
     checkreagent.h \
     dialog_checkreagent.h \
-    limitreagentoperate.h
+    limitreagentoperate.h \
+    connection.h
 
 FORMS    += mainwindow.ui \
     logininterface.ui \

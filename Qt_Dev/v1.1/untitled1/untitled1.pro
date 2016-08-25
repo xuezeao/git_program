@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    stardelegate.cpp \
+    starrating.cpp \
+    starditor.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    stardelegate.h \
+    starrating.h \
+    starditor.h
 
 FORMS    += mainwindow.ui

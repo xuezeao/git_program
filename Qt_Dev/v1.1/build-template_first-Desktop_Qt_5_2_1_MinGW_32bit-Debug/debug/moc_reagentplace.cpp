@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_reagentPlace_t {
-    QByteArrayData data[6];
-    char stringdata[139];
+    QByteArrayData data[9];
+    char stringdata[199];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,16 +30,20 @@ struct qt_meta_stringdata_reagentPlace_t {
 static const qt_meta_stringdata_reagentPlace_t qt_meta_stringdata_reagentPlace = {
     {
 QT_MOC_LITERAL(0, 0, 12),
-QT_MOC_LITERAL(1, 13, 24),
-QT_MOC_LITERAL(2, 38, 0),
-QT_MOC_LITERAL(3, 39, 13),
-QT_MOC_LITERAL(4, 53, 50),
-QT_MOC_LITERAL(5, 104, 33)
+QT_MOC_LITERAL(1, 13, 7),
+QT_MOC_LITERAL(2, 21, 0),
+QT_MOC_LITERAL(3, 22, 24),
+QT_MOC_LITERAL(4, 47, 13),
+QT_MOC_LITERAL(5, 61, 50),
+QT_MOC_LITERAL(6, 112, 33),
+QT_MOC_LITERAL(7, 146, 11),
+QT_MOC_LITERAL(8, 158, 39)
     },
-    "reagentPlace\0closePlacePageOpenChoice\0"
-    "\0openPlacePage\0"
+    "reagentPlace\0timeout\0\0closePlacePageOpenChoice\0"
+    "openPlacePage\0"
     "on_commandLinkButton_fromPlaceToChoicePage_clicked\0"
     "on_pushButton_sureOperate_clicked\0"
+    "auto_AddRow\0on_pushButton_deletReagentPlace_clicked\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -49,25 +53,31 @@ static const uint qt_meta_data_reagentPlace[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06,
+       1,    0,   49,    2, 0x06,
+       3,    0,   50,    2, 0x06,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   35,    2, 0x0a,
-       4,    0,   36,    2, 0x08,
-       5,    0,   37,    2, 0x08,
+       4,    0,   51,    2, 0x0a,
+       5,    0,   52,    2, 0x08,
+       6,    0,   53,    2, 0x08,
+       7,    0,   54,    2, 0x08,
+       8,    0,   55,    2, 0x08,
 
  // signals: parameters
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -80,10 +90,13 @@ void reagentPlace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     if (_c == QMetaObject::InvokeMetaMethod) {
         reagentPlace *_t = static_cast<reagentPlace *>(_o);
         switch (_id) {
-        case 0: _t->closePlacePageOpenChoice(); break;
-        case 1: _t->openPlacePage(); break;
-        case 2: _t->on_commandLinkButton_fromPlaceToChoicePage_clicked(); break;
-        case 3: _t->on_pushButton_sureOperate_clicked(); break;
+        case 0: _t->timeout(); break;
+        case 1: _t->closePlacePageOpenChoice(); break;
+        case 2: _t->openPlacePage(); break;
+        case 3: _t->on_commandLinkButton_fromPlaceToChoicePage_clicked(); break;
+        case 4: _t->on_pushButton_sureOperate_clicked(); break;
+        case 5: _t->auto_AddRow(); break;
+        case 6: _t->on_pushButton_deletReagentPlace_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -91,8 +104,14 @@ void reagentPlace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (reagentPlace::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&reagentPlace::closePlacePageOpenChoice)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&reagentPlace::timeout)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (reagentPlace::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&reagentPlace::closePlacePageOpenChoice)) {
+                *result = 1;
             }
         }
     }
@@ -124,20 +143,26 @@ int reagentPlace::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 7;
     }
     return _id;
 }
 
 // SIGNAL 0
-void reagentPlace::closePlacePageOpenChoice()
+void reagentPlace::timeout()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void reagentPlace::closePlacePageOpenChoice()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

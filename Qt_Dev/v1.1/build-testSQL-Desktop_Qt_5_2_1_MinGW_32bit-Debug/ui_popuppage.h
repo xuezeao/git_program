@@ -17,7 +17,6 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTableView>
 #include <QtWidgets/QTextBrowser>
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +24,6 @@ QT_BEGIN_NAMESPACE
 class Ui_popupPage
 {
 public:
-    QTableView *tableView;
     QPushButton *pushButton_placedNext;
     QPushButton *pushButton_jumpThisOption;
     QPushButton *pushButton_backPreviousOption;
@@ -40,37 +38,40 @@ public:
     {
         if (popupPage->objectName().isEmpty())
             popupPage->setObjectName(QStringLiteral("popupPage"));
-        popupPage->resize(920, 378);
-        tableView = new QTableView(popupPage);
-        tableView->setObjectName(QStringLiteral("tableView"));
-        tableView->setGeometry(QRect(60, 20, 256, 192));
+        popupPage->resize(508, 357);
         pushButton_placedNext = new QPushButton(popupPage);
         pushButton_placedNext->setObjectName(QStringLiteral("pushButton_placedNext"));
-        pushButton_placedNext->setGeometry(QRect(260, 250, 101, 31));
+        pushButton_placedNext->setGeometry(QRect(280, 260, 101, 31));
         pushButton_jumpThisOption = new QPushButton(popupPage);
         pushButton_jumpThisOption->setObjectName(QStringLiteral("pushButton_jumpThisOption"));
-        pushButton_jumpThisOption->setGeometry(QRect(160, 250, 81, 31));
+        pushButton_jumpThisOption->setGeometry(QRect(180, 260, 81, 31));
         pushButton_backPreviousOption = new QPushButton(popupPage);
         pushButton_backPreviousOption->setObjectName(QStringLiteral("pushButton_backPreviousOption"));
-        pushButton_backPreviousOption->setGeometry(QRect(60, 250, 81, 31));
+        pushButton_backPreviousOption->setGeometry(QRect(80, 260, 81, 31));
         label = new QLabel(popupPage);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(450, 30, 54, 12));
+        label->setGeometry(QRect(50, 40, 121, 41));
+        QFont font;
+        font.setFamily(QStringLiteral("Agency FB"));
+        font.setPointSize(20);
+        label->setFont(font);
         label_2 = new QLabel(popupPage);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(450, 100, 54, 12));
+        label_2->setGeometry(QRect(50, 100, 131, 41));
+        label_2->setFont(font);
         label_3 = new QLabel(popupPage);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(450, 170, 54, 12));
+        label_3->setGeometry(QRect(50, 170, 121, 41));
+        label_3->setFont(font);
         textBrowser_showReagentName = new QTextBrowser(popupPage);
         textBrowser_showReagentName->setObjectName(QStringLiteral("textBrowser_showReagentName"));
-        textBrowser_showReagentName->setGeometry(QRect(540, 20, 171, 31));
+        textBrowser_showReagentName->setGeometry(QRect(190, 30, 251, 51));
         textBrowser_showReagentVolume = new QTextBrowser(popupPage);
         textBrowser_showReagentVolume->setObjectName(QStringLiteral("textBrowser_showReagentVolume"));
-        textBrowser_showReagentVolume->setGeometry(QRect(540, 90, 171, 31));
+        textBrowser_showReagentVolume->setGeometry(QRect(190, 100, 251, 51));
         textBrowser_showReagentlocation = new QTextBrowser(popupPage);
         textBrowser_showReagentlocation->setObjectName(QStringLiteral("textBrowser_showReagentlocation"));
-        textBrowser_showReagentlocation->setGeometry(QRect(540, 160, 171, 31));
+        textBrowser_showReagentlocation->setGeometry(QRect(190, 170, 251, 61));
 
         retranslateUi(popupPage);
 

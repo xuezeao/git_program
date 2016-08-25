@@ -167,6 +167,7 @@ Makefile: ../testSQL/testSQL.pro D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/win32-g
 		D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/lex.prf \
 		../testSQL/testSQL.pro \
 		D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Widgets.prl \
+		D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Network.prl \
 		D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Sql.prl \
 		D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Gui.prl \
 		D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Core.prl
@@ -279,6 +280,7 @@ D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/yacc.prf:
 D:/work/q5.2.1/5.2.1/mingw48_32/mkspecs/features/lex.prf:
 ../testSQL/testSQL.pro:
 D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Widgets.prl:
+D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Network.prl:
 D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Sql.prl:
 D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Gui.prl:
 D:/work/q5.2.1/5.2.1/mingw48_32/lib/Qt5Core.prl:

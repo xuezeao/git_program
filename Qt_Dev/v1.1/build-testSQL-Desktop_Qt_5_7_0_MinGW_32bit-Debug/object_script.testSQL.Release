@@ -5,11 +5,11 @@ INPUT(
 ./release/searchwindow.o
 ./release/mouseeventtest.o
 ./release/test.o
-./release/form123.o
+./release/mainui.o
 ./release/moc_mainwindow.o
 ./release/moc_popuppage.o
 ./release/moc_searchwindow.o
 ./release/moc_mouseeventtest.o
 ./release/moc_test.o
-./release/moc_form123.o
+./release/moc_mainui.o
 );
