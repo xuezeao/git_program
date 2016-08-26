@@ -3,14 +3,12 @@ INPUT(
 ./release/mainwindow.o
 ./release/popuppage.o
 ./release/searchwindow.o
-./release/mouseeventtest.o
 ./release/test.o
 ./release/mainui.o
 ./release/uart4stm.o
 ./release/moc_mainwindow.o
 ./release/moc_popuppage.o
 ./release/moc_searchwindow.o
-./release/moc_mouseeventtest.o
 ./release/moc_test.o
 ./release/moc_mainui.o
 ./release/moc_threadread.o

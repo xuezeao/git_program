@@ -67,6 +67,8 @@ void PackageSend(QSerialPort* uartfd,int DID, struct Package1 data1, struct Pack
     QByteArray dataMsg;
     dataMsg.resize(sizeof(data1)+sizeof(data2));
     memcpy(dataMsg.data(),&data1,9);
+    qDebug()<<sendLen<<"---------------";
+
     memcpy(dataMsg.data()+9,&data2,sendLen);
     uartfd->write(dataMsg,9+sendLen);
 }
@@ -235,6 +237,7 @@ int SetLED(QSerialPort* uartfd,int DID,char *DataLed)//0x12 设置LED状态
     struct Package1 P1;
     P1.CmdID =CID_SET_LED;
     P1.ErrorCode = 0;
+    P1.ExtraDataLen[0]=0x07;
     struct Package2 P2;
     for(int i=0;i<6;i++)
     {

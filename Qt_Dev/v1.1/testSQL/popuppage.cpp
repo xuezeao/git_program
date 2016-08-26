@@ -118,10 +118,10 @@ void popupPage::showNeedPlaceReagent()
             acount=1;
         }
 
-        IntoCabinet(0x01);
-        qDebug("reCLOCK");
+
+//        qDebug("reCLOCK");
         //waitTaskInfo(300);
-        //IntoLED(0x01,5);
+
 
         if(attributV!='\0'&&sendSize!='\0')
         {
@@ -146,7 +146,16 @@ void popupPage::showNeedPlaceReagent()
              qDebug()<<"*************************";
 //            QTimer::singleShot(300,&eventloop,SLOT(quit()));
 //            eventloop.exec();
-            postStash_P(0);
+
+//            IntoCabinet(0x01);//开锁
+
+
+
+//            int a[]={1,3,5,7};
+//            IntoLED(0x01,a,4);//a是int 型数组包含显示灯的位置信号，后一位是发送的灯的个数
+
+
+//            postStash_P(0);
 
             if(positionInfo=="0")
             {
@@ -374,6 +383,7 @@ void popupPage::postS_GetPosition(QJsonDocument t,char t1)
     {
         QJsonValue i1=sett1["positionNo"].toInt();
         stash_P[0]=QString::number(i1.toInt());
+        send_positionNo=i1.toInt();
 
         QJsonValue i2=sett1["positionName"].toString();
         stash_P[1]=i2.toString();
@@ -383,12 +393,13 @@ void popupPage::postS_GetPosition(QJsonDocument t,char t1)
 
         QJsonValue i4=sett1["drawerNo"].toInt();
         stash_P[3]=QString::number(i4.toInt());
+        send_drawerNo=i4.toInt();
 
         QJsonValue i5=sett1["drawerName"].toString();
         stash_P[4]=i5.toString();
 
         qDebug()<<stash_P[0]+" "+stash_P[1]+"  "+stash_P[2]+"---"+stash_P[3]+"******"+stash_P[4]+"***";
-
+        postStash_P(0);
     }
     if(t1==1)
     {
@@ -416,6 +427,7 @@ void popupPage::postStash_P(int num)
             query.exec();
             positionInfo="抽屉号："+stash_P[3]+",位置："+stash_P[0];
             qDebug()<<positionInfo;
+            waitTaskInfo(10);
 //            emit stopWait();
     }
 
@@ -603,35 +615,38 @@ int popupPage::IntoCabinet(int DID)
             waitTaskInfo(300);
             if(STATE_RTN==STATE_SET_DRAWER_LOCK)
                 {
-                    waitTaskInfo(300);
-                    IntoLED(0x01,5);
+//                    waitTaskInfo(300);
+//                    IntoLED(0x01,5);
                     return 0;
                 }
             }
         }
         else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
         {
-            waitTaskInfo(300);
-            IntoLED(0x01,5);
+//            waitTaskInfo(300);
+//            IntoLED(0x01,5);
             qDebug("OPEN");
             return 0;
         }
     }
 }
-int popupPage::IntoLED(int DID,int positionNo)
+int popupPage::IntoLED(int DID,int *positionNo,int LEDNum)
 {
     STATE_RTN = STATE_NONE;
     waitTaskInfo(300);
     char DataLED[6];
     memset(DataLED,0,6);
-    int i=positionNo%2;
+    for(int ledNo = 0;ledNo < LEDNum;ledNo++)
+    {
+    int i=positionNo[ledNo]%2;
     if (i==1)
     {
-        DataLED[positionNo/2] = 0x10;
+        DataLED[positionNo[ledNo]/2] = 0x10;
     }
     else
     {
-        DataLED[positionNo/2-1] = 0x01;
+        DataLED[positionNo[ledNo]/2-1] = 0x01;
+    }
     }
     SetLED(myCom,DID,DataLED);
     for(int j=0;j<150;j++)
