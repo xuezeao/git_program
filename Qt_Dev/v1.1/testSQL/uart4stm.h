@@ -96,7 +96,7 @@ int SetDoorClock(QSerialPort* uartfd,int DID,int Mode_Lock1, int Mode_Lock2);   
 int RequestRTC(QSerialPort* uartfd,int DID);                                   //0x31 请求RTC时间
 int RequestBuzzer(QSerialPort* uartfd,int DID);                                //0x32 请求蜂鸣器状态
 int RequestTemperatureHumidity(QSerialPort* uartfd,int DID);                   //0x33 请求温湿度
-int intocabinet(QSerialPort* uartfd,int DID);                             //0x35 请求门锁状态
+int RequestDoorClock(QSerialPort* uartfd,int DID);                             //0x35 请求门锁状态
 
 int SetDrawerClock(QSerialPort* uartfd,int DID, int Mode);                       //0x11 设置抽屉锁状态
 int SetLED(QSerialPort* uartfd, int DID,char *DataLed);                          //0x12 设置LED状态

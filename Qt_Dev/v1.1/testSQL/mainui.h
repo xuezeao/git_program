@@ -16,6 +16,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonParseError>
+#include <QSqlQuery>
 
 
 namespace Ui {
@@ -52,6 +53,7 @@ private slots:
 private:
     bool messageSuccess;
     QString messageError;
+    QSqlQuery query;
     int message_Acount;
     Ui::MainUI *ui;
     searchWindow *reagentGPage;

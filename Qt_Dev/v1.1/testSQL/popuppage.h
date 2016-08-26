@@ -83,9 +83,11 @@ private:
     ThreadRead threadRead;
     void createSerialPort(const QString &portName, unsigned int baudRate);
     int IntoCabinet(int DID);
+    void waitTaskInfo(char a);
+    int IntoLED(int DID,int positionNo);
 };
 
-    void waitTaskInfo();
 
-int IntoCabinet(int DID);
+
+//int IntoCabinet(int DID);
 #endif // POPUPPAGE_H

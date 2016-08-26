@@ -201,7 +201,7 @@ int RequestTemperatureHumidity(QSerialPort* uartfd,int DID) //0x33 请求温湿�
     return (0);
 }
 
-int intocabinet(QSerialPort* uartfd,int DID)//0x35 请求门锁状态
+int RequestDoorClock(QSerialPort* uartfd,int DID)//0x35 请求门锁状态
 {
     struct Package1 P1;
     P1.CmdID = CID_REQUEST_DOOR_CLOCK;
@@ -235,11 +235,12 @@ int SetLED(QSerialPort* uartfd,int DID,char *DataLed)//0x12 设置LED状态
     struct Package1 P1;
     P1.CmdID =CID_SET_LED;
     P1.ErrorCode = 0;
-    for(int i=0;i<33;i++)
-    {
-        P1.ExtraDataLen[i] = DataLed[i];
-    }
     struct Package2 P2;
+    for(int i=0;i<6;i++)
+    {
+        P2.ExtraData[i] = DataLed[i];
+    }
+
 
     PackageSend(uartfd,DID,P1, P2);
     sleep(1);

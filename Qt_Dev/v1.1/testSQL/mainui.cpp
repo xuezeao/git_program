@@ -157,9 +157,9 @@ void MainUI::infoSave_To_Sql(char t)
 {
     if(t==0)
     {
-//        query.prepare("insert into T_CabinetInfo (cabinetName,groupId,groupName,drawerAmount) values (?,?,?,?)");
-//        query.addBindValue(stash_M[0]);
-//        query.addBindValue(stash_M[1]);
+        query.prepare("insert into T_CabinetInfo (cabinetName,groupId,groupName,drawerAmount) values (?,?,?,?)");
+        query.addBindValue(stash_M[0]);
+        query.addBindValue(stash_M[1]);
     }
 }
 

@@ -120,6 +120,9 @@ void popupPage::showNeedPlaceReagent()
 
         IntoCabinet(0x01);
         qDebug("reCLOCK");
+        //waitTaskInfo(300);
+        //IntoLED(0x01,5);
+
         if(attributV!='\0'&&sendSize!='\0')
         {
 
@@ -139,7 +142,7 @@ void popupPage::showNeedPlaceReagent()
 
             postHttp_P(1,json_str);
             modelSwitch=0;
-             waitTaskInfo();
+             waitTaskInfo(300);
              qDebug()<<"*************************";
 //            QTimer::singleShot(300,&eventloop,SLOT(quit()));
 //            eventloop.exec();
@@ -210,11 +213,11 @@ void popupPage::creatPostInfo(int a)//暂时不用
 //    }
 }
 
-void popupPage::waitTaskInfo()
+void popupPage::waitTaskInfo(char a)
 {
     QElapsedTimer t;//主程序等待
     t.start();
-     while(t.elapsed() < 300)
+     while(t.elapsed() < a)
      {
          QCoreApplication::processEvents();
      }
@@ -252,7 +255,7 @@ void popupPage::on_pushButton_placedNext_clicked()
     postHttp_P(2,json_str);
     modelSwitch=1;
 
-    waitTaskInfo();
+    waitTaskInfo(300);
 
 //    if(stash_P[5]=="false")
 //    {
@@ -521,11 +524,6 @@ void ThreadRead::run()
                         STATE_RTN = STATE_SET_LED;
                         qDebug("0x12");
                     }
-                    else if(CID==CID_SET_LED)               //0x12
-                    {
-                        STATE_RTN = STATE_SET_LED;
-                        qDebug("0x12");
-                    }
                     else
                         STATE_RTN = STATE_ERROR;
                 }
@@ -563,32 +561,91 @@ void popupPage::createSerialPort(const QString &portName, unsigned int baudRate)
     //myCom->setStopBits(QSerialPort::OneStop);
     myCom->setFlowControl(QSerialPort::NoFlowControl);
 }
+//int popupPage::IntoCabinet(int DID)//锁
+//{
+//    STATE_RTN=STATE_NONE;
+//    int j=0;
+//    RequestDrawerClock(myCom,DID);
+//    waitTaskInfo();
+//    for(j=0;j<150;j++)
+//    {
+//        waitTaskInfo();
+//        if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
+//        {
+//            SetDrawerClock(myCom,DID, 1);
+//            qDebug("CLOSE");
+//            return 0;
+//        }
+//        else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
+//        {
+//            qDebug("OPEN");
+//            return 0;
+//        }
+//    }
+//}
 int popupPage::IntoCabinet(int DID)
 {
     STATE_RTN=STATE_NONE;
     int j=0;
     RequestDrawerClock(myCom,DID);
-    waitTaskInfo();
+    waitTaskInfo(300);
     for(j=0;j<150;j++)
     {
-        waitTaskInfo();
+        waitTaskInfo(300);
         if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
         {
-            SetDrawerClock(myCom,DID, 1);
+            STATE_RTN = STATE_NONE;
+            SetDrawerClock(myCom,DID,1);
             qDebug("CLOSE");
-            return 0;
+            waitTaskInfo(300);
+            for(j=0;j<150;j++)
+            {
+            waitTaskInfo(300);
+            if(STATE_RTN==STATE_SET_DRAWER_LOCK)
+                {
+                    waitTaskInfo(300);
+                    IntoLED(0x01,5);
+                    return 0;
+                }
+            }
         }
         else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
         {
+            waitTaskInfo(300);
+            IntoLED(0x01,5);
             qDebug("OPEN");
             return 0;
         }
     }
 }
+int popupPage::IntoLED(int DID,int positionNo)
+{
+    STATE_RTN = STATE_NONE;
+    waitTaskInfo(300);
+    char DataLED[6];
+    memset(DataLED,0,6);
+    int i=positionNo%2;
+    if (i==1)
+    {
+        DataLED[positionNo/2] = 0x10;
+    }
+    else
+    {
+        DataLED[positionNo/2-1] = 0x01;
+    }
+    SetLED(myCom,DID,DataLED);
+    for(int j=0;j<150;j++)
+    {
+    waitTaskInfo(300);
+    if(STATE_RTN==STATE_SET_LED)
+        return 0;
+    }
+}
+
 void popupPage::on_pushButton_clicked()
 {
     createSerialPort("com3", 38400);
-//    waitTaskInfo();
+//    waitTaskInfo(300);
     threadRead.start();
     QByteArray data = 0x00;
     //const char data=0x00;
