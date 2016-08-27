@@ -17,6 +17,7 @@
 #include <QJsonValue>
 #include <QJsonParseError>
 #include <QSqlQuery>
+//#include "sigin.h"
 
 
 namespace Ui {
@@ -49,6 +50,7 @@ private slots:
 
     void finished(QNetworkReply * reply);
     void on_pushButton_clicked();
+//    void sigin_To_this();
 
 private:
     bool messageSuccess;
@@ -64,6 +66,7 @@ private:
     char ModelOperate;//用于指定agentiaNewsGet中对于json的解析模式选定 0 get 分解柜子信息
     void infoSave_To_Sql(char t);//使用ModelOperate作为模式选择对象
     QString stash_M[1000];
+
 
 };
 #endif // MAINUI_H

@@ -18,11 +18,14 @@ MainUI::MainUI(QWidget *parent) :
     reagentGPage = new searchWindow;
     reagentPPage = new MainWindow;
     accessManager =new QNetworkAccessManager(this);
-
+//    signin_page  = new sigin(this);
+//    this->close();
+//    signin_page->show();
 //    this->showFullScreen();//主屏幕最大化
     connect(accessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(finished(QNetworkReply*)));
     connect(reagentGPage,SIGNAL(GPageToMainUi()),this,SLOT(GPage_To_this()));
     connect(reagentPPage,SIGNAL(toMainChoice()),this,SLOT(PPage_To_this()));
+//    connect(signin_page,SIGNAL(open_Option()),this,SLOT(sigin_To_this()));
 //    QString postStr = "{\"username\":\"james\",\"password\":\"attack\"}";
 
 //    QString temporaryMessage="{\"a\":\"bejing\",\"name\":\"酒精\",\"number\":10,\"drawer\":[{\"drawerNo\":\"好的\"},{\"drawerNo\":2}]}";
@@ -47,6 +50,12 @@ MainUI::~MainUI()
 {
     delete ui;
 }
+//void MainUI::sigin_To_this()
+//{
+//    this->show();
+//    signin_page->close();
+
+//}
 
 void MainUI::on_pushButton_reagentP_clicked()
 {

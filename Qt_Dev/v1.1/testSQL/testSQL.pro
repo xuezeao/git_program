@@ -42,4 +42,7 @@ FORMS    += mainwindow.ui \
     mainui.ui \
     sigin.ui
 
-RESOURCES +=
+RESOURCES += \
+    image.qrc
+
+OTHER_FILES +=

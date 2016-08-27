@@ -6,12 +6,13 @@ INPUT(
 ./debug/test.o
 ./debug/mainui.o
 ./debug/uart4stm.o
-./debug/get_invalid_control.o
+./debug/sigin.o
+./debug/qrc_image.o
 ./debug/moc_mainwindow.o
 ./debug/moc_popuppage.o
 ./debug/moc_searchwindow.o
 ./debug/moc_test.o
 ./debug/moc_mainui.o
 ./debug/moc_threadread.o
-./debug/moc_get_invalid_control.o
+./debug/moc_sigin.o
 );

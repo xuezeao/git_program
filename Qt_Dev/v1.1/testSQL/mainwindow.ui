@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1069</width>
-    <height>551</height>
+    <width>982</width>
+    <height>615</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,32 +22,6 @@
       <width>861</width>
       <height>231</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_del">
-    <property name="geometry">
-     <rect>
-      <x>880</x>
-      <y>230</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>删除</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_placeChest">
-    <property name="geometry">
-     <rect>
-      <x>880</x>
-      <y>110</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>入柜</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -82,8 +56,98 @@
      <string>返回</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>310</y>
+      <width>381</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableView_searchWin">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>360</y>
+      <width>861</width>
+      <height>231</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>310</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>查询</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>0</y>
+      <width>1011</width>
+      <height>621</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/image/background1.jpg);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton_del">
+     <property name="geometry">
+      <rect>
+       <x>920</x>
+       <y>250</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>删除</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_placeChest">
+     <property name="geometry">
+      <rect>
+       <x>920</x>
+       <y>130</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>入柜</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>frame</zorder>
+   <zorder>tableView_showEnter</zorder>
+   <zorder>label</zorder>
+   <zorder>commandLinkButton</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>tableView_searchWin</zorder>
+   <zorder>pushButton</zorder>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

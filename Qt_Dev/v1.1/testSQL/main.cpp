@@ -6,15 +6,10 @@
 #include <QHeaderView>
 #include <QStandardItemModel>
 #include <QTableView>
-
-
 #include <QPushButton>
 #include "mainui.h"
 #include <QDebug>
 #include <QCoreApplication>
-
-
-
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -23,6 +18,8 @@
 #include <QString>
 #include <QByteArray>
 #include <QVariant>
+#include <sigin.h>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -30,10 +27,10 @@ int main(int argc, char *argv[])
         return 1;
 //   MainWindow w;
 //   searchWindow w;
-    MainUI w;
+//    MainUI w;
     // mouseEventTest w;
-//autocompelete w;
 //    Form123 w;
+    sigin w;
     w.show();
 
 

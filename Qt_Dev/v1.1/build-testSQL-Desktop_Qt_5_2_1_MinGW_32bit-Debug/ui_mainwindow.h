@@ -14,11 +14,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCommandLinkButton>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
@@ -29,28 +30,25 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QTableView *tableView_showEnter;
-    QPushButton *pushButton_del;
-    QPushButton *pushButton_placeChest;
     QLabel *label;
     QCommandLinkButton *commandLinkButton;
-    QStatusBar *statusBar;
+    QLineEdit *lineEdit;
+    QTableView *tableView_searchWin;
+    QPushButton *pushButton;
+    QFrame *frame;
+    QPushButton *pushButton_del;
+    QPushButton *pushButton_placeChest;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1069, 551);
+        MainWindow->resize(982, 615);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tableView_showEnter = new QTableView(centralWidget);
         tableView_showEnter->setObjectName(QStringLiteral("tableView_showEnter"));
         tableView_showEnter->setGeometry(QRect(10, 70, 861, 231));
-        pushButton_del = new QPushButton(centralWidget);
-        pushButton_del->setObjectName(QStringLiteral("pushButton_del"));
-        pushButton_del->setGeometry(QRect(880, 230, 75, 23));
-        pushButton_placeChest = new QPushButton(centralWidget);
-        pushButton_placeChest->setObjectName(QStringLiteral("pushButton_placeChest"));
-        pushButton_placeChest->setGeometry(QRect(880, 110, 75, 23));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(330, 0, 61, 31));
@@ -61,10 +59,39 @@ public:
         commandLinkButton = new QCommandLinkButton(centralWidget);
         commandLinkButton->setObjectName(QStringLiteral("commandLinkButton"));
         commandLinkButton->setGeometry(QRect(0, 30, 81, 41));
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(10, 310, 381, 41));
+        tableView_searchWin = new QTableView(centralWidget);
+        tableView_searchWin->setObjectName(QStringLiteral("tableView_searchWin"));
+        tableView_searchWin->setGeometry(QRect(10, 360, 861, 231));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(310, 310, 81, 41));
+        QFont font1;
+        font1.setFamily(QStringLiteral("Agency FB"));
+        font1.setPointSize(24);
+        pushButton->setFont(font1);
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setGeometry(QRect(-20, 0, 1011, 621));
+        frame->setStyleSheet(QStringLiteral("background-image: url(:/image/background1.jpg);"));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        pushButton_del = new QPushButton(frame);
+        pushButton_del->setObjectName(QStringLiteral("pushButton_del"));
+        pushButton_del->setGeometry(QRect(920, 250, 75, 23));
+        pushButton_placeChest = new QPushButton(frame);
+        pushButton_placeChest->setObjectName(QStringLiteral("pushButton_placeChest"));
+        pushButton_placeChest->setGeometry(QRect(920, 130, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        frame->raise();
+        tableView_showEnter->raise();
+        label->raise();
+        commandLinkButton->raise();
+        lineEdit->raise();
+        tableView_searchWin->raise();
+        pushButton->raise();
 
         retranslateUi(MainWindow);
 
@@ -74,10 +101,11 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        pushButton_del->setText(QApplication::translate("MainWindow", "\345\210\240\351\231\244", 0));
-        pushButton_placeChest->setText(QApplication::translate("MainWindow", "\345\205\245\346\237\234", 0));
         label->setText(QApplication::translate("MainWindow", "\345\205\245\346\237\234", 0));
         commandLinkButton->setText(QApplication::translate("MainWindow", "\350\277\224\345\233\236", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "\346\237\245\350\257\242", 0));
+        pushButton_del->setText(QApplication::translate("MainWindow", "\345\210\240\351\231\244", 0));
+        pushButton_placeChest->setText(QApplication::translate("MainWindow", "\345\205\245\346\237\234", 0));
     } // retranslateUi
 
 };

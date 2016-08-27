@@ -6,10 +6,13 @@ INPUT(
 ./release/test.o
 ./release/mainui.o
 ./release/uart4stm.o
+./release/sigin.o
+./release/qrc_image.o
 ./release/moc_mainwindow.o
 ./release/moc_popuppage.o
 ./release/moc_searchwindow.o
 ./release/moc_test.o
 ./release/moc_mainui.o
 ./release/moc_threadread.o
+./release/moc_sigin.o
 );
