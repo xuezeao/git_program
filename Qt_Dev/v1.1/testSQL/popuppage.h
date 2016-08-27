@@ -84,7 +84,7 @@ private:
     void createSerialPort(const QString &portName, unsigned int baudRate);
     int IntoCabinet(int DID);
     void waitTaskInfo(char a);
-    int IntoLED(int DID, int *positionNo, int LEDNum, int color);
+    int IntoLED(int DID, int *positionNo, int LEDNum,char *DataLED, int color);
     int send_positionNo;
     int send_drawerNo;
     int send_LEDNo;

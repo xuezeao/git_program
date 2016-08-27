@@ -161,16 +161,16 @@ void popupPage::showNeedPlaceReagent()
 
 
 
-//              takeAct(0x01,a,3);
+              takeAct(0x01,a,1);
 //              IntoCabinet(0x01);
 //              IntoLED(DID,send_positionNo,send_LEDNum,1);
-            IntoLED(0x01,a,1,0);//a是int 型数组包含显示灯的位置信号，后一位是发送的灯的个数
-            int b[]={0,0,0,0,0,0,0,0,0};
-            for(int j=0;j<150;j++)
-            {
-                waitTaskInfo(30);
-                IntoPhotosensor(0x01,b);
-            }
+//            IntoLED(0x01,a,1,0);//a是int 型数组包含显示灯的位置信号，后一位是发送的灯的个数
+//            int b[]={0,0,0,0,0,0,0,0,0};
+//            for(int j=0;j<150;j++)
+//            {
+//                waitTaskInfo(30);
+//                IntoPhotosensor(0x01,b);
+//            }
 //            postStash_P(0);
 
             if(positionInfo=="0")
@@ -450,7 +450,202 @@ void popupPage::postStash_P(int num)
 }
 
 /*************************************/
+void popupPage::createSerialPort(const QString &portName, unsigned int baudRate)
+{
+    myCom= new QSerialPort("com3");//dev/ttyS2
+    myCom->setPortName(portName);
+    myCom->open(QIODevice::ReadWrite);
+    myCom->setBaudRate(baudRate);
+    myCom->setDataBits(QSerialPort::Data8);
+    myCom->setParity(QSerialPort::NoParity);
+    //myCom->setStopBits(QSerialPort::OneStop);
+    myCom->setFlowControl(QSerialPort::NoFlowControl);
+}
+//int popupPage::IntoCabinet(int DID)//锁
+//{
+//    STATE_RTN=STATE_NONE;
+//    int j=0;
+//    RequestDrawerClock(myCom,DID);
+//    waitTaskInfo();
+//    for(j=0;j<150;j++)
+//    {
+//        waitTaskInfo();
+//        if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
+//        {
+//            SetDrawerClock(myCom,DID, 1);
+//            qDebug("CLOSE");//            return 0;
+//        }
+//        else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
+//        {
+//            qDebug("OPEN");
+//            return 0;
+//        }
+//    }
+//}
+int popupPage::IntoCabinet(int DID)
+{
+    STATE_RTN=STATE_NONE;
+    int j=0;
+    RequestDrawerClock(myCom,DID);
+//    waitTaskInfo(30);
+    for(j=0;j<150;j++)
+    {
+        waitTaskInfo(30);
+        if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
+        {
+            STATE_RTN = STATE_NONE;
+            SetDrawerClock(myCom,DID,1);
+            qDebug("CLOSE");
+//            waitTaskInfo(30);
+            for(j=0;j<150;j++)
+            {
+            waitTaskInfo(30);
+            if(STATE_RTN==STATE_SET_DRAWER_LOCK)
+                return 0;
+            }
+        }
+        else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
+        {
+            qDebug("OPEN");
+            return 0;
+        }
+    }
+}
+int popupPage::IntoLED(int DID,int *send_positionNo,int send_LEDNum,char *DataLED,int color)//color=1绿色
+{
+    STATE_RTN = STATE_NONE;
+//    char DataLED[6];
+//    memset(DataLED,0,6);
+    for(int ledNo = 0;ledNo < send_LEDNum;ledNo++)
+    {
+    int i=send_positionNo[ledNo]%2;
+    if (i==1)
+    {
+        if(color==1)
+            DataLED[send_positionNo[ledNo]/2] += 0x10;
+        else
+            DataLED[send_positionNo[ledNo]/2] += 0x20;
 
+    }
+    else
+    {
+        if(color==1)
+            DataLED[send_positionNo[ledNo]/2-1] += 0x01;
+        else
+            DataLED[send_positionNo[ledNo]/2-1] += 0x02;
+    }
+    }
+    SetLED(myCom,DID,DataLED);
+    for(int j=0;j<150;j++)
+    {
+    waitTaskInfo(30);
+    if(STATE_RTN==STATE_SET_LED)
+        return 0;
+    }
+}
+
+int popupPage::IntoPhotosensor(int DID,int *befor_photosensor)
+{
+    RequestPhotosensor(myCom,DID);
+    for(int j=0;j<150;j++)
+    {
+        waitTaskInfo(30);
+        if (STATE_RTN==STATE_REQUEST_PHOTOSENSOR)
+        {
+            for(int i=0;i<9;i++)
+            {
+                if(photosensor[i]!=befor_photosensor[i])
+//                    qDebug()<<i++;
+                    return 0;
+            }
+        }
+    }
+}
+
+int popupPage::wait4positionNo(int *send_positionNo,int send_LEDNum)
+{
+    for(int i=0;i<send_LEDNum;i++)
+    {
+        if(send_positionNo!=0)
+            return 1;
+        else
+            return 0;
+    }
+}
+
+int popupPage::takeAct(int DID,int *send_positionNo,int send_LEDNum)
+{
+    int *befor_photosensor;
+    int *after_photosensor;
+    int Error;
+    char DataLED[6];
+    memset(DataLED,0,6);
+    //查询任务前光电状态
+    RequestPhotosensor(myCom,DID);
+    for(int j=0;j<150;j++)
+    {
+        waitTaskInfo(300);
+        if (STATE_RTN==STATE_REQUEST_PHOTOSENSOR)
+        {
+            for(int i=0;i<9;i++)
+            {
+                befor_photosensor[i]=photosensor[i];
+                after_photosensor[i]=photosensor[i];
+                photosensor[i]=0;
+            }
+            break;
+        }
+    }
+    //设定任务后应得到的状态
+    for(int i=0;i<send_LEDNum;i++)
+    {
+        if(after_photosensor[send_positionNo[i]]==1)
+            after_photosensor[send_positionNo[i]]=0;
+        else
+            after_photosensor[send_positionNo[i]]=1;
+    }
+
+    IntoCabinet(DID);
+    IntoLED(DID,send_positionNo,send_LEDNum,DataLED,1);
+    while(wait4positionNo(send_positionNo,send_LEDNum)==1)
+    {
+        if(IntoPhotosensor(DID,befor_photosensor)==0);
+      {  //判断光电状态改变是否正确，改变灯状态
+        for(int i=0;i<9;i++)
+        {
+            if(photosensor[i]!=after_photosensor[i])
+            {
+                Error=1;
+                for (int j=0;j<send_LEDNum;j++)
+                {
+                    if(i==send_positionNo[j])
+                    {
+                        Error=0;
+                        send_positionNo[j]=0;
+                        IntoLED(DID,send_positionNo,send_LEDNum,DataLED,1);
+                        break;
+                    }
+                }
+                if(Error==1)
+                {
+                    IntoLED(DID,&i,1,DataLED,2);
+                }
+            }
+          }
+        }
+    }
+}
+void popupPage::on_pushButton_clicked()
+{
+    createSerialPort("com3", 38400);
+//    waitTaskInfo(300);
+    threadRead.start();
+    QByteArray data = 0x00;
+    //const char data=0x00;
+    myCom->write(data,1);
+    qDebug("1");
+    qDebug("SerialPort open!");
+}
 void ThreadRead::run()
 {
     QByteArray alldata;
@@ -589,198 +784,7 @@ int LEDposition (int positionNo)
 }
 */
 
-void popupPage::createSerialPort(const QString &portName, unsigned int baudRate)
-{
-    myCom= new QSerialPort("com3");//dev/ttyS2
-    myCom->setPortName(portName);
-    myCom->open(QIODevice::ReadWrite);
-    myCom->setBaudRate(baudRate);
-    myCom->setDataBits(QSerialPort::Data8);
-    myCom->setParity(QSerialPort::NoParity);
-    //myCom->setStopBits(QSerialPort::OneStop);
-    myCom->setFlowControl(QSerialPort::NoFlowControl);
-}
-//int popupPage::IntoCabinet(int DID)//锁
-//{
-//    STATE_RTN=STATE_NONE;
-//    int j=0;
-//    RequestDrawerClock(myCom,DID);
-//    waitTaskInfo();
-//    for(j=0;j<150;j++)
-//    {
-//        waitTaskInfo();
-//        if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
-//        {
-//            SetDrawerClock(myCom,DID, 1);
-//            qDebug("CLOSE");//            return 0;
-//        }
-//        else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
-//        {
-//            qDebug("OPEN");
-//            return 0;
-//        }
-//    }
-//}
-int popupPage::IntoCabinet(int DID)
-{
-    STATE_RTN=STATE_NONE;
-    int j=0;
-    RequestDrawerClock(myCom,DID);
-//    waitTaskInfo(30);
-    for(j=0;j<150;j++)
-    {
-        waitTaskInfo(30);
-        if (STATE_RTN==STATE_DRAWER_CLOCK_CLOSE)
-        {
-            STATE_RTN = STATE_NONE;
-            SetDrawerClock(myCom,DID,1);
-            qDebug("CLOSE");
-//            waitTaskInfo(30);
-            for(j=0;j<150;j++)
-            {
-            waitTaskInfo(30);
-            if(STATE_RTN==STATE_SET_DRAWER_LOCK)
-                return 0;
-            }
-        }
-        else if(STATE_RTN==STATE_DRAWER_CLOCK_OPEN)
-        {
-            qDebug("OPEN");
-            return 0;
-        }
-    }
-}
-int popupPage::IntoLED(int DID,int *send_positionNo,int send_LEDNum,int color)//color=1绿色
-{
-    STATE_RTN = STATE_NONE;
-    char DataLED[6];
-    memset(DataLED,0,6);
-    for(int ledNo = 0;ledNo < send_LEDNum;ledNo++)
-    {
-    int i=send_positionNo[ledNo]%2;
-    if (i==1)
-    {
-        if(color==1)
-            DataLED[send_positionNo[ledNo]/2] += 0x10;
-        else
-            DataLED[send_positionNo[ledNo]/2] += 0x20;
 
-    }
-    else
-    {
-        if(color==1)
-            DataLED[send_positionNo[ledNo]/2-1] += 0x01;
-        else
-            DataLED[send_positionNo[ledNo]/2-1] += 0x02;
-    }
-    }
-    SetLED(myCom,DID,DataLED);
-    for(int j=0;j<150;j++)
-    {
-    waitTaskInfo(30);
-    if(STATE_RTN==STATE_SET_LED)
-        return 0;
-    }
-}
-
-int popupPage::IntoPhotosensor(int DID,int *befor_photosensor)
-{
-    RequestPhotosensor(myCom,DID);
-    for(int j=0;j<150;j++)
-    {
-        waitTaskInfo(30);
-        if (STATE_RTN==STATE_REQUEST_PHOTOSENSOR)
-        {
-            for(int i=0;i<9;i++)
-            {
-                if(photosensor[i]!=befor_photosensor[i])
-                    qDebug()<<i++;
-            }
-        }
-    }
-}
-
-int popupPage::wait4positionNo(int *send_positionNo,int send_LEDNum)
-{
-    for(int i=0;i<send_LEDNum;i++)
-    {
-        if(send_positionNo!=0)
-            return 1;
-        else
-            return 0;
-    }
-}
-
-int popupPage::takeAct(int DID,int *send_positionNo,int send_LEDNum)
-{
-    int *befor_photosensor;
-    int *after_photosensor;
-    int Error;
-    //查询任务前光电状态
-    RequestPhotosensor(myCom,DID);
-    for(int j=0;j<150;j++)
-    {
-        waitTaskInfo(30);
-        if (STATE_RTN==STATE_REQUEST_PHOTOSENSOR)
-        {
-            for(int i=0;i<9;i++)
-            {
-                befor_photosensor[i]=photosensor[i];
-                after_photosensor[i]=photosensor[i];
-                photosensor[i]=0;
-            }
-            break;
-        }
-    }
-    //设定任务后应得到的状态
-    for(int i=0;i<send_LEDNum;i++)
-    {
-        if(after_photosensor[send_positionNo[i]]==1)
-            after_photosensor[send_positionNo[i]]=0;
-        else
-            after_photosensor[send_positionNo[i]]=1;
-    }
-
-    IntoCabinet(DID);
-    IntoLED(DID,send_positionNo,send_LEDNum,1);
-    while(wait4positionNo(send_positionNo,send_LEDNum)!=0)
-    {
-        IntoPhotosensor(DID,after_photosensor);
-        //判断光电状态改变是否正确，改变灯状态
-        for(int i=0;i<9;i++)
-        {
-            if(photosensor[i]!=befor_photosensor[i])
-            {
-                Error=1;
-                for (int j=0;j<send_LEDNum;j++)
-                {
-                    if(i==send_positionNo[j])
-                    {
-                        Error=0;
-                        IntoLED(DID,&i,1,0);
-                        send_positionNo[j]=0;
-                        break;
-                    }
-                }
-                if(Error==1)
-                {
-                    IntoLED(DID,&i,1,2);
-                }
-            }
-        }
-    }
-}
-void popupPage::on_pushButton_clicked()
-{
-    createSerialPort("com3", 38400);
-//    waitTaskInfo(300);
-    threadRead.start();
-    QByteArray data = 0x00;
-    //const char data=0x00;
-    myCom->write(data,1);
-    qDebug("1");
-    qDebug("SerialPort open!");
-}
 
 //void waitTaskInfo()
 //{
