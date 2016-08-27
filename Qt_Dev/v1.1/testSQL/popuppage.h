@@ -84,12 +84,16 @@ private:
     void createSerialPort(const QString &portName, unsigned int baudRate);
     int IntoCabinet(int DID);
     void waitTaskInfo(char a);
-    int IntoLED(int DID,int *positionNo,int LEDNum);
+    int IntoLED(int DID, int *positionNo, int LEDNum, int color);
     int send_positionNo;
     int send_drawerNo;
-
-
-
+    int send_LEDNo;
+    int IntoPhotosensor(int DID,int *after_photosensor);
+    int changePositionStatus;//接受改变位置
+    int wait4positionNo(int *send_positionNo,int send_LEDNum);
+    int takeAct(int DID,int *send_positionNo,int send_LEDNum);//执行任务
+int ba;
+int a[0];
 
 };
 

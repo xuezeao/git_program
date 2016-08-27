@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     searchwindow.cpp \
     test.cpp \
     mainui.cpp \
-    uart4stm.cpp
+    uart4stm.cpp \
+    sigin.cpp
 
 HEADERS  += mainwindow.h \
     connection.h \
@@ -31,9 +32,14 @@ HEADERS  += mainwindow.h \
     test.h \
     mainui.h \
     threadread.h \
-    uart4stm.h
+    uart4stm.h \
+    global_Vailable.h \
+    sigin.h
 
 FORMS    += mainwindow.ui \
     popuppage.ui \
     searchwindow.ui \
-    mainui.ui
+    mainui.ui \
+    sigin.ui
+
+RESOURCES +=

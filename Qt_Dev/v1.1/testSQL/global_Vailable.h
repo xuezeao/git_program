@@ -1,0 +1,4 @@
+#ifndef GLOBAL_VAILABLE_H
+#define GLOBAL_VAILABLE_H
+
+#endif // GLOBAL_VAILABLE_H

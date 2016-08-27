@@ -2,7 +2,6 @@
 #include <QApplication>
 #include "connection.h"
 #include "searchwindow.h"
-#include "mouseeventtest.h"
 #include "test.h"
 #include <QHeaderView>
 #include <QStandardItemModel>

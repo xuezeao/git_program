@@ -36,7 +36,7 @@
 #define CID_SET_LED                         0x12
 
 #define CID_REQUEST_DRAWER_CLOCK            0x41
-#define CID_REQUEST_LED                     0x42
+#define CID_REQUEST_PHOTOSENSOR                     0x42
 
 
 enum
@@ -62,7 +62,7 @@ enum
     STATE_REQUEST_DRAWER_CLOCK,
     STATE_DRAWER_CLOCK_OPEN,
     STATE_DRAWER_CLOCK_CLOSE,               //0x41 请求抽屉锁状态
-    STATE_REQUEST_LED,                      //0x42 请求请求光电状态状态
+    STATE_REQUEST_PHOTOSENSOR,                      //0x42 请求请求光电状态状态
 
     STATE_NONE,
     STATE_ERROR
@@ -102,7 +102,7 @@ int SetDrawerClock(QSerialPort* uartfd,int DID, int Mode);                      
 int SetLED(QSerialPort* uartfd, int DID,char *DataLed);                          //0x12 设置LED状态
 
 int RequestDrawerClock(QSerialPort* uartfd,int DID);                           //0x41 请求抽屉锁状态
-int RequestLED(QSerialPort* uartfd,int DID);                                   //0x42 请求请求光电状态状态
+int RequestPhotosensor(QSerialPort* uartfd,int DID);                                   //0x42 请求请求光电状态状态
 
 
 void PackageSend(QSerialPort* uartfd,int DID, struct palmPackage1 data1, struct palmPackage2 data2);

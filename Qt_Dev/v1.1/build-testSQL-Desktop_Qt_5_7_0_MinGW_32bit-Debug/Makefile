@@ -213,6 +213,7 @@ Makefile: ../testSQL/testSQL.pro D:/work/QT/5.7/mingw53_32/mkspecs/win32-g++/qma
 		D:/work/QT/5.7/mingw53_32/lib/Qt5Gui.prl \
 		D:/work/QT/5.7/mingw53_32/lib/Qt5Sql.prl \
 		D:/work/QT/5.7/mingw53_32/lib/Qt5Network.prl \
+		D:/work/QT/5.7/mingw53_32/lib/Qt5SerialPort.prl \
 		D:/work/QT/5.7/mingw53_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ CONFIG+=debug CONFIG+=qml_debug -o Makefile ../testSQL/testSQL.pro
 D:/work/QT/5.7/mingw53_32/mkspecs/features/spec_pre.prf:
@@ -369,6 +370,7 @@ D:/work/QT/5.7/mingw53_32/lib/Qt5Widgets.prl:
 D:/work/QT/5.7/mingw53_32/lib/Qt5Gui.prl:
 D:/work/QT/5.7/mingw53_32/lib/Qt5Sql.prl:
 D:/work/QT/5.7/mingw53_32/lib/Qt5Network.prl:
+D:/work/QT/5.7/mingw53_32/lib/Qt5SerialPort.prl:
 D:/work/QT/5.7/mingw53_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ CONFIG+=debug CONFIG+=qml_debug -o Makefile ../testSQL/testSQL.pro

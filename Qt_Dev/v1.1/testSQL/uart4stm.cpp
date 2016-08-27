@@ -264,10 +264,10 @@ int RequestDrawerClock(QSerialPort* uartfd,int DID)//0x41 请求抽屉锁状态
     return (0);
 }
 
-int RequestLED(QSerialPort* uartfd,int DID)//0x42 请求请求光电状态状态
+int RequestPhotosensor(QSerialPort* uartfd,int DID)//0x42 请求请求光电状态状态
 {
     struct Package1 P1;
-    P1.CmdID = CID_REQUEST_DRAWER_CLOCK;
+    P1.CmdID = CID_REQUEST_PHOTOSENSOR;
     P1.ErrorCode = 0;
     P1.ExtraDataLen[0] = 0x00;
 
