@@ -6,7 +6,9 @@
 #include "operatewindow.h"
 #include "returnpage.h"
 
-#include "showallinfo.h"
+#include "readstminfo.h"
+
+
 
 #include <QtDebug>
 #include <QUrl>
@@ -47,6 +49,8 @@ private slots:
 
     void on_pBt_change_clicked();
 
+    void on_pBt_inspect_clicked();
+
 signals:
     void leaveOperate_To_enter();
 
@@ -55,7 +59,9 @@ private:
     http_GAndP *MainUi_http_Page;
     OperateWindow *MainUi_operate_Page;
     ReturnPage *MainUi_return_Page;
-    ShowAllInfo *showAA;
+
+    ReadSTMInfo *readSTM;
+
 
 };
 

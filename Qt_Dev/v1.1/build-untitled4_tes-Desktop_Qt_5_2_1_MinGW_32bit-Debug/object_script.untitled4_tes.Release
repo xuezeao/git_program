@@ -1,0 +1,13 @@
+INPUT(
+./release/main.o
+./release/mainwindow.o
+./release/myqheaderview.o
+./release/checkboxdelegate.o
+./release/testone.o
+./release/test2.o
+./release/moc_mainwindow.o
+./release/moc_myqheaderview.o
+./release/moc_checkboxdelegate.o
+./release/moc_testone.o
+./release/moc_test2.o
+);

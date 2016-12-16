@@ -1,0 +1,13 @@
+INPUT(
+./debug/main.o
+./debug/mainwindow.o
+./debug/myqheaderview.o
+./debug/checkboxdelegate.o
+./debug/testone.o
+./debug/test2.o
+./debug/moc_mainwindow.o
+./debug/moc_myqheaderview.o
+./debug/moc_checkboxdelegate.o
+./debug/moc_testone.o
+./debug/moc_test2.o
+);

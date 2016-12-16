@@ -348,7 +348,7 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
       setPBTEnable(1);
 
 
-        this->showFullScreen();//主屏幕最大化
+//        this->showFullScreen();//主屏幕最大化
 
 }
 

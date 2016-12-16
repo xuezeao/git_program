@@ -12,10 +12,10 @@ MainUI::MainUI(QWidget *parent) :
     MainUi_http_Page = new http_GAndP;
     MainUi_operate_Page = new OperateWindow;
     MainUi_return_Page = new ReturnPage;
-    showAA = new ShowAllInfo;
+    readSTM = new ReadSTMInfo;
 
 
-
+    MainUi_http_Page->getHttp();
     connect(MainUi_operate_Page,SIGNAL(OperateWindow_To_MainUI()),this,SLOT(closeOperatePage_Return_MainUi()));
     connect(MainUi_return_Page,SIGNAL(returnPage_To_MainUi()),this,SLOT(closeReturnPage_Return_MainUi()));
 
@@ -48,9 +48,9 @@ void MainUI::initShow(int num,QString username)//0：创建者 1：管理者 2�
         ui->pBt_getTest->hide();
         ui->pBt_post->hide();
     }
-    MainUi_http_Page->getHttp();
+
     ui->label_usename->setText(username);
-    this->showFullScreen();//主屏幕最大化
+//    this->showFullScreen();//主屏幕最大化
 
 }
 
@@ -126,3 +126,8 @@ void MainUI::on_pBt_leave_clicked()
 
 
 
+
+void MainUI::on_pBt_inspect_clicked()
+{
+    readSTM->searchError();
+}

@@ -1,0 +1,17 @@
+INPUT(
+./release/main.o
+./release/checkboxdelegate.o
+./release/global_Vailable.o
+./release/http_gandp.o
+./release/mainui.o
+./release/myqheaderview.o
+./release/operatewindow.o
+./release/uart4stm.o
+./release/execute_window.o
+./release/moc_checkboxdelegate.o
+./release/moc_http_gandp.o
+./release/moc_mainui.o
+./release/moc_myqheaderview.o
+./release/moc_operatewindow.o
+./release/moc_execute_window.o
+);

@@ -1,0 +1,12 @@
+INPUT(
+./../build-IPTest/platforminputcontexts/obj/mockupplatforminputcontextplugin.o
+./../build-IPTest/platforminputcontexts/obj/mockupinputcontext.o
+./../build-IPTest/platforminputcontexts/obj/mockupkeyeventdispatcher.o
+./../build-IPTest/platforminputcontexts/obj/pinyininputmethod.o
+./../build-IPTest/platforminputcontexts/obj/qrc_res.o
+./../build-IPTest/platforminputcontexts/obj/qrc_qml.o
+./../build-IPTest/platforminputcontexts/obj/moc_mockupplatforminputcontextplugin.o
+./../build-IPTest/platforminputcontexts/obj/moc_mockupinputcontext.o
+./../build-IPTest/platforminputcontexts/obj/moc_mockupkeyeventdispatcher.o
+./../build-IPTest/platforminputcontexts/obj/moc_pinyininputmethod.o
+);

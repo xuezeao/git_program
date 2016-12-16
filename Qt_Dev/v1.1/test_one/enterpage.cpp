@@ -16,7 +16,7 @@ EnterPage::EnterPage(QWidget *parent) :
 //        postHttp(1,post_Info);//获取所有信息
 //        ModelOperate=1;
 
-    this->showFullScreen();//主屏幕最大化
+//    this->showFullScreen();//主屏幕最大化
 
 //    ui->widget->setObjectName("widget");
 //    ui->widget->setStyleSheet("#widget{"

@@ -176,20 +176,33 @@ void OperateWindow::on_Bt_execute_clicked()
                             if(getC_status != "已分配位置")
                             {
                                 T_model_Other_Execut->removeRow(i);
-                                T_model_Other_Execut->submitAll();
+
+                                qDebug()<<"删除 i";
                             }
+
+
                       }
+                      T_model_Other_Execut->submitAll();
 
                       allrow = T_model_Other_Execut->rowCount();//重新排序
+
                       for(int i = 0 ; i < allrow; i++)
                       {
                           T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
-                          T_model_Other_Execut->submitAll();
+                      }
+                      T_model_Other_Execut->submitAll();
+
+                      if(allrow == 0)
+                      {
+                          QMessageBox qMebox;
+                          qMebox.setText("没有可执行信息");
+                          qMebox.exec();
+                      }
+                      else{
+                          Operate_execut_Page->executeInit(1);
+                          Operate_execut_Page->exec();
                       }
 
-
-                     Operate_execut_Page->executeInit(1);
-                     Operate_execut_Page->exec();
 
                   }
               }
@@ -398,8 +411,9 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),getC_Specification);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,14),getC_Factory);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,15),getC_ItemNo);
-
-
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,16),0);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,17),0);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,18),0);
     }
 
     else if(T_table->dialog_model == 2)//取
@@ -851,7 +865,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换
 
 
 
-       this->showFullScreen();//主屏幕最大化
+//       this->showFullScreen();//主屏幕最大化
 
 
 
