@@ -90,10 +90,10 @@ void MainUI::on_pBt_Get_clicked()
 }
 
 void MainUI::on_pBt_change_clicked()
-{/*
+{
     MainUi_operate_Page->show();
     MainUi_operate_Page->ModelSelect(4);
-    this->close();*/
+    this->close();
 }
 
 void MainUI::on_pBt_Return_clicked()

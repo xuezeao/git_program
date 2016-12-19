@@ -775,7 +775,7 @@ void Execut_window::closePage()
     }
     else if(execute_V->execute_model == 4)
     {
-       qDebug()<<"1";
+        Show_Info->showInfo(2);
     }
 
     Show_Info->exec();

@@ -143,15 +143,7 @@ void http_GAndP::finished(QNetworkReply *reply)
 void http_GAndP::emitLostMessage(int t)
 //5: 入柜 6：入柜完成 7：取完成 8:还
 {
-    if(t == 5)
-    {
-        ;
-    }
-    else if(t == 6 || t == 8)
-    {
-        emit sendError_To_Execut(0,"没有成功上传");;
-    }
-    else if(t == 7)
+    if(t == 7)
     {
         emit sendInfo_To_sheetPage(1);//request save
     }
@@ -489,8 +481,12 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 //  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入
 {
     QJsonObject json_Ok;
+    QJsonObject json_Two;
     QJsonDocument document;
     QString stash_J_QString[10];
+    QByteArray byte_array;
+
+    QSqlQuery query;
     int stash_J_Int[10];
 /************/
     user->user_Id=1;//暂时使用
@@ -502,7 +498,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
     if(model_json == 5)//分配位置
     {
-        QSqlQuery query;
+
         query.exec(QString("select * from %1")//从id=rownum中选中所有属性 '*' /也可指定 'name'
                    .arg(T_tableName));
         query.seek(T_tableNo);
@@ -519,7 +515,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
         json_Ok.insert("attribute",stash_J_Int[1]);//
 
         document.setObject(json_Ok);
-        QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+        byte_array=document.toJson(QJsonDocument::Compact);
         QString json_str(byte_array);
 
         postHttp(5,json_str);//发送http
@@ -527,11 +523,11 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
     else if(model_json == 6)//入柜完成上报
     {
-        QSqlQuery query;
+
         query.exec(QString("select * from %1")//从id=rownum中选中所有属性 '*' /也可指定 'name'
                    .arg(T_tableName));
         query.seek(T_tableNo);
-//        qDebug()<<T_tableName<<"*/*"<<T_tableNo;
+
         stash_J_Int[1] = query.value(16).toInt();//agentiaTypeId
         stash_J_Int[0] = query.value(11).toInt();//PositionId
         stash_J_QString[0] = query.value(5).toString();//bottleCapacity
@@ -550,7 +546,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
 
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array=document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
 
             postHttp(6,json_str);//发送http
@@ -564,17 +560,15 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
     else if(model_json == 7)//取 完成上报
     {
-        QSqlQuery query;
+
         query.exec(QString("select * from %1").arg(T_tableName));
 
-//        qDebug()<<T_tableNo<<"  printf";
         query.seek(T_tableNo);
        /**********/
         stash_J_Int[0] = query.value(9).toInt();//agentiaId
         stash_J_Int[1] = query.value(10).toInt();//positionId
         stash_J_QString[0] = query.value(11).toString();//judgeAttitude
 
-//        qDebug()<<stash_J_QString[0]<<" printf";
         if(stash_J_QString[0] == "已摆放")
         {
             json_Ok.insert("userId",user->user_Id);
@@ -584,7 +578,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
 
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array=document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
 
             postHttp(7,json_str);
@@ -596,18 +590,15 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
     else if(model_json == 8)//归还
     {
-        QSqlQuery query;
+
         query.exec(QString("select * from %1").arg(T_tableName));
         query.seek(T_tableNo);
-
-        qDebug()<<T_tableNo<<"------------";
 
         stash_J_Int[0] = query.value(11).toInt();//agentiaId
         stash_J_Int[1] = query.value(12).toInt();//positionId
         stash_J_QString[0] = query.value(13).toString();//judgeAttitude
         stash_J_QString[1] = query.value(4).toString();
 
-//        qDebug()<<stash_J_QString[0]<<" printf";
         if(stash_J_QString[0] == "正确操作")
         {
             json_Ok.insert("userId",user->user_Id);
@@ -618,7 +609,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
 
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array=document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
 
             postHttp(8,json_str);
@@ -629,41 +620,56 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
     }
     else if(model_json == 9)//替换
     {
-        QSqlQuery query;
+
         query.exec(QString("select * from %1").arg(T_tableName));
 
-//        qDebug()<<T_tableNo<<"  printf";
         query.seek(T_tableNo);
        /**********/
-        stash_J_Int[0] = query.value(9).toInt();//agentiaId
-        stash_J_Int[1] = query.value(10).toInt();//positionId
-        stash_J_QString[0] = query.value(11).toString();//judgeAttitude
+        stash_J_Int[0] = query.value(11).toInt();//agentiaId
+        stash_J_Int[1] = query.value(12).toInt();//positionId
+        stash_J_QString[0] = query.value(13).toString();//judgeAttitude
+        stash_J_QString[1] = query.value(6).toString();//newDose
+        stash_J_QString[2] = query.value(7).toString();//expireDate
 
-//        qDebug()<<stash_J_QString[0]<<" printf";
         if(stash_J_QString[0] == "正确操作")
+        {
+            json_Two.insert("dose",stash_J_QString[1]);
+            json_Two.insert("expireDate",stash_J_QString[2]);
+
+            json_Ok.insert("userId",user->user_Id);
+            json_Ok.insert("agentiaId",stash_J_Int[0]);
+            json_Ok.insert("positionId",stash_J_Int[1]);
+            json_Ok.insert("newAgentia",json_Two);
+
+
+            document.setObject(json_Ok);
+            byte_array = document.toJson(QJsonDocument::Compact);
+            QString json_str(byte_array);
+            postHttp(9,json_str);
+
+        }
+        else if(stash_J_QString[0] == "报废操作")
         {
             json_Ok.insert("userId",user->user_Id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
             json_Ok.insert("positionId",stash_J_Int[1]);
 
-
-
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array = document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
+            postHttp(10,json_str);
 
-            postHttp(9,json_str);
-        }else{
-            emit sendInfo_To_sheetPage(2);//未摆放
+        }
+
+        else{
+            emit sendInfo_To_return_PutIn(2);//未摆放
         }
 
     }
     else if(model_json == 10)//报废
     {
-        QSqlQuery query;
-        query.exec(QString("select * from %1").arg(T_tableName));
 
-//        qDebug()<<T_tableNo<<"  printf";
+        query.exec(QString("select * from %1").arg(T_tableName));
         query.seek(T_tableNo);
        /**********/
         stash_J_Int[0] = query.value(9).toInt();//agentiaId
@@ -680,7 +686,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 
 
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array=document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
 
             postHttp(10,json_str);
@@ -704,7 +710,7 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
             json_Ok.insert("cabinetNo",QString(CABINETNO));
 
             document.setObject(json_Ok);
-            QByteArray byte_array=document.toJson(QJsonDocument::Compact);
+            byte_array=document.toJson(QJsonDocument::Compact);
             QString json_str(byte_array);
 
             postHttp(11,json_str);//发送http

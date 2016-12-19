@@ -38,15 +38,16 @@ private slots:
     void on_pushButton_clicked();
 
 
+
 private:
     Ui::Execut_window *ui;
     http_GAndP *Execut_http_GAndP;
     ShowAllInfo *Show_Info;
 
     void initVariable();//初始化变量
-
-
     void closePage();//关闭页面操作
+
+
     int pBt_operate(int order);//按钮操作 //0：下一步 1：查询
 
     void http_PG_AgentiaInfo(int order,int i);//上传/获取 药剂信息 order0:无用 2：入柜上传 3：还上传
@@ -64,12 +65,13 @@ private:
     void executeInfoError(int num,QString error);//任务完成情况 0-error  1-OK 2-跳过 输出任务状态并执行未成功数据保存
     void waitTaskInfo(int tim);//延时ms
     void checkLockStatus();//检测锁的状态
+
     struct Execute_Variable{
         int execute_model;//1：入柜 2：还
         int acountRow;//表格总row -1
         int currentAcount;//记入执行次数
         int drawerAcount;//记入执行次数
-
+        int judgeStatus;//用于判断状态 0: 第一次 1：第二次
         char statusOption; // 0 误取，1 误放，2 未操作，3 正确操作
 
 

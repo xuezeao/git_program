@@ -216,13 +216,18 @@ void OperateWindow::on_Bt_execute_clicked()
               }
 
         }
-        if(T_table->dialog_model == 2)
+        else if(T_table->dialog_model == 2)
         {
 
            Sheet_Operate_execute_Page->modelOperate = 1;
            Sheet_Operate_execute_Page->sheetTableInit(1);
            Sheet_Operate_execute_Page->exec();
 
+        }
+        else if(T_table->dialog_model == 4)
+        {
+            Operate_execut_Page->executeInit(4);
+            Operate_execut_Page->exec();
         }
 
     }
@@ -431,7 +436,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         int getC_attribute = T_model_Other_Search->data(T_model_Other_Search->index(i,8)).toInt();
         int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
         int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,10)).toInt();
-//        QString getC_judgeA = T_model_Other_Search->data(T_model_Other_Search->index(i,11)).toString();
 
 
         T_model_Other_Execut->insertRow(rowNum);
@@ -453,10 +457,45 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
 
 
     }
+    else if(T_table->dialog_model == 4)//替换
+    {
+        T_model_Other_Search->setData(T_model_Other_Search->index(i,1),QString("未选择"));
+
+        int getC_No = T_model_Other_Search->data(T_model_Other_Search->index(i,0)).toInt();
+        QString getC_AName = T_model_Other_Search->data(T_model_Other_Search->index(i,2)).toString();
+        QString getC_bottleCapacity = T_model_Other_Search->data(T_model_Other_Search->index(i,3)).toString();
+        QString getC_dose = T_model_Other_Search->data(T_model_Other_Search->index(i,4)).toString();
+        int getC_drawerNo = T_model_Other_Search->data(T_model_Other_Search->index(i,5)).toInt();
+        int getC_positionNo = T_model_Other_Search->data(T_model_Other_Search->index(i,6)).toInt();
+        QString getC_expireDate = T_model_Other_Search->data(T_model_Other_Search->index(i,7)).toString();
+        int getC_attribute = T_model_Other_Search->data(T_model_Other_Search->index(i,8)).toInt();
+        int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
+        int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,10)).toInt();
+
+
+        T_model_Other_Execut->insertRow(rowNum);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,0),getC_No);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,1),QString("未选择"));
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,2),QString("修改"));
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,3),getC_AName);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,4),getC_bottleCapacity);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,5),getC_dose);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,6),QString("0ml"));
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,7),getC_expireDate);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,8),getC_drawerNo);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,9),getC_positionNo);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,10),getC_attribute);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,11),getC_AID);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,12),getC_positionID);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),QString("未摆放"));
+
+
+        T_model_Other_Search->removeRow(i);
+
+    }
 
     T_model_Other_Execut->submitAll();
     T_model_Other_Search->submitAll();
-
 
 }
 
@@ -468,7 +507,7 @@ void OperateWindow::delInfo_Execute(int i)
     {
         T_model_Other_Execut->removeRow(i);
     }
-    if(T_table->dialog_model == 2)//取  删除添加到另一处
+    else if(T_table->dialog_model == 2)//取  删除添加到另一处
     {
 
 
@@ -486,7 +525,6 @@ void OperateWindow::delInfo_Execute(int i)
         int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,9)).toInt();
         int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,10)).toInt();
         QString getC_judgeA = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toString();
-
 
         int rowNum = T_model_Other_Search->rowCount();
         T_model_Other_Search->insertRow(rowNum);
@@ -508,8 +546,47 @@ void OperateWindow::delInfo_Execute(int i)
 
 
     }
+    else if(T_table->dialog_model == 4)//替换
+    {
+
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(i,1),QString("未选择"));
+
+        int getC_No = T_model_Other_Execut->data(T_model_Other_Execut->index(i,0)).toInt();
+        QString getC_AName = T_model_Other_Execut->data(T_model_Other_Execut->index(i,3)).toString();
+        QString getC_bottleCapacity = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
+        QString getC_dose = T_model_Other_Execut->data(T_model_Other_Execut->index(i,5)).toString();
+        QString getC_expireDate = T_model_Other_Execut->data(T_model_Other_Execut->index(i,7)).toString();
+        int getC_drawerNo = T_model_Other_Execut->data(T_model_Other_Execut->index(i,8)).toInt();
+        int getC_positionNo = T_model_Other_Execut->data(T_model_Other_Execut->index(i,9)).toInt();
+        int getC_attribute = T_model_Other_Execut->data(T_model_Other_Execut->index(i,10)).toInt();
+        int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toInt();
+        int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,12)).toInt();
+
+
+        int rowNum = T_model_Other_Search->rowCount();
+        T_model_Other_Search->insertRow(rowNum);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,0),getC_No);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,1),QString("未选择"));
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,2),getC_AName);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,3),getC_bottleCapacity);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,4),getC_dose);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,5),getC_drawerNo);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,6),getC_positionNo);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,7),getC_expireDate);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,8),getC_attribute);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,9),getC_AID);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),QString("未操作"));
+
+
+        T_model_Other_Execut->removeRow(i);
+
+    }
+
+
     T_model_Other_Execut->submitAll();
     T_model_Other_Search->submitAll();
+
 
 }
 
@@ -544,8 +621,9 @@ void OperateWindow::updateNo(int order)//更新数据表格行列号
         for(int i = 0 ; i < E_allRow ; i++)
         {
             T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
-            T_model_Other_Execut->submitAll();
+
         }
+        T_model_Other_Execut->submitAll();
     }
     else if(order == 2)
     {
@@ -554,8 +632,9 @@ void OperateWindow::updateNo(int order)//更新数据表格行列号
         for(int i = 0 ; i < S_allRow; i++)
         {
             T_model_Other_Search->setData(T_model_Other_Search->index(i,0),E_allRow+i+1);
-            T_model_Other_Search->submitAll();
+
         }
+        T_model_Other_Search->submitAll();
 
     }
 }
@@ -642,6 +721,7 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
     QString getC_bottle = "";
     QString getC_dose = "";
     QString getC_expireDate = "";
+    QString getC_newDose = "";
     int     getC_position = 0;
     int     getC_drawer   = 0;
     int rowAll = T_model_Other_Execut->rowCount();
@@ -677,20 +757,37 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
     }
     else if(order == 2)//2:检查试剂其他信息是否完善
     {
-        for(int i = 0 ; i < rowAll ; i++)
+        if(T_table->dialog_model == 1)
         {
-
-            getC_bottle = T_model_Other_Execut->data(T_model_Other_Execut->index(i,5)).toString();
-            getC_dose = T_model_Other_Execut->data(T_model_Other_Execut->index(i,6)).toString();
-            getC_size = T_model_Other_Execut->data(T_model_Other_Execut->index(i,7)).toString();
-            getC_expireDate = T_model_Other_Execut->data(T_model_Other_Execut->index(i,8)).toString();
-
-            if((getC_size == "")||(getC_bottle == "")||(getC_dose == "")||(getC_expireDate == ""))
+            for(int i = 0 ; i < rowAll ; i++)
             {
-                QMessageBox qMbox;
-                qMbox.setText(QString("第 %1 行未填写信息").arg(i+1));
-                qMbox.exec();
-                return 0;
+
+                getC_bottle = T_model_Other_Execut->data(T_model_Other_Execut->index(i,5)).toString();
+                getC_dose = T_model_Other_Execut->data(T_model_Other_Execut->index(i,6)).toString();
+                getC_size = T_model_Other_Execut->data(T_model_Other_Execut->index(i,7)).toString();
+                getC_expireDate = T_model_Other_Execut->data(T_model_Other_Execut->index(i,8)).toString();
+
+                if((getC_size == "")||(getC_bottle == "")||(getC_dose == "")||(getC_expireDate == ""))
+                {
+                    QMessageBox qMbox;
+                    qMbox.setText(QString("第 %1 行未填写信息").arg(i+1));
+                    qMbox.exec();
+                    return 0;
+                }
+            }
+        }
+        else if(T_table->dialog_model == 4)
+        {
+            for(int i = 0; i < rowAll; i++)
+            {
+                getC_newDose = T_model_Other_Execut->data(T_model_Other_Execut->index(i,6)).toString();
+                if(getC_newDose == "")
+                {
+                    QMessageBox qMbox;
+                    qMbox.setText(QString("第 %1 行未填写信息").arg(i+1));
+                    qMbox.exec();
+                    return 0;
+                }
             }
         }
 
@@ -811,7 +908,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换
 
         }
 
-        else if(modelOption == 4)
+        else if(modelOption == 4)//替换
         {
             T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
             T_model_Other_Search->select();

@@ -188,7 +188,7 @@ void AgentiaInfoChange::addInfo_To_sheet(int i)
         getC_newDose += getC_newDoseUint;
 
         query.exec(QString("update T_AgentiaReplace set newdose='%1',expireDate='%2' where rowid=%3")
-                   .arg(getC_dose).arg(getC_expireDate).arg(i+1));//rowid 从1开始
+                   .arg(getC_newDose).arg(getC_expireDate).arg(i+1));//rowid 从1开始
     }
 
 //    query.exec(QString("select * from %1").arg(changeTabel));

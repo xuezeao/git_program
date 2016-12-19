@@ -60,7 +60,7 @@ static bool createConnection()
                           [bottleCapacity] varchar,[dose] varchar,[newdose] varchar,[expireDate] varchar,[drawerNo] int,[positionNo] int,\
                           [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
        //替换 操作数据表
-       query.exec(QString("insert into T_AgentiaReplace values (1,'未选择','修改','1酒精','100ml','400ml','0','2010.7.7',1,1,1,123,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaReplace values (1,'未选择','修改','1酒精','100ml','400ml','100ml','2010.7.7',1,1,1,123,2,'未摆放')"));
 
 
        query.exec(QString("create table T_AgentiaExecute (id int primary key,[checkBox] varchar,[agentiaName] varchar,\

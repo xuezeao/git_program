@@ -42,9 +42,34 @@ void ShowAllInfo::on_pBt_close_clicked()
 
 /******************************************/
 
-void ShowAllInfo::showInfo(int order)//0：入柜 1：还
+void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换
 {
-    if(order == 1)
+    if(order == 2)
+    {
+        T_name = "T_AgentiaReplace";
+        T_model_show->setTable(QString("%1").arg(T_name));
+        T_model_show->select();
+        T_model_show->setHeaderData(3,Qt::Horizontal,QObject::tr("试剂名"));
+        T_model_show->setHeaderData(6,Qt::Horizontal,QObject::tr("试剂容量"));
+        T_model_show->setHeaderData(8,Qt::Horizontal,QObject::tr("抽屉号"));
+        T_model_show->setHeaderData(9,Qt::Horizontal,QObject::tr("位置"));
+        T_model_show->setHeaderData(13,Qt::Horizontal,QObject::tr("状态"));
+
+        T_model_show->setEditStrategy(QSqlTableModel::OnManualSubmit);
+        ui->tableView_showInfo->setColumnHidden(0,true);
+        ui->tableView_showInfo->setColumnHidden(1,true);
+        ui->tableView_showInfo->setColumnHidden(2,true);
+        ui->tableView_showInfo->setColumnHidden(4,true);
+        ui->tableView_showInfo->setColumnHidden(5,true);
+        ui->tableView_showInfo->setColumnHidden(7,true);
+        ui->tableView_showInfo->setColumnHidden(10,true);
+        ui->tableView_showInfo->setColumnHidden(11,true);
+        ui->tableView_showInfo->setColumnHidden(12,true);
+
+        ui->tableView_showInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    }
+    else if(order == 1)
     {
         T_name = "T_AgentiaWaitExecute";
         T_model_show->setTable(QString("%1").arg(T_name));
@@ -57,7 +82,6 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还
 
         T_model_show->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-//        T_model_show->sort(9,Qt::AscendingOrder);//升序
 
         ui->tableView_showInfo->setModel(T_model_show);
 
@@ -102,11 +126,6 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还
         ui->tableView_showInfo->setColumnHidden(16,true);
         ui->tableView_showInfo->setColumnHidden(17,true);
         ui->tableView_showInfo->setColumnHidden(18,true);
-
-
-
-
-
 
         ui->tableView_showInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
