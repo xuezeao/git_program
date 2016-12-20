@@ -181,6 +181,13 @@ void Execut_window::on_pBt_ignore_clicked()
     /**********跳过*********************/
     SCI_send(2);
     operateNext();
+    executeInfoError(1,"请取走试剂");
+    if((execute_V->judgeStatus == 1)&&(execute_V->execute_model == 4))
+    {
+        changeAgentiaStatus(6,2);//这时候跳过属于报废试剂操作
+        execute_V->judgeStatus = 0;//每一次跳过都是新的试剂信息
+    }
+
 }
 
 
@@ -582,7 +589,7 @@ int Execut_window::pBt_operate(int order)//0：下一步 1：查询
                     executeInfoError(2,"点击跳过，报废试剂");
                     changeAgentiaStatus(6,2);//报废操作
                     execute_V->judgeStatus = 0;
-                    executeInfoError(1,"请取出试剂");
+
                 }
             }
 
@@ -627,7 +634,7 @@ void Execut_window::changeAgentiaStatus(int just , int order)
         error = "报废操作";
     }
 
-    if((execute_V->execute_model == 2)||(execute_V->execute_model == 1))
+    if((execute_V->execute_model == 2)||(execute_V->execute_model == 1)||(execute_V->execute_model == 4))
     {
         if(order == 1)
         {
@@ -666,7 +673,7 @@ void Execut_window::executeInfoError(int num, QString error)//输出任务状态
     else if(num == 2)
     {
         QPalette pe;
-        pe.setColor(QPalette::WindowText,Qt::yellow);
+        pe.setColor(QPalette::WindowText,Qt::blue);
         ui->label_RoleStatus->setPalette(pe);
 
     }
@@ -775,7 +782,7 @@ void Execut_window::closePage()
     }
     else if(execute_V->execute_model == 4)
     {
-       qDebug()<<"1";
+        Show_Info->showInfo(2);
     }
 
     Show_Info->exec();

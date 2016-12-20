@@ -151,7 +151,7 @@ void http_GAndP::emitLostMessage(int t)
 }
 
 bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
-//5: 入柜 6：入柜完成 7：取完成 8:还完成   11：登入
+//5: 入柜 6：入柜完成 7：取完成 8:还完成  9:替换完成 10：报废完成 11：登入
 {
     QString stash_H[20];//临时存储解析的数据
     int stash_H_Int[20];
@@ -303,6 +303,33 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
         }
     }
 
+    else if(t == 9)//替换
+    {
+        QJsonValue i1 = analyze_Set["success"].toBool();
+        H_success = i1.toBool();
+
+        if( H_success )
+        {
+            emit sendInfo_To_return_PutIn(0);//0：ok
+        }
+        else {
+            emit sendInfo_To_return_PutIn(1);//reques
+        }
+    }
+    else if(t == 10 )//报废
+    {
+        QJsonValue i1 = analyze_Set["success"].toBool();
+        H_success = i1.toBool();
+
+        if( H_success )
+        {
+            emit sendInfo_To_return_PutIn(0);//0：ok
+        }
+        else{
+            emit sendInfo_To_return_PutIn(1);//request
+        }
+
+    }
     else if(t == 11)//登入
     {
         QJsonValue i1 = analyze_Set["success"].toBool();

@@ -37,7 +37,7 @@ public:
     void postHttp(int postName_NO,QString postStr);//postName_NO用于选择接口名对应的序号，postStr用于装载需要发送内容
 
     void jsonForSend(int model_json,QString T_tableName,int T_tableNo);//model_json 选择打包json格式，T_tableName用于选择对应的表格，T_tableNo选择对应打包的行数
-
+    //  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入
 
 signals:
     void sendInfo_To_Operate(int drawerNo,int positionNo,int positionId);//发送接收到的位置信息
@@ -59,7 +59,7 @@ private slots:
         void finished(QNetworkReply *reply);
 private:
         bool agentiaInfoGet(QJsonDocument str ,int t);//选择和切换post反馈的信息
-        //5: 入柜 6：入柜完成 7：取完成
+        //5: 入柜 6：入柜完成 7：取完成 8:还完成  9:替换完成 10：报废完成 11：登入
 
         void emitLostMessage(int t);//发送失败信息
         //5: 入柜 6：入柜完成 7：取完成
