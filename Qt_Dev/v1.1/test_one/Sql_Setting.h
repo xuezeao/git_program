@@ -125,30 +125,8 @@ static bool createConnection()
 
 
 
-//       query.exec(QString("create table T_Task_Operate (id int primary key,[checkBox] varchar,agentiaId int,[agentiaName] varchar,[bottleCapacity] varchar,[dose] varchar,[expiryDate] varchar,[drawerNo] int,[drawerName] varchar,[drawerSize] varchar,[positionId] varchar,[positionNo] varchar,[positionName] varchar,[attribute] int)"));
-//       //临时存储信息，取，报废，替换，点验，申请任务,待归还信息，入柜的执行界面1
-//       query.exec(QString("insert into T_Task_Operate values ('1','1',1,'酒精','500ml','400ml','2017.1.1',1,'Draw-1','10*10*20','1','1','1', 1)"));
-
-//        query.exec(QString("create table T_Task_return (id int ,[checkBox] varchar,[agentiaId] varchar primary key,[bottleCapacity] varchar,[dose] varchar,[expiryDate] varchar,[drawerNo] varchar,[drawerName] varchar,[positionNo] varchar,[positionName] varchar,[positionId] varchar,[attribute] varchar)"));
-//       //临时存储归还信息
-//       query.exec(QString("create table T_Task_return_opetation (id int ,[checkBox] varchar ,[agentiaId] varchar primary key,[bottleCapacity] varchar,[dose] varchar,[expiryDate] varchar,[drawerNo] varchar,[drawerName] varchar,[positionNo] varchar,[positionName] varchar,[positionId] varchar,[attribute] varchar)"));
-//       //临时存储确定归还信息
-//       query.exec(QString("create table T_CabinetStatus (id int primary key,[checkBox] varchar,[cabinetName] varchar,[cabinetStatue] varchar,[temperature] varchar,[humidity] varchar)"));
-//       //柜子信息更新表1
-//       query.exec(QString("create table T_PositionDisable (id int primary key,[checkBox] varchar,[drawerNo] varchar,[drawerName] varchar,[drawerSize] varchar,[positionAmount] varchar,[attribute] varchar,[drawerStatus] varchar)"));
-//       //修改柜子信息1
-//       query.exec(QString("create table T_WaringLog (id int primary key,[checkBox] varchar,[cabinetNo] varchar,[drawerNo] varchar,[positionNo] varchar,[taskId] varchar,[message] varchar)"));
-//       //报警信息1
-//       query.exec(QString("create table T_PositionAllocate ([positionNo] varchar,[positionName] varchar,[positionId] varchar,[drawerNo] varchar,[drawerName] varchar)"));
-//       //存储临时位置分配信息1
-//       query.exec(QString("create table T_DrawerSize ([id] int)"));
-//       //存储试剂规格信息1
-
-
-//       query.exec(QString("insert into BackReagent values (4,'酒精','3-2',500,'管制','大','2016.10.12','2016.8.9','未放')"));
-
        query.exec(QString("create table T_WaitPostInfo (id int primary key,[userId] int,[agentiaId] int, \
-                          [positionId] int ,[dose] varchar,[judgeAttitude] varchar)"));
+                          [positionId] int ,[dose] varchar,[judgeAttitude] varchar,[expireDate] varchar,[bottleCapacity] varchar)"));
        //存储未成功上传信息 操作数据表      //2：入柜 3:取 4：还 4：替换 5：报废 judgeAttitude
 
        return true;
