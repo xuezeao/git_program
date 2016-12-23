@@ -59,8 +59,6 @@ void EnterPage::receiverInfo_from_Http(int status, int userId, int role)
 {
     if(status == 0)//正确
     {
-        this->close();
-
         qDebug()<<userId;
 
         QString username;
@@ -68,6 +66,8 @@ void EnterPage::receiverInfo_from_Http(int status, int userId, int role)
 
         mainUI_Page->show();
         mainUI_Page->initShow(role,username);
+
+        this->close();
 
     }
     else if(status == 1) //错误

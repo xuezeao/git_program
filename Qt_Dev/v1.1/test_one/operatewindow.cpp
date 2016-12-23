@@ -216,18 +216,22 @@ void OperateWindow::on_Bt_execute_clicked()
               }
 
         }
-        else if(T_table->dialog_model == 2)
+        else if(T_table->dialog_model == 2)//取
         {
 
-           Sheet_Operate_execute_Page->modelOperate = 1;
-           Sheet_Operate_execute_Page->sheetTableInit(1);
+           Sheet_Operate_execute_Page->modelOption(2);
            Sheet_Operate_execute_Page->exec();
 
         }
-        else if(T_table->dialog_model == 4)
+        else if(T_table->dialog_model == 4)//替换
         {
             Operate_execut_Page->executeInit(4);
             Operate_execut_Page->exec();
+        }
+        else if(T_table->dialog_model == 5)//报废
+        {
+            Sheet_Operate_execute_Page->modelOption(5);
+            Sheet_Operate_execute_Page->exec();
         }
 
     }
@@ -304,7 +308,7 @@ void OperateWindow::on_Bt_changeInfo_A_clicked()//修改按钮
 
 
 /**************************************************/
-void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换
+void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:报废
 {
     switch (num) {
     case 1 :{
@@ -335,6 +339,16 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换
         ui->Bt_changeInfo_A->show();
         ui->pBt_getPosition->hide();
         tableInit(4);
+        break;
+    }
+    case 5:{
+        T_table->T_execut_RelationTable = "T_AgentiaScrap";
+        T_table->T_search_RelationTable = "T_AgentiaSaving";
+        T_table->dialog_model = 5;
+        ui->label_title->setText("报废试剂");
+        ui->pBt_getPosition->hide();
+        ui->Bt_changeInfo_A->hide();
+        tableInit(5);
         break;
     }
     default:
@@ -421,7 +435,7 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,18),0);
     }
 
-    else if(T_table->dialog_model == 2)//取
+    else if(T_table->dialog_model == 2 || T_table->dialog_model == 5)//取
     {
 
         T_model_Other_Search->setData(T_model_Other_Search->index(i,1),QString("未选择"));
@@ -507,7 +521,7 @@ void OperateWindow::delInfo_Execute(int i)
     {
         T_model_Other_Execut->removeRow(i);
     }
-    else if(T_table->dialog_model == 2)//取  删除添加到另一处
+    else if(T_table->dialog_model == 2 || T_table->dialog_model == 5)//取  删除添加到另一处
     {
 
 
@@ -797,7 +811,7 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
 
 
 
-void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换
+void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:报废
 {
     if(modelOption == 1)//入柜
     {
@@ -856,7 +870,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换
         ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
     }
 
-        if(modelOption == 2)//取试剂
+        if(modelOption == 2 || modelOption == 5)//取试剂 报废试剂
         {
             T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
             T_model_Other_Search->select();
@@ -959,6 +973,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
         }
+
 
 
 

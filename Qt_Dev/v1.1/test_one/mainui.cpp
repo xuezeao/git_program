@@ -131,3 +131,10 @@ void MainUI::on_pBt_inspect_clicked()
 {
     readSTM->searchError();
 }
+
+void MainUI::on_pBt_desert_clicked()
+{
+    MainUi_operate_Page->show();
+    MainUi_operate_Page->ModelSelect(5);
+    this->close();
+}

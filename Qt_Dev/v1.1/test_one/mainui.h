@@ -51,6 +51,8 @@ private slots:
 
     void on_pBt_inspect_clicked();
 
+    void on_pBt_desert_clicked();
+
 signals:
     void leaveOperate_To_enter();
 

@@ -78,7 +78,7 @@ void Sheet_OperatePage::modelOption(int order)
         ui->label_title->setText("报废试剂");
 
         break;
-    }
+    
     default:
         break;
     }

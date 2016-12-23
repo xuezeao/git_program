@@ -18,8 +18,7 @@ public:
     explicit Sheet_OperatePage(QDialog *parent = 0);
     ~Sheet_OperatePage();
 
-    void sheetTableInit(int num);//选择模式
-    int modelOperate;//选择模式对象 1:取
+    void modelOption(int order );   //选择模式对象 1:取 2:报废
 
 signals:
 
@@ -41,6 +40,7 @@ private:
     QSqlTableModel *T_model_execute;
     http_GAndP *http_GAndP_sheetOperate;
 
+    void sheetTableInit(int num);//选择模式
     //更改试剂信息 name 表格名 i 对应的行数 just 写入的状态值
     void changeInfo(int just,int i);//更改试剂信息 1: 上传成功 2：上传失败
     void delSheetInfo(int status,QString name ,int i);//delete or empty sheet info
@@ -66,6 +66,7 @@ private:
     struct T_table{
         int rowid;
         int error;
+        int modelOperate;
         QString T_tablesheet;
     };
 

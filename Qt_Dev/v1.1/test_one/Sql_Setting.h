@@ -68,6 +68,11 @@ static bool createConnection()
                           [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
        //取 操作数据表
 
+      query.exec(QString("create table T_AgentiaScrap (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+                         [bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,\
+                         [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
+      //报废 操作数据表
+
 
        query.exec(QString("create table T_AgentiaWaitSaving (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,\
