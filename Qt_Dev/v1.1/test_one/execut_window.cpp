@@ -70,11 +70,11 @@ void Execut_window::updateReturn(int status)//0 成功 1 失败 2 未放置
     {
         if(execute_V->execute_model == 1)
         {
-            http_PG_AgentiaInfo(2,execute_V->httpCount);
+            http_PG_AgentiaInfo(1,execute_V->httpCount);
         }
         else if(execute_V->execute_model == 2)
         {
-            http_PG_AgentiaInfo(3,execute_V->httpCount);
+            http_PG_AgentiaInfo(2,execute_V->httpCount);
         }
         else if(execute_V->execute_model == 4)
         {
@@ -165,13 +165,21 @@ void Execut_window::on_pBt_cancal_clicked()
 void Execut_window::on_pBt_next_clicked()
 {
 
-    if(execute_V->pBt_status == 1)
+    if(ui->lineEdit_changeVolume->text() != "")
     {
-        execute_V->pBt_status = 2;
-        pBt_operate(1);
-        qDebug()<<" enter ";
+        if(execute_V->pBt_status == 1)
+        {
+            execute_V->pBt_status = 2;
+            pBt_operate(1);
+            qDebug()<<"click next pushBotton ";
+        }
 
     }
+    else
+    {
+        executeInfoError(0, "请输入剩余容量");
+    }
+
 
 
 

@@ -42,6 +42,8 @@ void EnterPage::on_pushButton_sigin_clicked()
 
 void EnterPage::handleInfo()//处理输入框的信息
 {
+    ui->pushButton_sigin->setEnabled(false);
+
     QString username;
     QString password;
 
@@ -49,9 +51,7 @@ void EnterPage::handleInfo()//处理输入框的信息
     password = ui->lineEdit_password->text();
 
     http_Page->jsonForSend(11,username,0);
-
     http_Page->jsonForSend(11,password,1);
-
 }
 
 void EnterPage::receiverInfo_from_Http(int status, int userId, int role)
@@ -62,22 +62,22 @@ void EnterPage::receiverInfo_from_Http(int status, int userId, int role)
         qDebug()<<userId;
 
         QString username;
+
         username =ui->lineEdit_acount->text();
 
         mainUI_Page->show();
         mainUI_Page->initShow(role,username);
 
         this->close();
-
     }
     else if(status == 1) //错误
     {
-         QMessageBox::warning(this,tr("Waring"),tr("user name or password error!"),QMessageBox::Yes);
-
+        QMessageBox::warning(this,tr("Waring"),tr("user name or password error!"),QMessageBox::Yes);
     }
+
     ui->lineEdit_acount->clear();
     ui->lineEdit_password->clear();
-
+    ui->pushButton_sigin->setEnabled(true);
 }
 
 

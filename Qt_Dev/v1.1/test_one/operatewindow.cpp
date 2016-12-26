@@ -1,6 +1,7 @@
 #include "operatewindow.h"
 #include "ui_operatewindow.h"
 #include <QSqlRelationalDelegate>
+#include <QSqlError>
 
 
 OperateWindow::OperateWindow(QWidget *parent) :
@@ -38,8 +39,6 @@ OperateWindow::OperateWindow(QWidget *parent) :
 
 
     ui->tableView_showExecuteInfo->setHorizontalHeader(EHeader);
-
-
     ui->tableView_showExecuteInfo->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->tableView_showExecuteInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
 
@@ -253,8 +252,8 @@ void OperateWindow::on_Bt_delete_clicked()
 
     emit stateUp_OperatePage(1);
 
-    T_model_Other_Search->submitAll();
-    T_model_Other_Execut->submitAll();
+//    T_model_Other_Search->submitAll();
+//    T_model_Other_Execut->submitAll();
 
 }
 
@@ -281,8 +280,8 @@ void OperateWindow::on_Bt_add_clicked()
     }
     emit stateUp_OperatePage(1);
 
-    T_model_Other_Search->submitAll();
-    T_model_Other_Execut->submitAll();
+//    T_model_Other_Search->submitAll();
+//    T_model_Other_Execut->submitAll();
 
 }
 
@@ -504,11 +503,21 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),QString("未摆放"));
 
 
-        T_model_Other_Execut->submitAll();
+
+
         T_model_Other_Search->removeRow(i);
-        T_model_Other_Search->submitAll();
+
 
     }
+    if(T_model_Other_Execut->submitAll());
+    else
+        qDebug()<<T_model_Other_Execut->lastError().text()<<"E";
+    if(!T_model_Other_Search->submitAll())
+        qDebug()<<T_model_Other_Search->lastError().text()<<"S";
+
+    T_model_Other_Execut->database().commit();
+    T_model_Other_Search->database().commit();
+
 
 
 
@@ -593,13 +602,20 @@ void OperateWindow::delInfo_Execute(int i)
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),QString("未操作"));
 
-        T_model_Other_Search->submitAll();
-        T_model_Other_Execut->removeRow(i);
-        T_model_Other_Execut->submitAll();
 
+        T_model_Other_Execut->removeRow(i);
 
     }
 
+
+    if(T_model_Other_Execut->submitAll());
+    else
+        qDebug()<<T_model_Other_Execut->lastError().text()<<"E";
+    if(!T_model_Other_Search->submitAll())
+        qDebug()<<T_model_Other_Search->lastError().text()<<"S";
+
+    T_model_Other_Execut->database().commit();
+    T_model_Other_Search->database().commit();
 
 
 
@@ -831,6 +847,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("项目编号"));
 
         T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
         ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
         ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
@@ -890,6 +907,8 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
             T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
 
             T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
+            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
             ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
             ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
@@ -941,8 +960,9 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
             T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
             T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
 
-            T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
             ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
+
             ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
             ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
@@ -969,6 +989,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
 
 
             T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
 
             ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);

@@ -332,7 +332,8 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
 
        /**************查询指令******************/
 
-        T_tableexecute->error = SCI_send(1);
+//        T_tableexecute->error = SCI_send(1);
+        T_tableexecute->error = 2;
 
         /**************************************/
 // Alarm_No[0]错误    Alarm_No[1] 移动    Alarm_No[2]未成

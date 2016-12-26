@@ -29,10 +29,10 @@ static bool createConnection()
        query.exec(QString("create table T_DrawerList ([drawerNo] int,[drawerName] varchar,[drawerSize] varchar,[positionAmount] int,[attribute] int)"));
        //长期抽屉信息
 
-       query.exec(QString("create table T_AgentiaInBox (id int primary key,[checkBox] varchar,[agentiaName] varchar,[bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,[attribute] int,[agentiaId] int,[positionId] int)"));
+       query.exec(QString("create table T_AgentiaInBox (id int,[checkBox] varchar,[agentiaName] varchar,[bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,[attribute] int,[agentiaId] int,[positionId] int)"));
        //在柜信息(点验)
 
-       query.exec(QString("create table T_AgentiaTypeList (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaTypeList (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [abbreviation] varchar,[chemicalFormula] varchar,[specification] varchar,[factory] varchar,\
                           [attribute] int,[agentiaTypeId] int,[itemNo] varchar)"));
        //试剂类型
@@ -43,7 +43,7 @@ static bool createConnection()
        query.exec(QString("insert into T_AgentiaTypeList values (5,'未选择','高锰酸钾','酒23精','53123ml','12ml','1',1,1,'1')"));
        query.exec(QString("insert into T_AgentiaTypeList values (6,'未选择','乙醇','酒312精','5230ml','3ml','1',1,1,'1')"));
 
-       query.exec(QString("create table T_AgentiaSaving (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaSaving (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,\
                           [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
        //在柜试剂信息
@@ -56,25 +56,25 @@ static bool createConnection()
        query.exec(QString("insert into T_AgentiaSaving values (6,'未选择','4酒精','400ml','700ml',2,4,'2010.7.7',1,123,2,'未摆放')"));
 
 
-       query.exec(QString("create table T_AgentiaReplace (id int primary key,[checkBox] varchar,[changeInfo] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaReplace (id int,[checkBox] varchar,[changeInfo] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[newdose] varchar,[expireDate] varchar,[drawerNo] int,[positionNo] int,\
                           [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
        //替换 操作数据表
        query.exec(QString("insert into T_AgentiaReplace values (1,'未选择','修改','1酒精','100ml','400ml','100ml','2010.7.7',1,1,1,123,2,'未摆放')"));
 
 
-       query.exec(QString("create table T_AgentiaExecute (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaExecute (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,\
                           [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
        //取 操作数据表
 
-      query.exec(QString("create table T_AgentiaScrap (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+      query.exec(QString("create table T_AgentiaScrap (id int,[checkBox] varchar,[agentiaName] varchar,\
                          [bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,\
                          [attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
       //报废 操作数据表
 
 
-       query.exec(QString("create table T_AgentiaWaitSaving (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaWaitSaving (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,\
                           [drawerNo] int,[positionNo] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
         //还 存储数据表
@@ -86,7 +86,7 @@ static bool createConnection()
 
 
 
-       query.exec(QString("create table T_AgentiaWaitExecute (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaWaitExecute (id int,[checkBox] varchar,[agentiaName] varchar,\
                          [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,[returnA] varchar,[changeA] varchar,[desertA] varchar,\
                          [drawerNo] int,[positionNo] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
 
@@ -105,16 +105,16 @@ static bool createConnection()
 
 
 
-       //还 操作数据表
+       //还 操作数据表 primary key
 
-       query.exec(QString("create table T_AgentiaSearchInfo (id int primary key,[checkBox] varchar,[agentiaName] varchar,\
+       query.exec(QString("create table T_AgentiaSearchInfo (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[drawerNo] int,[positionNo] int,[expireDate] varchar,\
                           [currentUserName] varchar,[agentiaStatus] varchar,[attribute] varchar,[applicant] varchar,\
                           [applyStatus] int,[agentiaId] int,[positionId] int)"));
        //搜索信息
 
 
-       query.exec(QString("create table T_Task_PutIn (id int primary key,[checkBox] varchar,[changeInfo] varchar,\
+       query.exec(QString("create table T_Task_PutIn (id int,[checkBox] varchar,[changeInfo] varchar,\
                           [agentiaName] varchar,[judgeAttitude] varchar,[bottleCapacity] varchar, [dose] varchar,[drawerSize] varchar,[expireDate] varchar,\
                           [roleStatus] int,[attribute] int,[agentiaTypeId] int,[chemicalFormula] varchar,\
                           [specification] varchar,[factory] varchar,[itemNo] varchar,[positionId] int,[drawerNo] int ,[positionNo] int)"));
