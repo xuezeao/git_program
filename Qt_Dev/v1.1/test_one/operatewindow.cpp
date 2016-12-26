@@ -504,12 +504,13 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),QString("未摆放"));
 
 
+        T_model_Other_Execut->submitAll();
         T_model_Other_Search->removeRow(i);
+        T_model_Other_Search->submitAll();
 
     }
 
-    T_model_Other_Execut->submitAll();
-    T_model_Other_Search->submitAll();
+
 
 }
 
@@ -592,14 +593,15 @@ void OperateWindow::delInfo_Execute(int i)
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),QString("未操作"));
 
-
+        T_model_Other_Search->submitAll();
         T_model_Other_Execut->removeRow(i);
+        T_model_Other_Execut->submitAll();
+
 
     }
 
 
-    T_model_Other_Execut->submitAll();
-    T_model_Other_Search->submitAll();
+
 
 
 }
@@ -830,7 +832,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
 
         T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
         ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-        ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
         ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
@@ -864,7 +866,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
         ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-        ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
         ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
 
         ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
@@ -889,7 +891,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
 
             T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
             ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+            ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
             ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
@@ -915,7 +917,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
             T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
             ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+            ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,blake_Operate);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
@@ -941,7 +943,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
 
             T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
             ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+            ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
             ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
@@ -969,7 +971,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
             T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
             ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+            ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
         }

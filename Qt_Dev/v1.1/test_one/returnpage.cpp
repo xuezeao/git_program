@@ -309,7 +309,7 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
 
             T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
             ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+            ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
 
             ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
@@ -337,7 +337,7 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
             T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
             ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+            ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
 
             ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
             ui->tableView_showExecuteInfo->setItemDelegate(returnAgentiaChechBoxDelegate);

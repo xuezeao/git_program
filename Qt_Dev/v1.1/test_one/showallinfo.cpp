@@ -85,7 +85,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
                 query.addBindValue(getC_agentiaId);
                 query.addBindValue(getC_positionId);
                 query.addBindValue("0");
-                query.addBindValue(status_str);
+                query.addBindValue("");
                 query.exec();
             }
         }
@@ -111,7 +111,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
                 query.addBindValue(getC_agentiaId);
                 query.addBindValue(getC_positionId);
                 query.addBindValue("0");
-                query.addBindValue(status_str);
+                query.addBindValue("");
                 query.exec();
             }
         }
@@ -137,7 +137,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
                 query.addBindValue(getC_agentiaId);
                 query.addBindValue(getC_positionId);
                 query.addBindValue("0");
-                query.addBindValue(status_str);
+                query.addBindValue("");
                 query.exec();
             }
         }
