@@ -19,8 +19,6 @@ ShowAllInfo::ShowAllInfo(QDialog *parent) :
 
     ui->tableView_showInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-
-
 }
 
 ShowAllInfo::~ShowAllInfo()

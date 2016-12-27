@@ -64,8 +64,6 @@ private slots:
 
     void closePage();
 
-    void setPBTEnable(int status);//设置按钮使能//1：使能 2：注销
-
 
 private:
     Ui::ReturnPage *ui;

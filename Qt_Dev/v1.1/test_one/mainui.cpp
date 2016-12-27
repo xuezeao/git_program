@@ -127,9 +127,11 @@ void MainUI::on_pBt_leave_clicked()
 
 
 
-void MainUI::on_pBt_inspect_clicked()
+void MainUI::on_pBt_inspect_clicked()//点验
 {
-    readSTM->searchError();
+    MainUi_operate_Page->show();
+    MainUi_operate_Page->ModelSelect(6);
+    this->close();
 }
 
 void MainUI::on_pBt_desert_clicked()

@@ -17,6 +17,7 @@ class Execut_window : public QDialog
 public:
     explicit Execut_window(QDialog *parent = 0);
     ~Execut_window();
+
      void executeInit(int num);
 
 signals:
@@ -24,8 +25,6 @@ signals:
 
 private slots:
     void on_pBt_cancal_clicked();
-
-
 
     void on_pBt_next_clicked();
 
@@ -38,7 +37,6 @@ private slots:
     void on_pushButton_clicked();
 
 
-
 private:
     Ui::Execut_window *ui;
     http_GAndP *Execut_http_GAndP;
@@ -47,8 +45,8 @@ private:
     void initVariable();//初始化变量
     void closePage();//关闭页面操作
 
-
-    int pBt_operate(int order);//按钮操作 //0：下一步 1：查询
+    void pBt_operate(int order);//按钮操作 //0：下一步 1：查询
+    void operateNext();//执行下一步
 
     void http_PG_AgentiaInfo(int order,int i);//上传/获取 药剂信息 order0:无用 2：入柜上传 3：还上传
     void changeAgentiaStatus(int just,int order);//更改药剂状态 order 内部区分 0:无操作 1：正常 2：跳过
@@ -57,7 +55,6 @@ private:
     void updateShowInfo(QString A_name,QString Volume,QString Position);//更改显示信息
     void savePostFalseInfo();//保存上传失败的指令
 
-    void operateNext();//执行下一步
     int  SCI_send(int order);//0:下发包含开锁 1：查询 2：完成 3:查锁 int Error;//0: 错误 1：未完成 2：正确
     void searchPositionInfo(QString name, int i);//检索药剂位置
     void getAllCount();//获取总的行数
@@ -74,7 +71,6 @@ private:
         int judgeStatus;//用于判断状态 0: 第一次 1：第二次
         char statusOption; // 0 误取，1 误放，2 未操作，3 正确操作
 
-
         int positionNO;
         int drawerNo;
         int positionId;
@@ -88,7 +84,8 @@ private:
 
         int test;
 
-    }EXECUTE;
+    };
+
     struct Execute_Variable *execute_V;
 
     int saveDrawer[33];

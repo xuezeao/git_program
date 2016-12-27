@@ -323,10 +323,10 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
 
         if( H_success )
         {
-            emit sendInfo_To_return_PutIn(0);//0：ok
+            emit sendInfo_To_sheetPage(0);//0：ok
         }
         else{
-            emit sendInfo_To_return_PutIn(1);//request
+            emit sendInfo_To_sheetPage(1);//request
         }
 
     }

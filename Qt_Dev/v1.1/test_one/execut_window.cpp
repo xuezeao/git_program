@@ -15,10 +15,8 @@ Execut_window::Execut_window(QDialog *parent) :
 
     Execut_http_GAndP = new http_GAndP;
     Show_Info = new ShowAllInfo;
+    execute_V = new Execute_Variable;
 
-  /*  setWindowTitle(QString("执行中"));//标题
-    setWindowFlags(windowFlags()&~(Qt::WindowMinimizeButtonHint|Qt::WindowMaximizeButtonHint|Qt::WindowCloseButtonHint));
-    //令最大化、最小化、关闭按钮失效*/
     this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
@@ -27,16 +25,9 @@ Execut_window::Execut_window(QDialog *parent) :
     QValidator *validator_bottleCapacity = new QRegExpValidator(regx_bottleCapacity,ui->lineEdit_changeVolume);
     ui->lineEdit_changeVolume->setValidator(validator_bottleCapacity);
 
-
- 
-    execute_V = &EXECUTE;
-
-
-
     connect(Execut_http_GAndP,SIGNAL(sendInfo_To_return_PutIn(int)),this,SLOT(updateReturn(int)));
     connect(Execut_http_GAndP,SIGNAL(sendFalse()),this,SLOT(NetworkError()));
     connect(Show_Info,SIGNAL(upStatus()),this,SIGNAL(upSheet_From_Execute()));//返回主界面
-
 
     execute_V->test=0;
 }
@@ -85,8 +76,6 @@ void Execut_window::updateReturn(int status)//0 成功 1 失败 2 未放置
     {
         closePage();
     }
-
-
 }
 
 /********************************************************************/
@@ -121,6 +110,7 @@ int Execut_window::SCI_send(int order)//0:下发包含开锁 1：查询 2：完�
 
 
 */
+
 }
 
 
@@ -165,7 +155,7 @@ void Execut_window::on_pBt_cancal_clicked()
 void Execut_window::on_pBt_next_clicked()
 {
 
-    if(ui->lineEdit_changeVolume->text() != "")
+    if((ui->lineEdit_changeVolume->text() != "") || (execute_V->execute_model != 4))
     {
         if(execute_V->pBt_status == 1)
         {
@@ -231,7 +221,21 @@ void Execut_window::executeInit(int num)
         ui->label_oddDose->show();
         ui->label_changeNewAgentia->show();
         ui->label_oddDose->show();
+        ui->lineEdit_changeVolume->show();
         ui->CMB_V->show();
+        ui->label_changeNewAgentia->setText("更新为：");
+        break;
+    }
+    case 6:{
+        ui->label_title->setText("点验");
+        execute_V->T_executeTable = "T_AgentiaCheck";
+        execute_V->execute_model = 6;
+        ui->label_oddDose->show();
+        ui->label_changeNewAgentia->show();
+        ui->label_oddDose->show();
+        ui->lineEdit_changeVolume->show();
+        ui->CMB_V->show();
+        ui->label_changeNewAgentia->setText("更新为：");
         break;
     }
     default:
@@ -429,12 +433,6 @@ void Execut_window::getAgentiaPositionInfo(int i)//1：入柜 尺寸 2：还 位
             }
         }
     }
-    else if((execute_V->execute_model == 4))
-    {
-
-        ui->label_changeNewAgentia->setText("剩余：");
-    }
-
 }
 
 void Execut_window::updateShowInfo(QString A_name, QString Volume, QString Position)
@@ -460,7 +458,7 @@ void Execut_window::http_PG_AgentiaInfo(int order, int i)// order 2：入柜上�
     }
 }
 
-int Execut_window::pBt_operate(int order)//0：下一步 1：查询
+void Execut_window::pBt_operate(int order)//0：下一步 1：查询
 {
 
      if(order == 0)

@@ -13,7 +13,6 @@ CheckBoxDelegate::CheckBoxDelegate(QObject *parent) :
 }
 
 
-
 void CheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 
@@ -23,37 +22,25 @@ void CheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         viewOption.state = viewOption.state ^ QStyle::State_HasFocus;
 
     QStyledItemDelegate::paint(painter, viewOption, index);
+    QStyleOptionButton checkBoxStyle;
 
-//    if(index.column() == CHECKBOX_COLUMN_0)
-//    {
+    QString data1 = index.model()->data(index).toString();
 
+    if(data1 == "未选择")
+    {
+        checkBoxStyle.state =  QStyle::State_Off;
+    }
+    else if(data1 == "选择"){
+        checkBoxStyle.state =  QStyle::State_On;
+    }
 
-        QStyleOptionButton checkBoxStyle;
+    checkBoxStyle.state |= QStyle::State_Enabled;
+    checkBoxStyle.iconSize = QSize(30,30);
+    checkBoxStyle.rect = option.rect;
 
-        QString data1 = index.model()->data(index).toString();
+    QCheckBox checkBox;
+    QApplication::style()->drawPrimitive(QStyle::PE_IndicatorCheckBox, &checkBoxStyle, painter, &checkBox);
 
-//        qDebug()<<data1;
-
-        if(data1 == "未选择")
-        {
-            checkBoxStyle.state =  QStyle::State_Off;
-        }
-        else if(data1 == "选择"){
-            checkBoxStyle.state =  QStyle::State_On;
-        }
-
-
-
-//        checkBoxStyle.state = data ? QStyle::State_On : QStyle::State_Off;
-        checkBoxStyle.state |= QStyle::State_Enabled;
-        checkBoxStyle.iconSize = QSize(30,30);
-        checkBoxStyle.rect = option.rect;
-
-
-
-        QCheckBox checkBox;
-        QApplication::style()->drawPrimitive(QStyle::PE_IndicatorCheckBox, &checkBoxStyle, painter, &checkBox);
-//   }
 }
 
 bool CheckBoxDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
@@ -69,12 +56,14 @@ bool CheckBoxDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, con
 
             QString data1 = index.model()->data(index).toString();
             if(data1 == "未选择")
+            {
                 model->setData(index, "选择");
-            else if(data1 == "选择")
-            {    model->setData(index, "未选择");
-
-
             }
+            else if(data1 == "选择")
+            {
+                model->setData(index, "未选择");
+            }
+
             emit headUP(1);//更改表头状态
         }
     }

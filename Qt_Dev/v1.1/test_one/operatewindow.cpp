@@ -36,17 +36,12 @@ OperateWindow::OperateWindow(QWidget *parent) :
     ui->tableView_showSearchInfo->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->tableView_showSearchInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
 
-
-
     ui->tableView_showExecuteInfo->setHorizontalHeader(EHeader);
     ui->tableView_showExecuteInfo->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->tableView_showExecuteInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);//窗口不可编辑
 
-
-
     connect(pHeader,SIGNAL(stateUP(int)),this,SLOT(onState(int)));//头改子列
     connect(EHeader,SIGNAL(stateUP_ES(int)),this,SLOT(onState(int)));
-
 
     connect(checkBoxDelegate,SIGNAL(headUP(int)),pHeader,SLOT(SetHeaderBox(int)));//子改头列
     connect(checkBoxDelegate,SIGNAL(headUP(int)),EHeader,SLOT(SetHeaderBox(int)));
@@ -57,7 +52,6 @@ OperateWindow::OperateWindow(QWidget *parent) :
     connect(add_NewOperate,SIGNAL(sendNewFromPBT(int)),this,SLOT(receiveAddNew(int)));//添加信息
     connect(del_NewOperate,SIGNAL(sendNewFromPBT(int)),this,SLOT(receiveAddNew(int)));//删除信息
     connect(change_NewOperate,SIGNAL(sendNewFromPBT(int)),this,SLOT(receiveAddNew(int)));//修改信息
-
 
     connect(this,SIGNAL(sendInfo_To_AgentiaInfoChange(int,int,int)),AgentiaInfoChange_execute_Page,SLOT(sendUP_Info(int,int,int)));//更新状态
     connect(this,SIGNAL(sendInfo_To_agentiaInfoChangePageForEnable(int)),AgentiaInfoChange_execute_Page,SLOT(receiverUpEnable(int)));//初始化显示状态
@@ -87,11 +81,10 @@ void OperateWindow::onState(int state)
         if(state == 1)
         {
             setInfo = "选择";
-
-        }else{
-
+        }
+        else
+        {
             setInfo = "未选择";
-
         }
 
         for(int i = 0; i < countRow; i++)
@@ -99,17 +92,16 @@ void OperateWindow::onState(int state)
             T_model_Other_Search->setData(T_model_Other_Search->index(i,1),QString("%1").arg(setInfo));
         }
     }
-    if((state == 2) || (state == 3))
+    else if((state == 2) || (state == 3))
     {
         countRow = T_model_Other_Execut->rowCount();
         if(state == 3)
         {
             setInfo = "选择";
-
-        }else{
-
+        }
+        else
+        {
             setInfo = "未选择";
-
         }
 
         for(int i = 0; i < countRow; i++)
@@ -125,6 +117,7 @@ OperateWindow::~OperateWindow()
 {
     delete ui;
 }
+
 /********************************/
 void OperateWindow::on_Bt_backBefore_clicked()
 {
@@ -135,18 +128,21 @@ void OperateWindow::on_Bt_backBefore_clicked()
 void OperateWindow::on_Bt_searchInfo_clicked()
 {
     QString agentiaName = ui->lineEdit_getSearchInfo->text();//获取搜索框的内容
+
     if(agentiaName == "")
     {
         if(T_table->dialog_model == 1)
         {
             tableInit(1);
         }
-        if(T_table->dialog_model == 2)
+        else if(T_table->dialog_model == 2)
         {
             tableInit(2);
         }
 
-    }else{
+    }
+    else
+    {
         T_model_Other_Search->setFilter(QString("agentiaName like '%%1%'").arg(agentiaName));//筛选结果
     }
 }
@@ -189,6 +185,7 @@ void OperateWindow::on_Bt_execute_clicked()
                       {
                           T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
                       }
+
                       T_model_Other_Execut->submitAll();
 
                       if(allrow == 0)
@@ -197,21 +194,17 @@ void OperateWindow::on_Bt_execute_clicked()
                           qMebox.setText("没有可执行信息");
                           qMebox.exec();
                       }
-                      else{
+                      else
+                      {
                           Operate_execut_Page->executeInit(1);
                           Operate_execut_Page->exec();
                       }
-
-
                   }
               }
               else
               {
-
-
                   Operate_execut_Page->executeInit(1);
                   Operate_execut_Page->exec();
-
               }
 
         }
@@ -232,6 +225,11 @@ void OperateWindow::on_Bt_execute_clicked()
             Sheet_Operate_execute_Page->modelOption(5);
             Sheet_Operate_execute_Page->exec();
         }
+        else if(T_table->dialog_model == 6)//点验
+        {
+            Operate_execut_Page->executeInit(6);
+            Operate_execut_Page->exec();
+        }
 
     }
 
@@ -241,6 +239,7 @@ void OperateWindow::on_Bt_execute_clicked()
 void OperateWindow::on_Bt_delete_clicked()
 {
     int countRow = T_model_Other_Execut->rowCount();
+
     for(int i = 0;i < countRow; i++)
     {
         QString getValue = T_model_Other_Execut->data(T_model_Other_Execut->index(i,1)).toString();
@@ -252,8 +251,8 @@ void OperateWindow::on_Bt_delete_clicked()
 
     emit stateUp_OperatePage(1);
 
-//    T_model_Other_Search->submitAll();
-//    T_model_Other_Execut->submitAll();
+    T_model_Other_Search->submitAll();
+    T_model_Other_Execut->submitAll();
 
 }
 
@@ -265,7 +264,6 @@ void OperateWindow::on_Bt_add_clicked()
     int countRow_P = T_model_Other_Execut->rowCount();
 
     rowNum = countRow_P;
-
 
     for(int i = 0;i < countRow_S; i++)
     {
@@ -280,40 +278,40 @@ void OperateWindow::on_Bt_add_clicked()
     }
     emit stateUp_OperatePage(1);
 
-//    T_model_Other_Search->submitAll();
-//    T_model_Other_Execut->submitAll();
+    T_model_Other_Search->submitAll();
+    T_model_Other_Execut->submitAll();
 
 }
 
 void OperateWindow::on_Bt_changeInfo_A_clicked()//修改按钮
 {
-
-
     AgentiaInfoChange_execute_Page->show();
 
-
-    if(T_table->dialog_model == 4)
+    if(T_table->dialog_model == 4)//替换
     {
         emit sendInfo_To_agentiaInfoChangePageForEnable(0);
     }
-    if(T_table->dialog_model == 1)
+    else if(T_table->dialog_model == 6)//报废
+    {
+        emit sendInfo_To_agentiaInfoChangePageForEnable(2);
+    }
+    else if(T_table->dialog_model == 1)//入柜
     {
         emit sendInfo_To_agentiaInfoChangePageForEnable(1);
     }
 
      emit sendInfo_To_AgentiaInfoChange(0,2,0);//集体模式 status = 0, OK_Push = 2
-
 }
 
 
 /**************************************************/
-void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:报废
+void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:报废 6：点验
 {
     switch (num) {
     case 1 :{
-        T_table->T_execut_RelationTable="T_Task_PutIn";
-        T_table->T_search_RelationTable="T_AgentiaTypeList";
-        T_table->dialog_model=1;
+        T_table->T_execut_RelationTable = "T_Task_PutIn";
+        T_table->T_search_RelationTable = "T_AgentiaTypeList";
+        T_table->dialog_model = 1;
         ui->label_title->setText("入柜");
         ui->Bt_changeInfo_A->show();
         ui->pBt_getPosition->show();
@@ -350,6 +348,16 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         tableInit(5);
         break;
     }
+    case 6:{
+        T_table->T_execut_RelationTable = "T_AgentiaCheck";
+        T_table->T_search_RelationTable = "T_AgentiaSaving";
+        T_table->dialog_model = 6;
+        ui->label_title->setText("点验试剂");
+        ui->pBt_getPosition->hide();
+        ui->Bt_changeInfo_A->show();
+        tableInit(6);
+        break;
+    }
     default:
         break;
     }
@@ -369,14 +377,12 @@ void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修
         currentRow = ui->tableView_showSearchInfo->currentIndex().row();
         addInfo_Search_To_Execute(currentRow,countrow);
     }
-    if(option == 2)
+    else if(option == 2)
     {
         currentRow = ui->tableView_showExecuteInfo->currentIndex().row();
         delInfo_Execute(currentRow);
-
-
     }
-    if(option == 3)
+    else if(option == 3)
     {
         currentRow = ui->tableView_showExecuteInfo->currentIndex().row();
         AgentiaInfoChange_execute_Page->show();
@@ -385,14 +391,30 @@ void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修
         {
             emit sendInfo_To_agentiaInfoChangePageForEnable(0);
         }
-        if(T_table->dialog_model == 1)//入柜 使能部分输入框功能
+        else if(T_table->dialog_model == 6)//报废
+        {
+            emit sendInfo_To_agentiaInfoChangePageForEnable(2);
+        }
+        else if(T_table->dialog_model == 1)//入柜 使能部分输入框功能
         {
             emit sendInfo_To_agentiaInfoChangePageForEnable(1);
         }
+
         emit sendInfo_To_AgentiaInfoChange(1,1,currentRow);//单个模式
-
-
     }
+
+    if(T_model_Other_Execut->submitAll());
+    else
+    {
+        qDebug()<<T_model_Other_Execut->lastError().text()<<"E";
+    }
+
+    if(T_model_Other_Search->submitAll());
+    else
+    {
+        qDebug()<<T_model_Other_Search->lastError().text()<<"S";
+    }
+
 
 }
 
@@ -413,9 +435,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         QString getC_Factory = T_model_Other_Search->data(T_model_Other_Search->index(i,6)).toString();
         QString getC_ItemNo = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toString();
 
-
-
-
         T_model_Other_Execut->insertRow(rowNum);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,0),rowNum+1);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,1),QString("未选择"));
@@ -432,8 +451,8 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,16),0);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,17),0);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,18),0);
-    }
 
+    }
     else if(T_table->dialog_model == 2 || T_table->dialog_model == 5)//取
     {
 
@@ -450,7 +469,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
         int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,10)).toInt();
 
-
         T_model_Other_Execut->insertRow(rowNum);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,0),getC_No);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,1),QString("未选择"));
@@ -465,13 +483,12 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,10),getC_positionID);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,11),QString("未摆放"));
 
-
         T_model_Other_Search->removeRow(i);
 
-
     }
-    else if(T_table->dialog_model == 4)//替换
+    else if((T_table->dialog_model == 4) || (T_table->dialog_model == 6))//替换  点验
     {
+
         T_model_Other_Search->setData(T_model_Other_Search->index(i,1),QString("未选择"));
 
         int getC_No = T_model_Other_Search->data(T_model_Other_Search->index(i,0)).toInt();
@@ -485,7 +502,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
         int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,10)).toInt();
 
-
         T_model_Other_Execut->insertRow(rowNum);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,0),getC_No);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,1),QString("未选择"));
@@ -493,7 +509,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,3),getC_AName);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,4),getC_bottleCapacity);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,5),getC_dose);
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,6),QString("0ml"));
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,7),getC_expireDate);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,8),getC_drawerNo);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,9),getC_positionNo);
@@ -502,40 +517,18 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,12),getC_positionID);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),QString("未摆放"));
 
-
-
-
         T_model_Other_Search->removeRow(i);
-
-
     }
-    if(T_model_Other_Execut->submitAll());
-    else
-        qDebug()<<T_model_Other_Execut->lastError().text()<<"E";
-    if(!T_model_Other_Search->submitAll())
-        qDebug()<<T_model_Other_Search->lastError().text()<<"S";
-
-    T_model_Other_Execut->database().commit();
-    T_model_Other_Search->database().commit();
-
-
-
-
 }
 
 void OperateWindow::delInfo_Execute(int i)
 {
-
-
     if(T_table->dialog_model == 1)//删除信息
     {
         T_model_Other_Execut->removeRow(i);
     }
     else if(T_table->dialog_model == 2 || T_table->dialog_model == 5)//取  删除添加到另一处
     {
-
-
-
         T_model_Other_Execut->setData(T_model_Other_Execut->index(i,1),QString("未选择"));
 
         int getC_No = T_model_Other_Execut->data(T_model_Other_Execut->index(i,0)).toInt();
@@ -551,6 +544,7 @@ void OperateWindow::delInfo_Execute(int i)
         QString getC_judgeA = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toString();
 
         int rowNum = T_model_Other_Search->rowCount();
+
         T_model_Other_Search->insertRow(rowNum);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,0),getC_No);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,1),QString("未选择"));
@@ -565,14 +559,11 @@ void OperateWindow::delInfo_Execute(int i)
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),getC_judgeA);
 
-
         T_model_Other_Execut->removeRow(i);
 
-
     }
-    else if(T_table->dialog_model == 4)//替换
+    else if((T_table->dialog_model == 4) || (T_table->dialog_model == 6))//替换 点验
     {
-
         T_model_Other_Execut->setData(T_model_Other_Execut->index(i,1),QString("未选择"));
 
         int getC_No = T_model_Other_Execut->data(T_model_Other_Execut->index(i,0)).toInt();
@@ -586,8 +577,8 @@ void OperateWindow::delInfo_Execute(int i)
         int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toInt();
         int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,12)).toInt();
 
-
         int rowNum = T_model_Other_Search->rowCount();
+
         T_model_Other_Search->insertRow(rowNum);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,0),getC_No);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,1),QString("未选择"));
@@ -602,36 +593,20 @@ void OperateWindow::delInfo_Execute(int i)
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),QString("未操作"));
 
-
         T_model_Other_Execut->removeRow(i);
 
     }
-
-
-    if(T_model_Other_Execut->submitAll());
-    else
-        qDebug()<<T_model_Other_Execut->lastError().text()<<"E";
-    if(!T_model_Other_Search->submitAll())
-        qDebug()<<T_model_Other_Search->lastError().text()<<"S";
-
-    T_model_Other_Execut->database().commit();
-    T_model_Other_Search->database().commit();
-
-
-
 
 }
 
 void OperateWindow::upSheet_PutInWindow()
 {
     T_model_Other_Execut->select();
-
 }
 
 void OperateWindow::closePage()
 {
     emit OperateWindow_To_MainUI();
-
     this->close();
 }
 
@@ -648,13 +623,12 @@ void OperateWindow::updateNo(int order)//更新数据表格行列号
 
     if(order == 1)
     {
-
-
         for(int i = 0 ; i < E_allRow ; i++)
         {
             T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
 
         }
+
         T_model_Other_Execut->submitAll();
     }
     else if(order == 2)
@@ -664,10 +638,9 @@ void OperateWindow::updateNo(int order)//更新数据表格行列号
         for(int i = 0 ; i < S_allRow; i++)
         {
             T_model_Other_Search->setData(T_model_Other_Search->index(i,0),E_allRow+i+1);
-
         }
-        T_model_Other_Search->submitAll();
 
+        T_model_Other_Search->submitAll();
     }
 }
 
@@ -680,7 +653,6 @@ void OperateWindow::on_pBt_getPosition_clicked()
         requestPositionInfo(T_table->sendCount);
         ui->pBt_getPosition->setEnabled(false);
     }
-
 }
 
 void OperateWindow::requestPositionInfo(int i)
@@ -697,9 +669,13 @@ void OperateWindow::requestPositionInfo(int i)
         qDebug()<<"tiaoguolou";
         T_table->sendCount++;
         if(T_table->sendCount<compare)
+        {
             requestPositionInfo(T_table->sendCount);
+        }
         else
+        {
             ui->pBt_getPosition->setEnabled(true);
+        }
     }
 }
 
@@ -709,28 +685,24 @@ void OperateWindow::updatePosition(int drawer, int position, int positionId)
     T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,17),position);
     T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,18),positionId);
     T_model_Other_Execut->submitAll();
-
-
 }
 void OperateWindow::OperateError_info(int status)//显示更新信息 0：no 1：ok
 {
-
     int compare = T_model_Other_Execut->rowCount();
 
     if(status == 0)//no
     {
         T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,4),"暂缺此类位置，请更换");
         T_model_Other_Execut->submitAll();
-
-
     }
     else if(status == 1)//ok
     {
         T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,4),"已分配位置");
         T_model_Other_Execut->submitAll();
-
     }
+
     T_table->sendCount++;
+
     if(T_table->sendCount<compare)
     {
         requestPositionInfo(T_table->sendCount);
@@ -746,8 +718,6 @@ void OperateWindow::OperateError_info(int status)//显示更新信息 0：no 1�
 int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置信息是否完善
 // 0：检查size  1：检查position And drawer
 {
-
-
     QString getC_status = "" ;
     QString getC_size = "";
     QString getC_bottle = "";
@@ -758,7 +728,6 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
     int     getC_drawer   = 0;
     int rowAll = T_model_Other_Execut->rowCount();
 
-
     if(order == 0)//0：上报
     {
         getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
@@ -768,11 +737,15 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
             return 0;//0 不需要申报 1 需要申报位置
         }
         else
+        {
             return 1;
+        }
     }
+
     else if(order == 1)//1：执行
     {
         T_table->notDrawer = 0;
+
         for(int i = 0 ; i < rowAll ; i++)
         {
             getC_position = T_model_Other_Execut->data(T_model_Other_Execut->index(i,18)).toInt();
@@ -783,10 +756,11 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
                 T_model_Other_Execut->setData(T_model_Other_Execut->index(i,4),"未分配位置");
                 T_table->notDrawer++;
             }
-
         }
+
         T_model_Other_Execut->submitAll();
     }
+
     else if(order == 2)//2:检查试剂其他信息是否完善
     {
         if(T_table->dialog_model == 1)
@@ -822,8 +796,8 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
                 }
             }
         }
-
     }
+
     return 1;
 }
 
@@ -849,10 +823,8 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
         ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-        ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
-
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
         ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
-
 
         /**********************************************************************/
         T_model_Other_Execut->setTable(QString("%1").arg(T_table->T_execut_RelationTable));
@@ -878,130 +850,112 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         T_model_Other_Execut->setHeaderData(17,Qt::Horizontal,QObject::tr("抽屉号"));
         T_model_Other_Execut->setHeaderData(18,Qt::Horizontal,QObject::tr("位置"));
 
+        T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
+        ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
+    }
+    else if(modelOption == 2 || modelOption == 5)//取试剂 报废试剂
+    {
+        T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
+        T_model_Other_Search->select();
+        T_model_Other_Search->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
+        T_model_Other_Search->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
+        T_model_Other_Search->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
+        T_model_Other_Search->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
+        T_model_Other_Search->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
+        T_model_Other_Search->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
+        T_model_Other_Search->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
+        T_model_Other_Search->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
+        T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
+        T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
+
+        T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
+        ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
+
+        /**********************************************************************/
+        T_model_Other_Execut->setTable(QString("%1").arg(T_table->T_execut_RelationTable));
+        T_model_Other_Execut->select();
+
+        T_model_Other_Execut->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
+        T_model_Other_Execut->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
+        T_model_Other_Execut->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
+        T_model_Other_Execut->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
+        T_model_Other_Execut->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
+        T_model_Other_Execut->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
+        T_model_Other_Execut->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
+        T_model_Other_Execut->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
+        T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("状态"));
+        T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
 
         T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
         ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-        ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
-        ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
-
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,blake_Operate);
         ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
+
+    }
+    else if((modelOption == 4) || (modelOption == 6))//替换  点验
+    {
+        T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
+        T_model_Other_Search->select();
+        T_model_Other_Search->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
+        T_model_Other_Search->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
+        T_model_Other_Search->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
+        T_model_Other_Search->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
+        T_model_Other_Search->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
+        T_model_Other_Search->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
+        T_model_Other_Search->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
+        T_model_Other_Search->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
+        T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
+        T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
+
+        T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
+        ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(0,add_NewOperate);
+        ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
+
+        /**********************************************************************/
+        T_model_Other_Execut->setTable(QString("%1").arg(T_table->T_execut_RelationTable));
+        T_model_Other_Execut->select();
+
+        T_model_Other_Execut->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
+        T_model_Other_Execut->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
+        T_model_Other_Execut->setHeaderData(2,Qt::Horizontal,QObject::tr("修改"));
+        T_model_Other_Execut->setHeaderData(3,Qt::Horizontal,QObject::tr("试剂名"));
+        T_model_Other_Execut->setHeaderData(4,Qt::Horizontal,QObject::tr("额定容积"));
+        T_model_Other_Execut->setHeaderData(5,Qt::Horizontal,QObject::tr("试剂容量"));
+        T_model_Other_Execut->setHeaderData(6,Qt::Horizontal,QObject::tr("新放容量"));
+        T_model_Other_Execut->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
+        T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("抽屉号"));
+        T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("位置"));
+        T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("试剂类别"));
+        T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Execut->setHeaderData(12,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Execut->setHeaderData(13,Qt::Horizontal,QObject::tr("状态"));
+
+        T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
+
+        ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(0,del_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
+        ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
+
     }
 
-        if(modelOption == 2 || modelOption == 5)//取试剂 报废试剂
-        {
-            T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
-            T_model_Other_Search->select();
-            T_model_Other_Search->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
-            T_model_Other_Search->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
-            T_model_Other_Search->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
-            T_model_Other_Search->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
-            T_model_Other_Search->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
-            T_model_Other_Search->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
-            T_model_Other_Search->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
-            T_model_Other_Search->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
-            T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
-            T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
-            T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
-            T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
-
-            T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
-
-            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
-            ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
-
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
-
-
-            /**********************************************************************/
-            T_model_Other_Execut->setTable(QString("%1").arg(T_table->T_execut_RelationTable));
-            T_model_Other_Execut->select();
-
-            T_model_Other_Execut->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
-            T_model_Other_Execut->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
-            T_model_Other_Execut->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
-            T_model_Other_Execut->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
-            T_model_Other_Execut->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
-            T_model_Other_Execut->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
-            T_model_Other_Execut->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
-            T_model_Other_Execut->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
-            T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("状态"));
-            T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
-            T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
-            T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
-
-
-            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
-
-            ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,blake_Operate);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
-
-
-        }
-
-        else if(modelOption == 4)//替换
-        {
-            T_model_Other_Search->setTable(QString("%1").arg(T_table->T_search_RelationTable));
-            T_model_Other_Search->select();
-            T_model_Other_Search->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
-            T_model_Other_Search->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
-            T_model_Other_Search->setHeaderData(2,Qt::Horizontal,QObject::tr("试剂名"));
-            T_model_Other_Search->setHeaderData(3,Qt::Horizontal,QObject::tr("额定容积"));
-            T_model_Other_Search->setHeaderData(4,Qt::Horizontal,QObject::tr("试剂容量"));
-            T_model_Other_Search->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
-            T_model_Other_Search->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
-            T_model_Other_Search->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
-            T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
-            T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
-            T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
-            T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
-
-            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
-            ui->tableView_showSearchInfo->setModel(T_model_Other_Search);//关联窗口
-
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(3,add_NewOperate);
-
-            ui->tableView_showSearchInfo->setItemDelegateForColumn(1,checkBoxDelegate);
-
-
-            /**********************************************************************/
-            T_model_Other_Execut->setTable(QString("%1").arg(T_table->T_execut_RelationTable));
-            T_model_Other_Execut->select();
-
-            T_model_Other_Execut->setHeaderData(0,Qt::Horizontal,QObject::tr("添加"));
-            T_model_Other_Execut->setHeaderData(1,Qt::Horizontal,QObject::tr("勾选"));
-            T_model_Other_Execut->setHeaderData(2,Qt::Horizontal,QObject::tr("修改"));
-            T_model_Other_Execut->setHeaderData(3,Qt::Horizontal,QObject::tr("试剂名"));
-            T_model_Other_Execut->setHeaderData(4,Qt::Horizontal,QObject::tr("额定容积"));
-            T_model_Other_Execut->setHeaderData(5,Qt::Horizontal,QObject::tr("试剂容量"));
-            T_model_Other_Execut->setHeaderData(6,Qt::Horizontal,QObject::tr("新放容量"));
-            T_model_Other_Execut->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
-            T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("抽屉号"));
-            T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("位置"));
-            T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("试剂类别"));
-            T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("试剂ID"));
-            T_model_Other_Execut->setHeaderData(12,Qt::Horizontal,QObject::tr("位置ID"));
-            T_model_Other_Execut->setHeaderData(13,Qt::Horizontal,QObject::tr("状态"));
-
-
-            T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
-
-
-            ui->tableView_showExecuteInfo->setModel(T_model_Other_Execut);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(3,del_NewOperate);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(2,change_NewOperate);
-            ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
-        }
-
-
-
-
 //       this->showFullScreen();//主屏幕最大化
-
-
 
 }

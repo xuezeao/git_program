@@ -12,10 +12,8 @@ AgentiaInfoChange::AgentiaInfoChange(QWidget *parent) :
     ui(new Ui::AgentiaInfoChange)
 {
     ui->setupUi(this);
-   /* setWindowTitle(QString("信息修改界面"));//标题
-    setWindowFlags(windowFlags()&~(Qt::WindowMinimizeButtonHint|Qt::WindowMaximizeButtonHint|Qt::WindowCloseButtonHint));
-    //最大化等按钮无效化*/
     this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+
     //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
     QRegExp regx_bottleCapacity("[0-9]+$");//"[a-zA-Z0-9]+$" 长度7纯数字输入3.3格式
@@ -27,18 +25,13 @@ AgentiaInfoChange::AgentiaInfoChange(QWidget *parent) :
     ui->lineEdit_dose->setValidator(validator_dose);
 
     ui->dateEdit_expireDate->setCalendarPopup(true);
-
-
     ui->dateEdit_expireDate->setDisplayFormat("yyyy.M.d");//设置日期格式
     ui->dateEdit_expireDate->setCalendarPopup(true);
     ui->dateEdit_expireDate->setDate(QDate::currentDate());
-
-
 }
 
 void AgentiaInfoChange::closeWindow_operate()
 {
-
     addInfo_To_sheet(AInfo_sheetOrder);
     emit upSheet_PutIn();
     this->close();
@@ -59,32 +52,29 @@ void AgentiaInfoChange::sendUP_Info(int status ,int OK_Push, int sheetOrder)//�
 
         changeShowInfo(sheetOrder);
     }
-    else if(status == 0){
+    else if(status == 0)
+    {
         ui->pBt_nextOperate->setText("下一条");
         ui->pBt_previousOperate->setText("完成");
         ui->pBt_previousOperate->setEnabled(true);
 
         changeShowInfo(0);//从第一条开始执行
     }
-
-
-
 }
 
 AgentiaInfoChange::~AgentiaInfoChange()
 {
     delete ui;
-
 }
 
 void AgentiaInfoChange::on_pBt_returnPrevious_clicked()
 {
-
     closeWindow_operate();
 }
 
 void AgentiaInfoChange::on_pBt_nextOperate_clicked()
 {
+
     QSqlQuery query;
     query.exec(QString("select * from %1").arg(changeTabel));
     query.last();//定位到最后一条
@@ -92,11 +82,10 @@ void AgentiaInfoChange::on_pBt_nextOperate_clicked()
 
     if((AInfo_OK_Push == 1) || (AInfo_sheetOrder >= rowNum && AInfo_OK_Push == 0))
     {
-
         closeWindow_operate();
-
-    }else{
-
+    }
+    else
+    {
         if(AInfo_sheetOrder < rowNum)
         {
             addInfo_To_sheet(AInfo_sheetOrder);
@@ -105,7 +94,7 @@ void AgentiaInfoChange::on_pBt_nextOperate_clicked()
             ui->pBt_previousOperate->setText("上一步");
             AInfo_OK_Push = 0;
         }
-        if(AInfo_sheetOrder >= rowNum)
+        else if(AInfo_sheetOrder >= rowNum)
         {
             ui->pBt_nextOperate->setText("完成");
             AInfo_OK_Push = 1;
@@ -114,21 +103,18 @@ void AgentiaInfoChange::on_pBt_nextOperate_clicked()
         }
     }
 
-
-
     qDebug()<<"AInfo_Sheet: "<<AInfo_sheetOrder;
 }
-
-
 
 void AgentiaInfoChange::on_pBt_previousOperate_clicked()
 {
 
     if((AInfo_OK_Push == 2) || (AInfo_sheetOrder <= 0 && AInfo_OK_Push == 0))
     {
-
         closeWindow_operate();
-    }else{
+    }
+    else
+    {
         if(AInfo_sheetOrder > 0)
         {
             addInfo_To_sheet(AInfo_sheetOrder);
@@ -137,21 +123,15 @@ void AgentiaInfoChange::on_pBt_previousOperate_clicked()
             ui->pBt_nextOperate->setText("下一步");
             AInfo_OK_Push = 0;
         }
-        if(AInfo_sheetOrder <= 0)//为0的时候切换为完成功能
+        else if(AInfo_sheetOrder <= 0)//为0的时候切换为完成功能
         {
             ui->pBt_previousOperate->setText("完成");
             AInfo_OK_Push = 2;
         }
     }
 
-
-
-
-
     qDebug()<<"AInfo_Sheet: "<<AInfo_sheetOrder\
               <<"OK: "<< AInfo_OK_Push;
-
-
 }
 
 
@@ -161,10 +141,6 @@ void AgentiaInfoChange::addInfo_To_sheet(int i)
     QString getC_bottleCapacity = ui->lineEdit_bottleCapacity->text();
     QString getC_doseUint = ui->CMB_dose->currentText();
     QString getC_dose = ui->lineEdit_dose->text();
-
-
-//    getC_bottleCapacity.replace("ml","");
-//    getC_dose.replace("ml","");
 
     getC_dose += getC_doseUint;
     getC_bottleCapacity += getC_bottledose;
@@ -187,12 +163,12 @@ void AgentiaInfoChange::addInfo_To_sheet(int i)
 
         getC_newDose += getC_newDoseUint;
 
-        query.exec(QString("update T_AgentiaReplace set newdose='%1',expireDate='%2' where rowid=%3")
-                   .arg(getC_newDose).arg(getC_expireDate).arg(i+1));//rowid 从1开始
+        query.exec(QString("update %4 set newdose='%1',expireDate='%2' where rowid=%3")
+                   .arg(getC_newDose).arg(getC_expireDate).arg(i+1).arg(changeTabel));//rowid 从1开始
+
+        ui->lineEdit_newdose->clear();
     }
 
-//    query.exec(QString("select * from %1").arg(changeTabel));
-//    query.seek(0); 视乎无用
 
 }
 
@@ -222,19 +198,14 @@ void AgentiaInfoChange::changeShowInfo(int i)
         ui->label_agentiaID->setText(QString("%1").arg(getC_ID));
     }
 
-
-
     QString getC_bottleCapacity = query.value(5).toString();//额定容量
     QString getC_dose = query.value(6).toString();//实际容量
     QString getC_expireDate = query.value(8).toString();//失效日期
-
-
 
     getC_dose.replace("ml","");
     getC_dose.replace("g","");
     getC_bottleCapacity.replace("ml","");
     getC_bottleCapacity.replace("g","");
-
 
     ui->lineEdit_bottleCapacity->setText(getC_bottleCapacity);
     ui->lineEdit_dose->setText(getC_dose);
@@ -243,25 +214,6 @@ void AgentiaInfoChange::changeShowInfo(int i)
 
     ui->label_agentiaName->setText(getC_AName);
     ui->label_attribute->setText(QString("%1").arg(getC_Attribute));
-
-
-
-    /*
-     * query.next();//执行一次next，quer指向结果集的第一条记录
-      query.seek(2);//定位到编号为2的记录，即第三条记录
-      query.last();//定位到最后一条记录
-      int rowNum = query.at();//获取 rowNum
-      int columnNum = query.record().count();//获取 column
-      int fieldNo = query.record().indexOf("agentiaName");//获取所在列的编号，从左向右，0
-      int getC_AName = query.value(0).toString();//获取值
-
-    query.prepare("update T_Task_PutIn set bottleCapacity = ?,dose = ?,drawerSize = ?,expireDate = ? where id = ?");
-    query.addBindValue(getC_bottleCapacity);
-    query.addBindValue(getC_dose);
-    query.addBindValue(getC_drawerSize );
-    query.addBindValue(getC_expireDate);
-    query.addBindValue(1);
-    query.exec();*/
 
 }
 
@@ -312,6 +264,7 @@ void AgentiaInfoChange::receiverUpEnable(int status)//0:注销 1：恢复
         ui->lineEdit_newdose->show();
         ui->label_newdose->show();
         ui->CMB_newdose->show();
+        ui->lineEdit_newdose->clear();
 
         modelChoice = 0;
         changeTabel = "T_AgentiaReplace";
@@ -329,6 +282,21 @@ void AgentiaInfoChange::receiverUpEnable(int status)//0:注销 1：恢复
 
         modelChoice = 1;
         changeTabel = "T_Task_PutIn";
+    }
+    else if(status == 2)//报废
+    {
+        ui->lineEdit_dose->setEnabled(false);
+        ui->lineEdit_bottleCapacity->setEnabled(false);
+        ui->CMB_bottleCapacity->setEnabled(false);
+        ui->CMB_dose->setEnabled(false);
+        ui->comboBox_drawerSize->setEnabled(false);
+        ui->lineEdit_newdose->show();
+        ui->label_newdose->show();
+        ui->CMB_newdose->show();
+        ui->lineEdit_newdose->clear();
+
+        modelChoice = 0;
+        changeTabel = "T_AgentiaCheck";
     }
 
 }

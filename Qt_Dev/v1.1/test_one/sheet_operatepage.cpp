@@ -23,9 +23,7 @@ Sheet_OperatePage::Sheet_OperatePage(QDialog *parent) :
 
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
-
     T_model_execute = new QSqlTableModel;
-
     http_GAndP_sheetOperate = new http_GAndP;
 
     connect(http_GAndP_sheetOperate,SIGNAL(sendInfo_To_sheetPage(int)),this,SLOT(receivers_From_http(int)));//接收来自post讯号
@@ -143,7 +141,7 @@ void Sheet_OperatePage::sheetTableInit(int num)
 }
 
 
-void Sheet_OperatePage::changeInfo(int just,int i)//更改试剂信息 1: 上传成功 2：上传失败 3：未摆放
+void Sheet_OperatePage::changeInfo(int just,int i)//更改试剂信息 1: 上传成功 2：上传失败 3：未操作
 {
     QSqlQuery query;
     QString error;
@@ -498,8 +496,14 @@ void Sheet_OperatePage::sendHttp()
 
         if(T_tableexecute->rowid < rowAll)
         {
-
-           http_GAndP_sheetOperate->jsonForSend(7,T_tableexecute->T_tablesheet,T_tableexecute->rowid);
+            if(T_tableexecute->modelOperate == 2)
+            {
+                http_GAndP_sheetOperate->jsonForSend(7,T_tableexecute->T_tablesheet,T_tableexecute->rowid);
+            }
+            else if(T_tableexecute->modelOperate == 5)
+            {
+                http_GAndP_sheetOperate->jsonForSend(10,T_tableexecute->T_tablesheet,T_tableexecute->rowid);
+            }
         }
         else
         {
