@@ -10,15 +10,12 @@ ShowAllInfo::ShowAllInfo(QDialog *parent) :
     ui(new Ui::ShowAllInfo)
 {
     ui->setupUi(this);
-
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);//去掉标题栏
 
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
     T_model_show = new QSqlTableModel;
-
     ui->tableView_showInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
 }
 
 ShowAllInfo::~ShowAllInfo()
@@ -36,8 +33,6 @@ void ShowAllInfo::on_pBt_close_clicked()
     /********************************/
     emit upStatus();
     this->close();
-
-
 }
 
 /******************************************/
@@ -62,9 +57,35 @@ void ShowAllInfo::saveNotPostInfo(int order)
     int allLong = query.at()+1;
 
 
-    if(order == 0)
+    if (order == 0)
     {
-        for(int i = 0; i<allLong; i++)
+        for (int i = 0; i<allLong; i++)
+        {
+            query.seek(i);
+            getC_status = query.value(13).toString();//状态
+            if (getC_status == "正确操作" || getC_status == "上传失败")
+            {
+                getC_agentiaId = query.value(11).toInt();//试剂ID
+                getC_positionId = query.value(12).toInt();//位置ID
+                getC_dose       = query.value(4).toString();//dose
+
+                query.prepare("insert into T_WaitPostInfo (id,userId,agentiaId,\
+                              positionId,dose,judgeAttitude) values (?,?,?,?,?,?)");
+                getC_all++;
+
+                query.addBindValue(getC_all);
+                query.addBindValue(getC_userId);
+                query.addBindValue(getC_agentiaId);
+                query.addBindValue(getC_positionId);
+                query.addBindValue("0");
+                query.addBindValue("");
+                query.exec();
+            }
+        }
+    }
+    else if (order == 1)
+    {
+        for (int i = 0; i<allLong; i++)
         {
             query.seek(i);
             getC_status = query.value(13).toString();//状态
@@ -88,13 +109,14 @@ void ShowAllInfo::saveNotPostInfo(int order)
             }
         }
     }
-    else if(order == 1)
+    else if ((order == 2) ||(order == 3))
     {
-        for(int i = 0; i<allLong; i++)
+        for (int i = 0; i<allLong; i++)
         {
             query.seek(i);
             getC_status = query.value(13).toString();//状态
-            if(getC_status == "正确操作" || getC_status == "上传失败")
+
+            if ((getC_status == "正确操作") || (getC_status == "上传失败"))
             {
                 getC_agentiaId = query.value(11).toInt();//试剂ID
                 getC_positionId = query.value(12).toInt();//位置ID
@@ -114,43 +136,40 @@ void ShowAllInfo::saveNotPostInfo(int order)
             }
         }
     }
-    else if(order == 2)
-    {
-        for(int i = 0; i<allLong; i++)
-        {
-            query.seek(i);
-            getC_status = query.value(13).toString();//状态
-            if(getC_status == "正确操作" || getC_status == "上传失败")
-            {
-                getC_agentiaId = query.value(11).toInt();//试剂ID
-                getC_positionId = query.value(12).toInt();//位置ID
-                getC_dose       = query.value(4).toString();//dose
-
-                query.prepare("insert into T_WaitPostInfo (id,userId,agentiaId,\
-                              positionId,dose,judgeAttitude) values (?,?,?,?,?,?)");
-                getC_all++;
-
-                query.addBindValue(getC_all);
-                query.addBindValue(getC_userId);
-                query.addBindValue(getC_agentiaId);
-                query.addBindValue(getC_positionId);
-                query.addBindValue("0");
-                query.addBindValue("");
-                query.exec();
-            }
-        }
-    }
-
-
 }
 
-
-void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换
+void ShowAllInfo::InitVariable(int order)
 {
-    if(order == 2) // 替换
-    {
-        saveNotPostInfo(2);
+    switch (order) {
+    case 0:{
+        T_name = "T_Task_PutIn";
+        break;
+    }
+    case 1:{
+        T_name = "T_AgentiaWaitExecute";
+        break;
+    }
+    case 2:{
         T_name = "T_AgentiaReplace";
+        break;
+    }
+    case 3:{
+        T_name = "T_AgentiaCheck";
+    }
+    default:
+        break;
+    }
+
+    saveNotPostInfo(order);
+}
+
+void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
+{
+    InitVariable(order);
+
+    if ((order == 2) || (order == 3)) // 替换  点验
+    {
+
         T_model_show->setTable(QString("%1").arg(T_name));
         T_model_show->select();
         T_model_show->setHeaderData(3,Qt::Horizontal,QObject::tr("试剂名"));
@@ -173,10 +192,9 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换
         ui->tableView_showInfo->setColumnHidden(11,true);
         ui->tableView_showInfo->setColumnHidden(12,true);
     }
-    else if(order == 1) //还
+    else if (order == 1) //还
     {
-        saveNotPostInfo(1);
-        T_name = "T_AgentiaWaitExecute";
+
         T_model_show->setTable(QString("%1").arg(T_name));
         T_model_show->select();
 
@@ -201,10 +219,8 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换
         ui->tableView_showInfo->setColumnHidden(12,true);
 
     }
-    else if(order == 0) // 入柜
-    {
-        saveNotPostInfo(0);
-        T_name = "T_Task_PutIn";
+    else if (order == 0) // 入柜
+    {    
         T_model_show->setTable(QString("%1").arg(T_name));
         T_model_show->select();
         T_model_show->setHeaderData(3,Qt::Horizontal,QObject::tr("试剂名"));

@@ -150,7 +150,7 @@
     </rect>
    </property>
    <property name="placeholderText">
-    <string>如果更新数据，必须输入</string>
+    <string>如果更新数据，必须输入；不输入视为信息正确</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_oddDose">

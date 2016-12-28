@@ -56,20 +56,23 @@ void Execut_window::updateReturn(int status)//0 成功 1 失败 2 未放置
     query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")//update %1 set judgeAttitude='%2' where rowid=%3
                    .arg(execute_V->T_executeTable).arg(QString(error)).arg(execute_V->httpCount));
 
-
-    if(execute_V->httpCount < execute_V->acountRow)
+    if (execute_V->httpCount < execute_V->acountRow)
     {
-        if(execute_V->execute_model == 1)
+        if (execute_V->execute_model == 1)
         {
             http_PG_AgentiaInfo(1,execute_V->httpCount);
         }
-        else if(execute_V->execute_model == 2)
+        else if (execute_V->execute_model == 2)
         {
             http_PG_AgentiaInfo(2,execute_V->httpCount);
         }
-        else if(execute_V->execute_model == 4)
+        else if (execute_V->execute_model == 4)
         {
             http_PG_AgentiaInfo(4,execute_V->httpCount);
+        }
+        else if (execute_V->execute_model == 6)
+        {
+            http_PG_AgentiaInfo(6,execute_V->httpCount);
         }
     }
     else
@@ -128,14 +131,14 @@ void Execut_window::on_pBt_cancal_clicked()
 {
     executeInfoError(1,"正在上报，请稍后");
 
-    if(execute_V->execute_model == 2)
+    if (execute_V->execute_model == 2)
     {
         ui->pBt_cancal->hide();
         ui->pBt_next->hide();
         ui->pBt_ignore->hide();
         http_PG_AgentiaInfo(2,0);
     }
-    else if(execute_V->execute_model == 1)
+    else if (execute_V->execute_model == 1)
     {
         ui->pBt_cancal->hide();
         ui->pBt_next->hide();
@@ -143,12 +146,19 @@ void Execut_window::on_pBt_cancal_clicked()
         http_PG_AgentiaInfo(1,0);
 
     }
-    else if(execute_V->execute_model == 4)
+    else if (execute_V->execute_model == 4)
     {
         ui->pBt_cancal->hide();
         ui->pBt_ignore->hide();
         ui->pBt_next->hide();
         http_PG_AgentiaInfo(4,0);
+    }
+    else if (execute_V->execute_model == 6)
+    {
+        ui->pBt_cancal->hide();
+        ui->pBt_ignore->hide();
+        ui->pBt_next->hide();
+        http_PG_AgentiaInfo(6,0);
     }
 }
 
@@ -163,24 +173,20 @@ void Execut_window::on_pBt_next_clicked()
             pBt_operate(1);
             qDebug()<<"click next pushBotton ";
         }
-
     }
     else
     {
         executeInfoError(0, "请输入剩余容量");
     }
-
-
-
-
 }
+
 void Execut_window::on_pBt_ignore_clicked()
 {
     /**********跳过*********************/
     SCI_send(2);
     operateNext();
     executeInfoError(1,"请取走试剂");
-    if((execute_V->judgeStatus == 1)&&(execute_V->execute_model == 4))
+    if((execute_V->judgeStatus == 1)&&((execute_V->execute_model == 4) || (execute_V->execute_model == 6)))
     {
         changeAgentiaStatus(6,2);//这时候跳过属于报废试剂操作
         execute_V->judgeStatus = 0;//每一次跳过都是新的试剂信息
@@ -256,7 +262,11 @@ void Execut_window::initVariable()
     execute_V->drawerAcount =1;
     execute_V->positionId = 0;
     execute_V->judgeStatus = 0;
-    for(int i = 0 ;i < 33 ; i++)
+    ui->lineEdit_changeVolume->clear();
+    ui->pBt_ignore->setEnabled(true);
+    ui->pBt_cancal->setEnabled(true);
+
+    for (int i = 0 ;i < 33 ; i++)
     {
         saveDrawer[i] = 0;
         saveRowid [i] = 0;
@@ -269,11 +279,12 @@ void Execut_window::initVariable()
 
     getAllCount();
 
-    if(saveDrawer[0] == 0)
+    if (saveDrawer[0] == 0)
     {
         this->close();
     }
-    else{
+    else
+    {
        searchPositionInfo(execute_V->T_executeTable,1);//如果抽屉数为零关闭，否则获取saveDrawer[1]的位置数和号码
     }
 
@@ -281,7 +292,7 @@ void Execut_window::initVariable()
 
 }
 
-void Execut_window::getAllCount()
+void Execut_window::getAllCount(void)
 {
     QSqlQuery query;
     int temporaryA = 0;
@@ -290,28 +301,28 @@ void Execut_window::getAllCount()
     int choiceModel = 0;//选择drawerNo的位置
     saveDrawer[0] = 0;
 
-    if(execute_V->execute_model == 1)//入柜
+    if (execute_V->execute_model == 1)//入柜
     {
         choiceModel = 17;
     }
-    else if(execute_V->execute_model == 2)//还
+    else if (execute_V->execute_model == 2)//还
     {
         choiceModel = 9;
     }
-    else if(execute_V->execute_model == 4)//替换
+    else if ((execute_V->execute_model == 4) || (execute_V->execute_model == 6))//替换
     {
         executeInfoError(1,"请取出试剂");
         choiceModel = 8;
     }
 
-    if((execute_V->execute_model == 2)||(execute_V->execute_model == 1)||(execute_V->execute_model == 4))
+    if ((execute_V->execute_model == 2) || (execute_V->execute_model == 1) ||\
+            (execute_V->execute_model == 4) || (execute_V->execute_model == 6))
     {
 
         query.exec(QString("SELECT * from %1 ORDER BY drawerNo ASC").arg(execute_V->T_executeTable));
 
         query.last();
         execute_V->acountRow = query.at()+1;//0
-
 
         for(int i = 0; i < execute_V->acountRow; i++)
         {
@@ -349,8 +360,6 @@ void Execut_window::searchPositionInfo(QString name,int i)//获取对应抽屉�
         saveRowid[0] = i+1;
         saveRowid[i+1] = query.value(0).toInt();
     }
-
-
 }
 
 void Execut_window::getAgentiaPositionInfo(int i)//1：入柜 尺寸 2：还 位置
@@ -369,23 +378,21 @@ void Execut_window::getAgentiaPositionInfo(int i)//1：入柜 尺寸 2：还 位
     query.next();
 
 
-    if(execute_V->execute_model == 2)
+    if (execute_V->execute_model == 2)
     {
         A_name = query.value(2).toString();
         A_Drawer  = query.value(9).toInt();
         A_Position = query.value(10).toInt();
         Volume = query.value(4).toString();
-
-
     }
-    else if(execute_V->execute_model == 1)
+    else if (execute_V->execute_model == 1)
     {     
         A_name = query.value(3).toString();
         A_Drawer  = query.value(17).toInt();
         A_Position = query.value(18).toInt();
         Volume = query.value(6).toString();
     }
-    else if(execute_V->execute_model == 4)
+    else if ((execute_V->execute_model == 4) || (execute_V->execute_model == 6))
     {
         A_name = query.value(3).toString();
         A_Drawer =query.value(8).toInt();
@@ -395,9 +402,12 @@ void Execut_window::getAgentiaPositionInfo(int i)//1：入柜 尺寸 2：还 位
         newDose = query.value(6).toString();
         newDose.replace("ml","");
         newDose.replace("g","");
-        execute_V->newDose = newDose;
-        ui->lineEdit_changeVolume->setText(newDose);
 
+        if ("" != newDose)
+        {
+            execute_V->newDose = newDose;
+            ui->lineEdit_changeVolume->setText(newDose);
+        }
     }
 
 
@@ -410,23 +420,23 @@ void Execut_window::getAgentiaPositionInfo(int i)//1：入柜 尺寸 2：还 位
 
     updateShowInfo(A_name,Volume,position);
 
-    if((execute_V->execute_model == 1)||(execute_V->execute_model == 2))
+    if ((execute_V->execute_model == 1)||(execute_V->execute_model == 2))
     {
         executeInfoError(1,"请继续操作");//更新显示
 
-        if(execute_V->execute_model == 2)
+        if (execute_V->execute_model == 2)
         {
             judgeAttitude = query.value(13).toString();
 
-            if(judgeAttitude == "归还")
+            if (judgeAttitude == "归还")
             {
                 ui->label_changeNewAgentia->setText("剩余：");
             }
-            else if(judgeAttitude == "替换")
+            else if (judgeAttitude == "替换")
             {
                 ui->label_changeNewAgentia->setText("替换为：");
             }
-            else if(judgeAttitude == "报废")
+            else if (judgeAttitude == "报废")
             {
                 changeAgentiaStatus(6,0);
                 operateNext();
@@ -444,36 +454,38 @@ void Execut_window::updateShowInfo(QString A_name, QString Volume, QString Posit
 
 void Execut_window::http_PG_AgentiaInfo(int order, int i)// order 2：入柜上传 3：还上传
 {
-    if(order == 1)
+    if (order == 1)
     {
         Execut_http_GAndP->jsonForSend(6,execute_V->T_executeTable,i);//入柜
     }
-    else if(order == 2)
+    else if (order == 2)
     {
         Execut_http_GAndP->jsonForSend(8,execute_V->T_executeTable,i);//还
     }
-    else if(order == 4)
+    else if (order == 4)
     {
         Execut_http_GAndP->jsonForSend(9,execute_V->T_executeTable,i);//替换
+    }
+    else if (order == 6)
+    {
+        Execut_http_GAndP->jsonForSend(12,execute_V->T_executeTable,i);//替换
     }
 }
 
 void Execut_window::pBt_operate(int order)//0：下一步 1：查询
 {
 
-     if(order == 0)
+     if (order == 0)
      {
-        if(execute_V->currentAcount < execute_V->acountRow+1)
+        if (execute_V->currentAcount < execute_V->acountRow+1)
         {
 
 
-            if((execute_V->execute_model == 2)||(execute_V->execute_model == 1)||
-                    (execute_V->execute_model == 4))
+            if ((execute_V->execute_model == 2)||(execute_V->execute_model == 1)||  \
+               (execute_V->execute_model == 4) || (execute_V->execute_model == 6))
             {
-                if(execute_V->orderPosition <= saveRowid[0])
+                if (execute_V->orderPosition <= saveRowid[0])
                 {
-
-
                     getAgentiaPositionInfo(execute_V->orderPosition);
                 }
                 else
@@ -482,13 +494,11 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
 //                    checkLockStatus();
 
                     /*****************************************/
-                    if(execute_V->drawerAcount <= saveDrawer[0])
+                    if (execute_V->drawerAcount <= saveDrawer[0])
                     {
                         execute_V->orderPosition = 1;
-
                         execute_V->drawerAcount++;
                         searchPositionInfo(execute_V->T_executeTable,execute_V->drawerAcount);
-
                         pBt_operate(0);
                     }
                 }
@@ -506,23 +516,27 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
             ui->pBt_next->hide();
             ui->pBt_ignore->hide();
 
-            if(execute_V->execute_model == 2)
+            if (execute_V->execute_model == 2)
             {
                 http_PG_AgentiaInfo(2,0);
             }
-            else if(execute_V->execute_model == 1)
+            else if (execute_V->execute_model == 1)
             {     
                 http_PG_AgentiaInfo(1,0);
             }
-            else if(execute_V->execute_model == 4)
+            else if (execute_V->execute_model == 4)
             {
                 http_PG_AgentiaInfo(4,0);
+            }
+            else if (execute_V->execute_model == 6)
+            {
+                http_PG_AgentiaInfo(6,0);
             }
 
         }
 
     }
-    else if(order == 1)
+    else if (order == 1)
     {
 
         int Error;//0: 错误 1：未完成 2：正确
@@ -531,67 +545,88 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
         Error=SCI_send(1);
         Error = execute_V->test;
         /**********************/
-        if(Error == 2)//正确
+        if (Error == 2)//正确
         {
             ui->pBt_cancal->show();
             ui->pBt_ignore->show();
             SCI_send(2);         
 
-            if(execute_V->execute_model == 1 || execute_V->execute_model == 2)
+            if (execute_V->execute_model == 1 || execute_V->execute_model == 2)
             {
                 executeInfoError(1,"操作正确，请下一个任务");
-                if(execute_V->execute_model == 2)
+                if (execute_V->execute_model == 2)
                 {
                     QString dose = ui->lineEdit_changeVolume->text();
                     QString uint = ui->CMB_V->currentText();
                     execute_V->newDose = dose+uint;
                     changeAgentiaStatus(4,1);
                 }
-                else if(execute_V->execute_model == 1)
+                else if (execute_V->execute_model == 1)
                 {
                     changeAgentiaStatus(4,1);
                 }
 
             }
-            else if(execute_V->execute_model == 4)
+            else if (execute_V->execute_model == 4)
             {
-                if(execute_V->judgeStatus == 0)
+                if (execute_V->judgeStatus == 0)
                 {
                      executeInfoError(1,"操作正确，请放入替换试剂");
                      execute_V->judgeStatus = 1;
                 }
-                else if(execute_V->judgeStatus == 1)
+                else if (execute_V->judgeStatus == 1)
                 {
                     executeInfoError(1,"请取出试剂");
                     changeAgentiaStatus(4,2);
                     execute_V->judgeStatus = 0;
                 }
+            }
+            else if (execute_V->execute_model == 6)
+            {
+                if (execute_V->judgeStatus == 0)
+                {
+                    executeInfoError(1,"已取出！错误请直接下一步");
+                    execute_V->judgeStatus = 1;
+                }
+                else if (execute_V->judgeStatus == 1)
+                {
+                    executeInfoError(1,"请取出试剂");
 
+                    if ("" == ui->lineEdit_changeVolume->text())
+                    {
+                        changeAgentiaStatus(4,2);
+                    }
+                    else
+                    {
+                        changeAgentiaStatus(7,2);
+                    }
+
+                    execute_V->judgeStatus = 0;
+                }
             }
 
             operateNext();
-
-
         }
-        else if(Error == 1)//未完成
+        else if (Error == 1)//未完成
         {
             ui->pBt_ignore->show();
             ui->pBt_cancal->show();
 
-            if((execute_V->execute_model == 1)||(execute_V->execute_model == 2))
+            if ((execute_V->execute_model == 1)||(execute_V->execute_model == 2))
             {
                 executeInfoError(2,"点击跳过，跳过本次任务");
                 changeAgentiaStatus(3,2);
             }
-            else if(execute_V->execute_model == 4)
+            else if ((execute_V->execute_model == 4) || (execute_V->execute_model == 6))
             {
-                if(execute_V->judgeStatus == 0)//第一次
+                if (execute_V->judgeStatus == 0)//第一次
                 {
                     executeInfoError(2,"点击跳过，跳过本次任务");
                     changeAgentiaStatus(3,2);
                 }
-                else if(execute_V->judgeStatus == 1)//第二次
+                else if (execute_V->judgeStatus == 1)//第二次
                 {
+
                     executeInfoError(2,"点击跳过，报废试剂");
                     changeAgentiaStatus(6,2);//报废操作
                     execute_V->judgeStatus = 0;
@@ -606,7 +641,6 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
             ui->pBt_ignore->hide();
             executeInfoError(0,"错误，请更正！");
             changeAgentiaStatus(5,0);
-
         }
 
      execute_V->pBt_status = 1;
@@ -619,37 +653,46 @@ void Execut_window::changeAgentiaStatus(int just , int order)
 {
     QSqlQuery query;
     QString error;
-    if(just == 1)
+    if (just == 1)
     {
         error = "上传成功";
-
-    }else if(just == 2)
+    }
+    else if (just == 2)
     {
         error = "上传失败";
-    }else if(just == 3)
+    }
+    else if (just == 3)
     {
         error = "未操作";
-    }else if(just == 4)
+    }
+    else if (just == 4)
     {
         error = "正确操作";
-    }else if(just == 5)
+    }
+    else if (just == 5)
     {
         error = "错误操作";
-    }else if(just == 6)
+    }
+    else if (just == 6)
     {
         error = "报废操作";
     }
-
-    if((execute_V->execute_model == 2)||(execute_V->execute_model == 1)||(execute_V->execute_model == 4))
+    else if (just == 7)
     {
-        if(order == 1)
+        error = "替换操作";
+    }
+
+    if ((execute_V->execute_model == 2) || (execute_V->execute_model == 1) ||  \
+            (execute_V->execute_model == 4) || (execute_V->execute_model == 6))
+    {
+        if (order == 1)
         {
             query.exec(QString("update %1 set judgeAttitude='%2',dose='%3' where id=%4")
                    .arg(execute_V->T_executeTable).arg(error).arg(execute_V->newDose).arg(saveRowid[execute_V->orderPosition]));
 
 //            ui->lineEdit_changeVolume->clear();//清空输入款内容 测试阶段暂不清空
         }
-        else if(order == 2)
+        else if (order == 2)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
                    .arg(execute_V->T_executeTable).arg(error).arg(saveRowid[execute_V->orderPosition]));
@@ -663,39 +706,34 @@ void Execut_window::executeInfoError(int num, QString error)//输出任务状态
 //任务完成情况 0-error  1-操作OK 2-跳过 3 显示OK
 {
 
-    if(num == 0)
+    if (num == 0)
     {
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::red);
         ui->label_RoleStatus->setPalette(pe);
     }
-    else if(num == 1)//显示完成并修改数据库
+    else if (num == 1)//显示完成并修改数据库
     {
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::green);
         ui->label_RoleStatus->setPalette(pe);
 
     }
-    else if(num == 2)
+    else if (num == 2)
     {
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::blue);
         ui->label_RoleStatus->setPalette(pe);
 
     }
-    else if(num == 3)
+    else if (num == 3)
     {
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::green);
         ui->label_RoleStatus->setPalette(pe);
     }
 
-
     ui->label_RoleStatus->setText(error);
-/****************************************/
-
-
-
 }
 
 void Execut_window::savePostFalseInfo()//保存上传失败的试剂
@@ -703,14 +741,15 @@ void Execut_window::savePostFalseInfo()//保存上传失败的试剂
     int getC_agentiaId;
     int getC_positionId;
     QSqlQuery query;
-    if(execute_V->execute_model == 1)
+
+    if (execute_V->execute_model == 1)
     {
         query.exec(QString("select * from %1").arg(execute_V->T_executeTable));
         query.seek(execute_V->currentAcount);
         getC_agentiaId = query.value(10).toInt();//试剂ID
         getC_positionId = execute_V->positionId;//位置ID
     }
-    else if(execute_V->execute_model ==2 )
+    else if (execute_V->execute_model ==2 )
     {
         query.exec(QString("select * from %1").arg(execute_V->T_executeTable));
         query.seek(execute_V->currentAcount);
@@ -738,27 +777,31 @@ void Execut_window::savePostFalseInfo()//保存上传失败的试剂
 
 }
 
-void Execut_window::operateNext()//执行下一步操作
+void Execut_window::operateNext(void)//执行下一步操作
 {
-
-
-    if(execute_V->execute_model == 2 || execute_V->execute_model == 1)
+    if (execute_V->execute_model == 2 || execute_V->execute_model == 1)
     {
         execute_V->currentAcount++;
         execute_V->orderPosition++;
     }
-    else if(execute_V->execute_model == 4)
+    else if ((execute_V->execute_model == 4) || (execute_V->execute_model == 6))
     {
-        if(execute_V->judgeStatus == 0)//第一次替换取
+        if (execute_V->judgeStatus == 0)//第一次替换取
         {
             execute_V->currentAcount++;
             execute_V->orderPosition++;
+
+            ui->lineEdit_changeVolume->clear();
+            ui->pBt_ignore->setEnabled(true);
+            ui->pBt_cancal->setEnabled(true);
         }
-        else if(execute_V->judgeStatus == 1)//第二次替换放
+        else if (execute_V->judgeStatus == 1)//第二次替换放
         {
-            ;
+            ui->pBt_ignore->setEnabled(false);
+            ui->pBt_cancal->setEnabled(false);
         }
     }
+
     pBt_operate(0);
 }
 
@@ -778,35 +821,37 @@ void Execut_window::closePage()
 {
     this->close();
 
-    if(execute_V->execute_model == 2)
+    if (execute_V->execute_model == 2)
     {
         Show_Info->showInfo(1);
     }
-    else if(execute_V->execute_model == 1)
+    else if (execute_V->execute_model == 1)
     {
         Show_Info->showInfo(0);
     }
-    else if(execute_V->execute_model == 4)
+    else if (execute_V->execute_model == 4)
     {
         Show_Info->showInfo(2);
+    }
+    else if (execute_V->execute_model == 6)
+    {
+        Show_Info->showInfo(3);
     }
 
     Show_Info->exec();
 }
 
 /*****************************************/
-
-
-
-
 void Execut_window::on_pushButton_clicked()
 {
-    if(execute_V->test == 2)
+    if (execute_V->test == 2)
     {
         execute_V->test = 0;
     }
     else
+    {
         execute_V->test++;
+    }
 
     qDebug()<<"OK  -----";
 }
@@ -821,7 +866,7 @@ void Execut_window::waitTaskInfo(int tim)//延时ms
     }
 }
 
-void Execut_window::checkLockStatus()//抽屉关闭返回0
+void Execut_window::checkLockStatus(void)//抽屉关闭返回0
 {
     if(SCI_send(3))
     {

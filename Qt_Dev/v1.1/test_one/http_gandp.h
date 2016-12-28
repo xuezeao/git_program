@@ -32,7 +32,7 @@ class http_GAndP : public QObject
     Q_OBJECT
 public:
     explicit http_GAndP(QObject *parent = 0);
-    void getHttp();
+    void getHttp(void);
     //0 测试地址 1获取再位试剂列表 2获取试剂类型列表 3获取待归还试剂
     void postHttp(int postName_NO,QString postStr);//postName_NO用于选择接口名对应的序号，postStr用于装载需要发送内容
 

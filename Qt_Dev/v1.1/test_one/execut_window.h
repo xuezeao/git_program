@@ -42,11 +42,11 @@ private:
     http_GAndP *Execut_http_GAndP;
     ShowAllInfo *Show_Info;
 
-    void initVariable();//初始化变量
+    void initVariable(void);//初始化变量
     void closePage();//关闭页面操作
 
     void pBt_operate(int order);//按钮操作 //0：下一步 1：查询
-    void operateNext();//执行下一步
+    void operateNext(void);//执行下一步
 
     void http_PG_AgentiaInfo(int order,int i);//上传/获取 药剂信息 order0:无用 2：入柜上传 3：还上传
     void changeAgentiaStatus(int just,int order);//更改药剂状态 order 内部区分 0:无操作 1：正常 2：跳过
@@ -57,11 +57,11 @@ private:
 
     int  SCI_send(int order);//0:下发包含开锁 1：查询 2：完成 3:查锁 int Error;//0: 错误 1：未完成 2：正确
     void searchPositionInfo(QString name, int i);//检索药剂位置
-    void getAllCount();//获取总的行数
+    void getAllCount(void);//获取总的行数
     void moveAgentia();//误操作信息记录
     void executeInfoError(int num,QString error);//任务完成情况 0-error  1-OK 2-跳过 输出任务状态并执行未成功数据保存
     void waitTaskInfo(int tim);//延时ms
-    void checkLockStatus();//检测锁的状态
+    void checkLockStatus(void);//检测锁的状态
 
     struct Execute_Variable{
         int execute_model;//1：入柜 2：还

@@ -33,6 +33,7 @@ private:
     QString T_name;
 
     void saveNotPostInfo(int order);//保存未上传但是正确操作的试剂信息
+    void InitVariable(int order);
 
 
 

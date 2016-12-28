@@ -15,7 +15,7 @@ http_GAndP::http_GAndP(QObject *parent) :
 
 }
 
-void http_GAndP::getHttp()
+void http_GAndP::getHttp(void)
 {
     QNetworkRequest *request=new QNetworkRequest();
     //request->setUrl(QUrl("http://121.41.78.9:3000/arm/getTest"));
@@ -83,31 +83,31 @@ void http_GAndP::postHttp(int postName_NO,QString postStr)
         Http_ModelChoice = 10;
         break;
     }
-
     case 11 :{
         address = "login";//登入
         Http_ModelChoice = 11;
         break;
+    }
+    case 12 :{
+        address = "check";//点验
+        Http_ModelChoice = 12;
     }
     default:
         break;
     }
 
 
-
 //测试用户
 //    QString postStr = "{\"username\":\"james\",\"password\":\"attack\"}";
 //    request->setUrl(QUrl("http://121.41.78.9:3000/arm/postTest"));
 
-
     QNetworkRequest *request=new QNetworkRequest();
-//    121.43.159.215:3000/arm/
-//    request->setUrl(QUrl(QString("http://localhost:3000/arm/%1").arg(address)));
-    request->setUrl(QUrl(QString("http://121.43.159.215:3000/arm/%1").arg(address)));
+
+    request->setUrl(QUrl(QString("http://localhost:3000/arm/%1").arg(address)));
+//    request->setUrl(QUrl(QString("http://121.43.159.215:3000/arm/%1").arg(address)));
     request->setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
 
     QByteArray postData =postStr.toUtf8();//翻译
-
     qDebug()<<QObject::tr(postData);
 
     accessManager->post(*request, postData);
@@ -125,8 +125,6 @@ void http_GAndP::finished(QNetworkReply *reply)
         agentiaInfoGet(all_info,Http_ModelChoice);
 
         qDebug()<<all<<"---------finished";
-
-
     }
     else
     {
@@ -330,7 +328,7 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
         }
 
     }
-    else if(t == 11)//登入
+    else if (t == 11)//登入
     {
         QJsonValue i1 = analyze_Set["success"].toBool();
         H_success = i1.toBool();
@@ -352,14 +350,25 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
             query.exec();
             emit sendInfo_To_Enter(0,user->user_Id,user->user_Role);//0:OK 1:lose
 
-        }else{
-
+        }
+        else
+        {
             emit sendInfo_To_Enter(1,0,0);//request save
-
         }
 
+    }
+    else if (t == 12)//点验
+    {
+        QJsonValue i1 = analyze_Set["success"].toBool();
+        H_success = i1.toBool();
 
-
+        if( H_success )
+        {
+            emit sendInfo_To_return_PutIn(0);//0：ok
+        }
+        else {
+            emit sendInfo_To_return_PutIn(1);//reques
+        }
     }
 
 
@@ -505,7 +514,7 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
 
 
 void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
-//  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入
+//  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12：点验
 {
     QJsonObject json_Ok;
     QJsonObject json_Two;
@@ -741,6 +750,53 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
             QString json_str(byte_array);
 
             postHttp(11,json_str);//发送http
+        }
+    }
+    else if (model_json == 12)//点验
+    {
+        int errorType = 1;//默认是替换
+
+        query.exec(QString("select * from %1").arg(T_tableName));
+        query.seek(T_tableNo);
+       /**********/
+        stash_J_Int[0] = query.value(11).toInt();//agentiaId
+        stash_J_Int[1] = query.value(12).toInt();//positionId
+        stash_J_QString[0] = query.value(13).toString();//judgeAttitude
+        stash_J_QString[1] = query.value(6).toString();//newDose
+        stash_J_QString[2] = query.value(7).toString();//expireDate
+
+        if ((stash_J_QString[0] == "正确操作") || (stash_J_QString[0] == "报废操作") || (stash_J_QString[0] == "替换操作"))
+        {
+
+            json_Ok.insert("userId",user->user_Id);
+            json_Ok.insert("agentiaId",stash_J_Int[0]);
+            json_Ok.insert("positionId",stash_J_Int[1]);
+
+            if (stash_J_QString[0] == "报废操作")
+            {
+                errorType = 2;
+                stash_J_QString[1] = "";
+                qDebug()<<"错误操作";
+            }
+            else if (stash_J_QString[0] == "正确操作")
+            {
+                errorType = 0;
+                stash_J_QString[1] = "";
+                qDebug()<<"正确操作";
+            }
+
+            json_Ok.insert("errorType",errorType);
+            json_Ok.insert("correctDose",stash_J_QString[1]);
+
+            document.setObject(json_Ok);
+            byte_array = document.toJson(QJsonDocument::Compact);
+            QString json_str(byte_array);
+            postHttp(12,json_str);
+
+        }
+        else
+        {
+            emit sendInfo_To_return_PutIn(2);//未摆放
         }
     }
 }
