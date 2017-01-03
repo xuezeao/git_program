@@ -61,7 +61,8 @@ private:
     //0:show current drawer agentia  // 1:show all drawer agentia
 
     int SCI_send(int order);//指令下发 //0:下发 1：查询 2：完成 error//0: 错误 1：未完成 2：正确
-
+    void InfoError(int num, QString error);//输出任务状态并执行未成功数据保存
+    //任务完成情况 0-error  1-操作OK 2-跳过 3 显示OK
 
     struct T_table{
         int rowid;

@@ -1,6 +1,7 @@
 #include "http_gandp.h"
 #include "global_Vailable.h"
 #include "QInputMethod"
+#include <QDateTime>
 
 http_GAndP::http_GAndP(QObject *parent) :
     QObject(parent)
@@ -103,28 +104,34 @@ void http_GAndP::postHttp(int postName_NO,QString postStr)
 
     QNetworkRequest *request=new QNetworkRequest();
 
-    request->setUrl(QUrl(QString("http://localhost:3000/arm/%1").arg(address)));
-//    request->setUrl(QUrl(QString("http://121.43.159.215:3000/arm/%1").arg(address)));
+//    request->setUrl(QUrl(QString("http://localhost:3000/arm/%1").arg(address)));
+    request->setUrl(QUrl(QString("http://121.43.159.215:3000/arm/%1").arg(address)));
     request->setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
 
     QByteArray postData =postStr.toUtf8();//翻译
     qDebug()<<QObject::tr(postData);
 
     accessManager->post(*request, postData);
+
+    qDebug()<<QDateTime::currentDateTime() << "send";
 }
 
 
 void http_GAndP::finished(QNetworkReply *reply)
 {
+    qDebug()<<QDateTime::currentDateTime() << "received";
     if(reply->error() == QNetworkReply::NoError)
     {
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
         QString all = codec->toUnicode(reply->readAll());
         QJsonDocument all_info=QJsonDocument::fromJson(all.toUtf8());
 
-        agentiaInfoGet(all_info,Http_ModelChoice);
 
-        qDebug()<<all<<"---------finished";
+        qDebug()<<QDateTime::currentDateTime() << "starJiexi";
+        agentiaInfoGet(all_info,Http_ModelChoice);
+        qDebug()<<QDateTime::currentDateTime() << "endJiexi";
+
+
     }
     else
     {
@@ -220,8 +227,7 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
 
         }
 
-    }
-
+    }  
     else if(t == 5)//入柜申请分配位置
     {
         QJsonValue i1 = analyze_Set["success"].toBool();
@@ -239,11 +245,13 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
             H_positionId = i4.toInt();
             user->positionId_allocPosition=H_positionId;
 
+            qDebug()<<QDateTime::currentDateTime() << "9";
             emit sendInfo_To_Operate(H_drawerNO, H_positionNo,H_positionId);//将值传送到执行弹窗口
             emit sendError_To_Operate(1);//,"位置申请成功"
             qDebug()<<"OK+++weizhi";
         }
-        else{
+        else
+        {
 
 //            QJsonValue qError = analyze_Set["errorMessage"].toString();
             emit sendError_To_Operate(0);//,"没有空闲位置"
@@ -251,8 +259,7 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
         }
 
     }
-
-    else if(t == 6)//入柜完成
+    else if (t == 6)//入柜完成
     {
         QJsonValue i1 = analyze_Set["success"].toBool();
         H_success = i1.toBool();
@@ -262,7 +269,9 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
             qDebug()<<"入柜完成";
             emit  sendInfo_To_return_PutIn(0);//0:OK 1:lose
 
-        }else{
+        }
+        else
+        {
 
             emit sendInfo_To_return_PutIn(1);//0:OK 1:lose
         }
@@ -271,9 +280,10 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
 
     else if(t == 7)//取 完成
     {
+
         QJsonValue i1 = analyze_Set["success"].toBool();
         H_success = i1.toBool();
-
+        qDebug()<<QDateTime::currentDateTime() << "starJIE";
         if( H_success )
         {
            emit sendInfo_To_sheetPage(0);//0:OK 1:lose
@@ -283,6 +293,8 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
            emit sendInfo_To_sheetPage(1);//request save
 
         }
+                qDebug()<<QDateTime::currentDateTime() << "endJIE";
+
     }
 
     else if(t == 8)//还 完成
@@ -516,6 +528,8 @@ bool http_GAndP::agentiaInfoGet(QJsonDocument str, int t)
 void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
 //  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12：点验
 {
+
+
     QJsonObject json_Ok;
     QJsonObject json_Two;
     QJsonDocument document;
@@ -554,7 +568,9 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
         byte_array=document.toJson(QJsonDocument::Compact);
         QString json_str(byte_array);
 
+
         postHttp(5,json_str);//发送http
+
     }
 
     else if(model_json == 6)//入柜完成上报

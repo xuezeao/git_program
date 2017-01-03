@@ -58,22 +58,8 @@ void Execut_window::updateReturn(int status)//0 成功 1 失败 2 未放置
 
     if (execute_V->httpCount < execute_V->acountRow)
     {
-        if (execute_V->execute_model == 1)
-        {
-            http_PG_AgentiaInfo(1,execute_V->httpCount);
-        }
-        else if (execute_V->execute_model == 2)
-        {
-            http_PG_AgentiaInfo(2,execute_V->httpCount);
-        }
-        else if (execute_V->execute_model == 4)
-        {
-            http_PG_AgentiaInfo(4,execute_V->httpCount);
-        }
-        else if (execute_V->execute_model == 6)
-        {
-            http_PG_AgentiaInfo(6,execute_V->httpCount);
-        }
+        http_PG_AgentiaInfo(execute_V->execute_model,execute_V->httpCount);
+
     }
     else
     {
@@ -183,14 +169,22 @@ void Execut_window::on_pBt_next_clicked()
 void Execut_window::on_pBt_ignore_clicked()
 {
     /**********跳过*********************/
-    SCI_send(2);
-    operateNext();
-    executeInfoError(1,"请取走试剂");
-    if((execute_V->judgeStatus == 1)&&((execute_V->execute_model == 4) || (execute_V->execute_model == 6)))
+    if (SCI_send(1))
     {
-        changeAgentiaStatus(6,2);//这时候跳过属于报废试剂操作
-        execute_V->judgeStatus = 0;//每一次跳过都是新的试剂信息
+        SCI_send(2);
+        operateNext();
+        executeInfoError(1,"请取走试剂");
+        if((execute_V->judgeStatus == 1)&&((execute_V->execute_model == 4) || (execute_V->execute_model == 6)))
+        {
+            changeAgentiaStatus(6,2);//这时候跳过属于报废试剂操作
+            execute_V->judgeStatus = 0;//每一次跳过都是新的试剂信息
+        }
     }
+    else
+    {
+        executeInfoError(0,"请纠正");
+    }
+
 
 }
 
@@ -516,22 +510,7 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
             ui->pBt_next->hide();
             ui->pBt_ignore->hide();
 
-            if (execute_V->execute_model == 2)
-            {
-                http_PG_AgentiaInfo(2,0);
-            }
-            else if (execute_V->execute_model == 1)
-            {     
-                http_PG_AgentiaInfo(1,0);
-            }
-            else if (execute_V->execute_model == 4)
-            {
-                http_PG_AgentiaInfo(4,0);
-            }
-            else if (execute_V->execute_model == 6)
-            {
-                http_PG_AgentiaInfo(6,0);
-            }
+            http_PG_AgentiaInfo(execute_V->execute_model,0);
 
         }
 
@@ -641,6 +620,8 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
             ui->pBt_ignore->hide();
             executeInfoError(0,"错误，请更正！");
             changeAgentiaStatus(5,0);
+
+
         }
 
      execute_V->pBt_status = 1;
@@ -705,34 +686,24 @@ void Execut_window::changeAgentiaStatus(int just , int order)
 void Execut_window::executeInfoError(int num, QString error)//输出任务状态并执行未成功数据保存
 //任务完成情况 0-error  1-操作OK 2-跳过 3 显示OK
 {
-
+    QPalette pe;
     if (num == 0)
     {
-        QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::red);
-        ui->label_RoleStatus->setPalette(pe);
     }
     else if (num == 1)//显示完成并修改数据库
     {
-        QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::green);
-        ui->label_RoleStatus->setPalette(pe);
-
     }
     else if (num == 2)
     {
-        QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::blue);
-        ui->label_RoleStatus->setPalette(pe);
-
     }
     else if (num == 3)
-    {
-        QPalette pe;
+    { 
         pe.setColor(QPalette::WindowText,Qt::green);
-        ui->label_RoleStatus->setPalette(pe);
     }
-
+    ui->label_RoleStatus->setPalette(pe);
     ui->label_RoleStatus->setText(error);
 }
 
@@ -821,23 +792,7 @@ void Execut_window::closePage()
 {
     this->close();
 
-    if (execute_V->execute_model == 2)
-    {
-        Show_Info->showInfo(1);
-    }
-    else if (execute_V->execute_model == 1)
-    {
-        Show_Info->showInfo(0);
-    }
-    else if (execute_V->execute_model == 4)
-    {
-        Show_Info->showInfo(2);
-    }
-    else if (execute_V->execute_model == 6)
-    {
-        Show_Info->showInfo(3);
-    }
-
+    Show_Info->showInfo(execute_V->execute_model);
     Show_Info->exec();
 }
 

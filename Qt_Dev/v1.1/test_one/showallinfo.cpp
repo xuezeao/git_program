@@ -3,7 +3,7 @@
 #include <qsqlquery.h>
 #include <QDebug>
 #include <QDesktopWidget>
-extern int Alarm_No[3][32];
+
 
 ShowAllInfo::ShowAllInfo(QDialog *parent) :
     QDialog(parent),
@@ -57,7 +57,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
     int allLong = query.at()+1;
 
 
-    if (order == 0)
+    if (order == 1)
     {
         for (int i = 0; i<allLong; i++)
         {
@@ -83,7 +83,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
             }
         }
     }
-    else if (order == 1)
+    else if (order == 2)
     {
         for (int i = 0; i<allLong; i++)
         {
@@ -109,7 +109,7 @@ void ShowAllInfo::saveNotPostInfo(int order)
             }
         }
     }
-    else if ((order == 2) ||(order == 3))
+    else if ((order == 4) ||(order == 6))
     {
         for (int i = 0; i<allLong; i++)
         {
@@ -141,19 +141,19 @@ void ShowAllInfo::saveNotPostInfo(int order)
 void ShowAllInfo::InitVariable(int order)
 {
     switch (order) {
-    case 0:{
+    case 1:{
         T_name = "T_Task_PutIn";
         break;
     }
-    case 1:{
+    case 2:{
         T_name = "T_AgentiaWaitExecute";
         break;
     }
-    case 2:{
+    case 4:{
         T_name = "T_AgentiaReplace";
         break;
     }
-    case 3:{
+    case 6:{
         T_name = "T_AgentiaCheck";
     }
     default:
@@ -167,7 +167,7 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
 {
     InitVariable(order);
 
-    if ((order == 2) || (order == 3)) // 替换  点验
+    if ((order == 4) || (order == 6)) // 替换  点验
     {
 
         T_model_show->setTable(QString("%1").arg(T_name));
@@ -192,7 +192,7 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
         ui->tableView_showInfo->setColumnHidden(11,true);
         ui->tableView_showInfo->setColumnHidden(12,true);
     }
-    else if (order == 1) //还
+    else if (order == 2) //还
     {
 
         T_model_show->setTable(QString("%1").arg(T_name));
@@ -219,7 +219,7 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
         ui->tableView_showInfo->setColumnHidden(12,true);
 
     }
-    else if (order == 0) // 入柜
+    else if (order == 1) // 入柜
     {    
         T_model_show->setTable(QString("%1").arg(T_name));
         T_model_show->select();

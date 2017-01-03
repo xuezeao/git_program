@@ -126,11 +126,12 @@ void Sheet_OperatePage::sheetTableInit(int num)
         sheet_model = 0;
         T_tableexecute->rowid = 0;
         sheet_status = 1;
+
         getDrawer();
         pBtStatus(1);
         T_tableexecute->error = 1;
         /*********************/
-        if(T_model_execute->rowCount() == 0)
+        if (T_model_execute->rowCount() == 0)
         {
             closeOperate();
         }
@@ -350,22 +351,10 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
                 qMbox.exec();
             }
 
-//            for(int i = 0;i < 32 ;i++)
-//            {
-//                if(Alarm_No[0][i] != 0)//写入错误操作
-//                  specialWrite(0,1,Alarm_No[0][i]);
-
-//                if(Alarm_No[1][i] != 0)//写入移动操作
-//                  specialWrite(0,2,Alarm_No[11][i]);
-
-//                if(Alarm_No[2][i] != 0)//写入未操作
-//                  specialWrite(0,0,Alarm_No[11][i]);
-//            }
-
-
 
             ui->pBt_ignore->hide();
             ui->pBt_return->hide();
+
 
        }
        else if(T_tableexecute->error == 2)//正确
@@ -398,9 +387,11 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
                 }
 
             }
-            sheetTableInit(0);
+
+            InfoError(2,"是否跳过");
             ui->pBt_ignore->show();
             ui->pBt_return->show();
+
        }
 
     }
@@ -451,19 +442,22 @@ void Sheet_OperatePage::pBtStatus(int status)//正常发送 1:调用下发指令
 
             ui->pBt_OK->setText(QString("抽屉 %1 完成").arg(sheet_drawer[sheet_model]));
         }
-        else if(sheet_model >= sheet_drawer[0])
-             {
+        else if (sheet_model >= sheet_drawer[0])
+        {
 
 
-                 showNeedData(1,1);
-                 ui->pBt_OK->setText(QString("点击退出"));
+            showNeedData(1,1);
+            ui->pBt_OK->setText(QString("点击退出"));
+            ui->label_error->setText(QString("完成"));
 
 
-                sendHttp();
+            sendHttp();
 
-            }else{
-                sheet_model++;
-            }
+        }
+        else
+        {
+            sheet_model++;
+        }
 
     }
 
@@ -592,6 +586,35 @@ int Sheet_OperatePage::SCI_send(int order) //0:下发 1：查询 2：完成
 
 void Sheet_OperatePage::on_pBt_ignore_clicked()
 {
-    SCI_send(2);
-    pBtStatus(1);
+    if (SCI_send(1))
+    {
+        SCI_send(2);
+        pBtStatus(1);
+    }
+    else
+    {
+        InfoError(0,"错误纠正");
+    }
+}
+
+
+void Sheet_OperatePage::InfoError(int num, QString error)//输出任务状态并执行未成功数据保存
+//任务完成情况
+{
+    QPalette pe;
+    if (num == 0)//红
+    {
+        pe.setColor(QPalette::WindowText,Qt::red);
+    }
+    else if (num == 1)//绿
+    {
+        pe.setColor(QPalette::WindowText,Qt::green);
+    }
+    else if (num == 2)//蓝
+    {      
+        pe.setColor(QPalette::WindowText,Qt::blue);
+    }
+
+    ui->label_error->setPalette(pe);
+    ui->label_error->setText(error);
 }

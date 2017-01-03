@@ -93,7 +93,14 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1,5,1,0,3">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,3,1,5,1,0,3">
+       <item>
+        <widget class="QLabel" name="label_error">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <spacer name="horizontalSpacer_3">
          <property name="orientation">

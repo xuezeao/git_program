@@ -78,7 +78,6 @@ private:
         QString newDose;
 
         int orderPosition;//计rowid
-
         char pBt_status;//1：可发送查询 2：等待执行
         int httpCount;//上传计数
 
