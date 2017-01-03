@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     returnpage.cpp \
     showallinfo.cpp \
     enterpage.cpp \
-    readstminfo.cpp
+    readstminfo.cpp \
+    httpgp.cpp
 
 HEADERS  += \
     checkboxdelegate.h \
@@ -48,7 +49,8 @@ HEADERS  += \
     returnpage.h \
     showallinfo.h \
     enterpage.h \
-    readstminfo.h
+    readstminfo.h \
+    httpgp.h
 
 FORMS    += \
     execut_window.ui \

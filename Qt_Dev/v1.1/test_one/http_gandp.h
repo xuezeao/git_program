@@ -1,7 +1,6 @@
 #ifndef HTTP_GANDP_H
 #define HTTP_GANDP_H
 
-
 /****************http******************/
 #include <QByteArray>
 #include <QtNetwork>
@@ -27,6 +26,8 @@
 
 
 
+
+
 class http_GAndP : public QObject
 {
     Q_OBJECT
@@ -40,17 +41,13 @@ public:
     //  5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入
 
 signals:
+
     void sendInfo_To_Operate(int drawerNo,int positionNo,int positionId);//发送接收到的位置信息
     void sendError_To_Operate(int status);//发送上传状态 0：ok 1:lose
-
     void sendError_To_Execut(int error_status,QString errorInfo);//发送任务完成情况 0-error 1-OK
-
     void sendInfo_To_sheetPage(int status);//发送上传状态 0:OK 1:lose
-
     void sendFalse();
-
     void sendInfo_To_return_PutIn(int status);//0 成功 1 失败 2未操作
-
     void sendInfo_To_Enter(int status,int userId,int userRole);//0 成功 1 失败
 
 public slots:
