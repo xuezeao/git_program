@@ -134,6 +134,18 @@ static bool createConnection()
                           [positionId] int ,[dose] varchar,[judgeAttitude] varchar,[expireDate] varchar,[bottleCapacity] varchar)"));
        //存储未成功上传信息 操作数据表      //2：入柜 3:取 4：还 4：替换 5：报废 judgeAttitude
 
+       query.exec(QString("create table Task_sheet (id int,[taskId] int,[taskType] int,\
+                         [taskStatus] int,[expiryDate] varchar,[agentiaName] varchar, [dose] varchar,[positionNo] varchar,[drawerNo] varchar,\
+                         [cabinetNo] varchar,[newAgentia_dose] varchar,[newAgentia_expiryDate] varchar)"));
+
+      //任务存储
+
+      query.exec(QString("create table Task_sheetExecute (id int,[taskId] int,[taskType] int,\
+                        [taskStatus] int,[expiryDate] varchar,[agentiaName] varchar, [dose] varchar,[positionNo] varchar,[drawerNo] varchar,\
+                        [cabinetNo] varchar,[newAgentia_dose] varchar,[newAgentia_expiryDate] varchar)"));
+
+     //任务存储
+
        return true;
 
 }

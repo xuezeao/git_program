@@ -25,10 +25,10 @@ ShowAllInfo::~ShowAllInfo()
 /*****************************************/
 void ShowAllInfo::on_pBt_close_clicked()
 {
-    /***************清空表格********有问题****/
+    /***************清空表格************/
     QSqlQuery query;
-    query.exec(QString("DELETE * from %1").arg(T_name));
-    query.next();
+    query.exec(QString("DELETE from %1").arg(T_name));
+
 
     /********************************/
     emit upStatus();
