@@ -80,12 +80,14 @@ void HttpGP::HttpInit(void)
 
 void HttpGP::GetHttp(void)//get cabinet info
 {
+    http_info->http_modelChoice = 0;
+    http_info->model_json = 0;
     QNetworkRequest *request=new QNetworkRequest();
 //    request->setUrl(QUrl(QString("http://localhost:3000/arm/initialInfo/%1").arg(CABINETNO)));
     request->setUrl(QUrl(QString("http://121.43.159.215:3000/arm/initialInfo/%1").arg(CABINETNO)));
     accessManager->get(*request);//通过发送数据，返回值保存在reply指针里.
 
-    http_info->http_modelChoice = 0;
+
 
 }
 
@@ -287,7 +289,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             query.exec();
 
         }
-
+        qDebug() << "机柜消息解析完毕";
         return 0;
 
     }
@@ -325,6 +327,11 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
             s_json[3] = analyze_C["expiryDate"].toString();
             s_str[3]  = s_json[3].toString();
+            year = s_str[3].section("-",0,0);
+            month = s_str[3].section("-",1,1);
+            day = s_str[3].section("-",2,2);
+            day = day.section("T",0,0);
+            time = QString("%1.%2.%3").arg(year).arg(month).arg(day);
 
             s_json[4] = analyze_C["drawerNo"].toInt();
             s_int[4]  = s_json[4].toInt();
@@ -340,16 +347,23 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
             query.prepare("insert into T_AgentiaWaitSaving (id,checkBox,agentiaName,bottleCapacity,dose,\
                                                             expireDate,drawerNo,positionNo,agentiaId,positionId,judgeAttitude\
-                                                            ) values (?,?,?,?,?\
-                                                                      ?,?,?,?,?,?)");
+                                                            ) values (?,?,?,?,?,?,?,?,?,?,?)");
+            query.addBindValue(i+1);
+            query.addBindValue(1);
             query.addBindValue(s_str[0]);
-            query.addBindValue(s_int[1]);
+            query.addBindValue(s_str[1]);
             query.addBindValue(s_str[2]);
-            query.addBindValue(s_int[3]);
+            query.addBindValue(time);
+            query.addBindValue(s_int[4]);
+            query.addBindValue(s_int[5]);
+            query.addBindValue(s_int[6]);
+            query.addBindValue(s_int[7]);
+            query.addBindValue(QString("未归还"));
             query.exec();
 
        }
 
+       qDebug() << "带归还试剂列表解析完毕";
        return 0;
 
     }
@@ -714,8 +728,6 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
             QString json_str(byte_array);
 
             PostHttp(5,json_str);//发送http
-
-            qDebug()<<" ---1 request position";
         }
         else
         {
@@ -960,7 +972,12 @@ void HttpGP::EmitSignal(int status, int order)
     {
         switch (order) {
         case 0:{
+            JsonForSend(4, "", 0);
             //获取机柜信息
+            break;
+        }
+        case 4:{
+            //获取带归还试剂列表信息
             break;
         }
         case 5:{
@@ -1004,6 +1021,10 @@ void HttpGP::EmitSignal(int status, int order)
         switch (order) {
         case 0:{
             //获取机柜信息
+            break;
+        }
+        case 4:{
+            //获取带归还试剂列表信息
             break;
         }
         case 5:{

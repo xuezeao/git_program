@@ -112,7 +112,7 @@ void MainUI::on_pBt_getTest_clicked()
 
 void MainUI::on_pBt_post_clicked()
 {
-    MainUi_http_Page->JsonPostHttp();
+    ;
 }
 
 void MainUI::on_pBt_leave_clicked()

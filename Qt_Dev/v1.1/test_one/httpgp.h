@@ -88,7 +88,7 @@ private:
 
     void PackageJson(int model_json, QString T_tableName, int T_tableNo);
     //封装JSON信息
-    //1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
+    //0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
     //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
 
     int UnpackageJson(QJsonDocument str, int t);
