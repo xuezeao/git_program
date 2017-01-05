@@ -1,18 +1,18 @@
 #ifndef AGENTIAINFOCHANGE_H
 #define AGENTIAINFOCHANGE_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class AgentiaInfoChange;
 }
 
-class AgentiaInfoChange : public QWidget
+class AgentiaInfoChange : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AgentiaInfoChange(QWidget *parent = 0);
+    explicit AgentiaInfoChange(QDialog *parent = 0);
     ~AgentiaInfoChange();
 signals:
     void upSheet_PutIn();

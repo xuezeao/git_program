@@ -6,9 +6,13 @@
 #include <QSqlTableModel>
 #include <QDebug>
 #include <QSqlQuery>
+#include <QSqlRelationalDelegate>
+#include <QSqlError>
+
 
 #include <QCheckBox>
 #include <QPushButton>
+
 
 
 #include "execut_window.h"
@@ -17,7 +21,7 @@
 #include "agentiainfochange.h"
 #include "pbtdelegate.h"
 #include "sheet_operatepage.h"
-#include "http_gandp.h"
+#include "httpgp.h"
 
 namespace Ui {
 class OperateWindow;
@@ -64,11 +68,7 @@ private slots:
 
     void closePage();
 
-    void on_pBt_getPosition_clicked();
-
-    void updatePosition(int drawer, int position ,int positionId);//存储分配的位置和位置ID
-
-    void OperateError_info(int status);//错误 //显示更新信息 0：no 1：ok
+    void OperateError_info(void);//更新本地数据库
 
 
 
@@ -77,7 +77,7 @@ private:
     Execut_window *Operate_execut_Page;
     AgentiaInfoChange *AgentiaInfoChange_execute_Page;
     Sheet_OperatePage *Sheet_Operate_execute_Page;
-    http_GAndP *Operate_http;
+    HttpGP *http_GP;
 
 
     QSqlTableModel *T_model_Other_Search;
@@ -102,7 +102,7 @@ private:
 
     void updateNo(int order);//更新数据表格行列号 //1：执行框表格序列号 2：顺序重写两个表格顺序号
 
-    void requestPositionInfo(int i );//请求位置信息
+    void requestPositionInfo(void);//请求位置信息
 
     int checkSheet(int order ,int i);// check sheet position for execute
     //检查数据表格关键位置信息是否完善
@@ -112,7 +112,7 @@ private:
         QString T_search_RelationTable;//搜索框关联表格
         QString T_execut_RelationTable;//执行框关联表格
         int     dialog_model;//区分模式
-        int     sendCount;//记入发送次数
+        int     executeCount;//记录状态
         int     notDrawer;//没有填试剂的数量
     }T_TABLE;
 

@@ -55,7 +55,7 @@ void http_GAndP::postHttp(int postName_NO,QString postStr)
         break;
     }
     case 5 :{
-        address = "allocPosition";//获取地址信息
+        address = "allocPos ition";//获取地址信息
         Http_ModelChoice = 5;
         break;
     }
@@ -734,8 +734,6 @@ void http_GAndP::jsonForSend(int model_json, QString T_tableName, int T_tableNo)
             json_Ok.insert("userId",user->user_Id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
             json_Ok.insert("positionId",stash_J_Int[1]);
-
-
 
             document.setObject(json_Ok);
             byte_array=document.toJson(QJsonDocument::Compact);

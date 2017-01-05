@@ -52,7 +52,7 @@ static bool createConnection()
        query.exec(QString("insert into T_AgentiaSaving values (2,'未选择','2酒精','200ml','500ml',2,1,'2010.7.7',1,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaSaving values (3,'未选择','3酒精','300ml','600ml',3,1,'2010.7.7',1,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaSaving values (4,'未选择','4酒精','400ml','700ml',3,1,'2010.7.7',1,123,2,'未摆放')"));
-       query.exec(QString("insert into T_AgentiaSaving values (5,'未选择','3酒精','300ml','600ml',2,3,'2010.7.7',1,13,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaSaving values (5,'未选择','3酒精','300ml','600ml',2,3,'2010.7.7',1,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaSaving values (6,'未选择','4酒精','400ml','700ml',2,4,'2010.7.7',1,123,2,'未摆放')"));
 
 
@@ -137,12 +137,6 @@ static bool createConnection()
        query.exec(QString("create table Task_sheet (id int,[taskId] int,[taskType] int,\
                          [taskStatus] int,[expiryDate] varchar,[agentiaName] varchar, [dose] varchar,[positionNo] varchar,[drawerNo] varchar,\
                          [cabinetNo] varchar,[newAgentia_dose] varchar,[newAgentia_expiryDate] varchar)"));
-
-      //任务存储
-
-      query.exec(QString("create table Task_sheetExecute (id int,[taskId] int,[taskType] int,\
-                        [taskStatus] int,[expiryDate] varchar,[agentiaName] varchar, [dose] varchar,[positionNo] varchar,[drawerNo] varchar,\
-                        [cabinetNo] varchar,[newAgentia_dose] varchar,[newAgentia_expiryDate] varchar)"));
 
      //任务存储
 

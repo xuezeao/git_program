@@ -1,7 +1,5 @@
 #include "operatewindow.h"
 #include "ui_operatewindow.h"
-#include <QSqlRelationalDelegate>
-#include <QSqlError>
 
 
 OperateWindow::OperateWindow(QWidget *parent) :
@@ -16,7 +14,7 @@ OperateWindow::OperateWindow(QWidget *parent) :
     T_model_Other_Search = new QSqlTableModel;
 
 
-    Operate_http = new http_GAndP;
+    http_GP = new HttpGP;
     Operate_execut_Page  = new Execut_window;
     AgentiaInfoChange_execute_Page = new AgentiaInfoChange;
     Sheet_Operate_execute_Page = new Sheet_OperatePage;
@@ -61,8 +59,8 @@ OperateWindow::OperateWindow(QWidget *parent) :
     connect(Operate_execut_Page,SIGNAL(upSheet_From_Execute()),this,SIGNAL(OperateWindow_To_MainUI()));//返回主界面
 
     connect(Sheet_Operate_execute_Page,SIGNAL(closePrevious()),this,SLOT(closePage()));
-    connect(Operate_http,SIGNAL(sendInfo_To_Operate(int,int,int)),this,SLOT(updatePosition(int,int,int)));
-    connect(Operate_http,SIGNAL(sendError_To_Operate(int)),this,SLOT(OperateError_info(int)));//反馈信息
+
+    connect(http_GP,SIGNAL(sendError_To_Operate(int)),this,SLOT(OperateError_info(int)));//反馈信息
 
 
 
@@ -150,90 +148,90 @@ void OperateWindow::on_Bt_searchInfo_clicked()
 void OperateWindow::on_Bt_execute_clicked()
 {
     updateNo(1);
-    if(checkSheet(2,0))//检查是否有未填写试剂信息
+    if ((0 == T_table->executeCount) && (1 == T_table->dialog_model))
     {
-        if(T_table->dialog_model == 1)
+        if(checkSheet(2,0))//检查是否有未填写试剂信息
         {
-              checkSheet(1,0);
-              if(T_table->notDrawer != 0)
-              {
-                  QMessageBox::StandardButton reply;
-                  reply = QMessageBox::question(this, "Question", QString("是否跳过没填位置试剂,有%1个位置").arg(T_table->notDrawer),
-                                                QMessageBox::Yes|QMessageBox::No);
-                  if (reply == QMessageBox::Yes) {
+            requestPositionInfo();
+        }
+    }
+    else
+    {
+        if(checkSheet(2,0))//检查是否有未填写试剂信息
+        {
+            if(T_table->dialog_model == 1)
+            {
+                  T_table->dialog_model = 0;
+                  checkSheet(1,0);
+                  if(T_table->notDrawer != 0)
+                  {
+                      QMessageBox::StandardButton reply;
+                      reply = QMessageBox::question(this, "Question", QString("是否跳过没填位置试剂,有%1个位置").arg(T_table->notDrawer),
+                                                    QMessageBox::Yes|QMessageBox::No);
 
-                      int allrow = T_model_Other_Execut->rowCount();
-                      QString getC_status = "";
-
-                      for(int i = 0 ; i < allrow; i++)//去除不符合标准的试剂信息
+                      if (reply == QMessageBox::Yes)
                       {
-                            getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
-                            if(getC_status != "已分配位置")
-                            {
-                                T_model_Other_Execut->removeRow(i);
 
-                                qDebug()<<"删除 i";
-                            }
+                          int allrow = T_model_Other_Execut->rowCount();
+                          QString getC_status = "";
+
+                          for(int i = 0 ; i < allrow; i++)//去除不符合标准的试剂信息
+                          {
+                                getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
+                                if(getC_status != "已分配位置")
+                                {
+                                    T_model_Other_Execut->removeRow(i);
+
+                                    qDebug()<<"删除 i";
+                                }
 
 
-                      }
-                      T_model_Other_Execut->submitAll();
+                          }
+                          T_model_Other_Execut->submitAll();
 
-                      allrow = T_model_Other_Execut->rowCount();//重新排序
+                          allrow = T_model_Other_Execut->rowCount();//重新排序
 
-                      for(int i = 0 ; i < allrow; i++)
-                      {
-                          T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
-                      }
+                          for(int i = 0 ; i < allrow; i++)
+                          {
+                              T_model_Other_Execut->setData(T_model_Other_Execut->index(i,0),i+1);
+                          }
 
-                      T_model_Other_Execut->submitAll();
+                          T_model_Other_Execut->submitAll();
 
-                      if(allrow == 0)
-                      {
-                          QMessageBox qMebox;
-                          qMebox.setText("没有可执行信息");
-                          qMebox.exec();
-                      }
-                      else
-                      {
-                          Operate_execut_Page->executeInit(1);
-                          Operate_execut_Page->exec();
+                          if(allrow == 0)
+                          {
+                              QMessageBox qMebox;
+                              qMebox.setText("没有可执行信息");
+                              qMebox.exec();
+                          }
+                          else
+                          {
+                              Operate_execut_Page->executeInit(1);
+                              Operate_execut_Page->exec();
+                          }
                       }
                   }
-              }
-              else
-              {
-                  Operate_execut_Page->executeInit(1);
-                  Operate_execut_Page->exec();
-              }
+                  else
+                  {
+                      Operate_execut_Page->executeInit(1);
+                      Operate_execut_Page->exec();
+                  }
 
-        }
-        else if(T_table->dialog_model == 2)//取
-        {
+            }
+            else if ((T_table->dialog_model == 2) || (T_table->dialog_model == 5))//报废//取
+            {
 
-           Sheet_Operate_execute_Page->modelOption(2);
-           Sheet_Operate_execute_Page->exec();
+               Sheet_Operate_execute_Page->modelOption(T_table->dialog_model);
+               Sheet_Operate_execute_Page->exec();
 
+            }
+            else if((T_table->dialog_model == 4) || (T_table->dialog_model == 6))//点验//替换
+            {
+                Operate_execut_Page->executeInit(T_table->dialog_model);
+                Operate_execut_Page->exec();
+            }
         }
-        else if(T_table->dialog_model == 4)//替换
-        {
-            Operate_execut_Page->executeInit(4);
-            Operate_execut_Page->exec();
-        }
-        else if(T_table->dialog_model == 5)//报废
-        {
-            Sheet_Operate_execute_Page->modelOption(5);
-            Sheet_Operate_execute_Page->exec();
-        }
-        else if(T_table->dialog_model == 6)//点验
-        {
-            Operate_execut_Page->executeInit(6);
-            Operate_execut_Page->exec();
-        }
-
     }
-
-
 }
 
 void OperateWindow::on_Bt_delete_clicked()
@@ -285,7 +283,7 @@ void OperateWindow::on_Bt_add_clicked()
 
 void OperateWindow::on_Bt_changeInfo_A_clicked()//修改按钮
 {
-    AgentiaInfoChange_execute_Page->show();
+    AgentiaInfoChange_execute_Page->exec();
 
     if(T_table->dialog_model == 4)//替换
     {
@@ -314,7 +312,6 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         T_table->dialog_model = 1;
         ui->label_title->setText("入柜");
         ui->Bt_changeInfo_A->show();
-        ui->pBt_getPosition->show();
         tableInit(1);
         break;
     }
@@ -324,7 +321,6 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         T_table->dialog_model = 2;
         ui->label_title->setText("取试剂");
         ui->Bt_changeInfo_A->hide();
-        ui->pBt_getPosition->hide();
         tableInit(2);
         break;
     }
@@ -334,7 +330,6 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         T_table->dialog_model = 4;
         ui->label_title->setText("替换试剂");
         ui->Bt_changeInfo_A->show();
-        ui->pBt_getPosition->hide();
         tableInit(4);
         break;
     }
@@ -343,7 +338,6 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         T_table->T_search_RelationTable = "T_AgentiaSaving";
         T_table->dialog_model = 5;
         ui->label_title->setText("报废试剂");
-        ui->pBt_getPosition->hide();
         ui->Bt_changeInfo_A->hide();
         tableInit(5);
         break;
@@ -353,7 +347,6 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         T_table->T_search_RelationTable = "T_AgentiaSaving";
         T_table->dialog_model = 6;
         ui->label_title->setText("点验试剂");
-        ui->pBt_getPosition->hide();
         ui->Bt_changeInfo_A->show();
         tableInit(6);
         break;
@@ -362,10 +355,10 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
         break;
     }
 
+    T_table->executeCount = 0;
     updateNo(2);//更新表格序列号为之后的增减做准备
 
 }
-
 
 
 void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修改
@@ -385,7 +378,7 @@ void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修
     else if(option == 3)
     {
         currentRow = ui->tableView_showExecuteInfo->currentIndex().row();
-        AgentiaInfoChange_execute_Page->show();
+        AgentiaInfoChange_execute_Page->exec();
 
         if(T_table->dialog_model == 4)//替换 注销部分输入框编辑功能
         {
@@ -644,74 +637,17 @@ void OperateWindow::updateNo(int order)//更新数据表格行列号
     }
 }
 
-
-void OperateWindow::on_pBt_getPosition_clicked()
+void OperateWindow::requestPositionInfo(void)
 {
-    if(checkSheet(2,0))//检查是否有未填写试剂信息
-    {
-        T_table->sendCount = 0;
-        requestPositionInfo(T_table->sendCount);
-        ui->pBt_getPosition->setEnabled(false);
-    }
+    int allRowCount = T_model_Other_Execut->rowCount();
+    http_GP->JsonForSend(5, T_table->T_execut_RelationTable, allRowCount);
 }
 
-void OperateWindow::requestPositionInfo(int i)
+void OperateWindow::OperateError_info(void)//显示更新信息
 {
-    int compare = T_model_Other_Execut->rowCount();
-    int choice = 0;
-    choice = checkSheet(0,i);
-    if(choice == 1)
-    {
-        Operate_http->jsonForSend(5,T_table->T_execut_RelationTable,i);
-    }
-    else
-    {
-        qDebug()<<"tiaoguolou";
-        T_table->sendCount++;
-        if(T_table->sendCount<compare)
-        {
-            requestPositionInfo(T_table->sendCount);
-        }
-        else
-        {
-            ui->pBt_getPosition->setEnabled(true);
-        }
-    }
-}
-
-void OperateWindow::updatePosition(int drawer, int position, int positionId)
-{
-    T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,16),drawer);
-    T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,17),position);
-    T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,18),positionId);
-    T_model_Other_Execut->submitAll();
-}
-void OperateWindow::OperateError_info(int status)//显示更新信息 0：no 1：ok
-{
-    int compare = T_model_Other_Execut->rowCount();
-
-    if(status == 0)//no
-    {
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,4),"暂缺此类位置，请更换");
-        T_model_Other_Execut->submitAll();
-    }
-    else if(status == 1)//ok
-    {
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(T_table->sendCount,4),"已分配位置");
-        T_model_Other_Execut->submitAll();
-    }
-
-    T_table->sendCount++;
-
-    if(T_table->sendCount<compare)
-    {
-        requestPositionInfo(T_table->sendCount);
-    }
-    else
-    {
-        ui->pBt_getPosition->setEnabled(true);
-    }
-
+    T_model_Other_Execut->select();
+    T_table->executeCount = 1;
+    on_Bt_execute_clicked();
 }
 
 
@@ -728,21 +664,7 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
     int     getC_drawer   = 0;
     int rowAll = T_model_Other_Execut->rowCount();
 
-    if(order == 0)//0：上报
-    {
-        getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
-        qDebug()<<getC_size<<"---------------11-***"<<i;
-        if(getC_status == "已分配位置")
-        {
-            return 0;//0 不需要申报 1 需要申报位置
-        }
-        else
-        {
-            return 1;
-        }
-    }
-
-    else if(order == 1)//1：执行
+    if(order == 1)//1：执行
     {
         T_table->notDrawer = 0;
 
@@ -772,8 +694,13 @@ int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置�
                 getC_dose = T_model_Other_Execut->data(T_model_Other_Execut->index(i,6)).toString();
                 getC_size = T_model_Other_Execut->data(T_model_Other_Execut->index(i,7)).toString();
                 getC_expireDate = T_model_Other_Execut->data(T_model_Other_Execut->index(i,8)).toString();
+                getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
 
-                if((getC_size == "")||(getC_bottle == "")||(getC_dose == "")||(getC_expireDate == ""))
+                if (getC_status == "已分配位置")
+                {
+                    ;
+                }
+                else if ((getC_size == "")||(getC_bottle == "")||(getC_dose == "")||(getC_expireDate == ""))
                 {
                     QMessageBox qMbox;
                     qMbox.setText(QString("第 %1 行未填写信息").arg(i+1));

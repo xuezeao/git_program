@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "mainui.h"
-#include "http_gandp.h"
+#include "httpgp.h"
 
 namespace Ui {
 class EnterPage;
@@ -27,7 +27,7 @@ private slots:
 private:
     Ui::EnterPage *ui;
     MainUI *mainUI_Page;
-    http_GAndP *http_Page;
+    HttpGP *http_Page;
 
     void handleInfo();//处理输入框的信息
 };

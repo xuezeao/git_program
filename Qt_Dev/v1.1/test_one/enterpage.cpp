@@ -9,7 +9,7 @@ EnterPage::EnterPage(QWidget *parent) :
 {
     ui->setupUi(this);
     mainUI_Page = new MainUI;
-    http_Page = new http_GAndP;
+    http_Page = new HttpGP;
 
 //    ui->graphicsView->autoFillBackground();
 //        post_Info="0";
@@ -50,8 +50,8 @@ void EnterPage::handleInfo()//处理输入框的信息
     username = ui->lineEdit_acount->text();
     password = ui->lineEdit_password->text();
 
-    http_Page->jsonForSend(11,username,0);
-    http_Page->jsonForSend(11,password,1);
+    http_Page->JsonForSend(11,username,0);
+    http_Page->JsonForSend(11,password,1);
 }
 
 void EnterPage::receiverInfo_from_Http(int status, int userId, int role)

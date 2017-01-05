@@ -1,4 +1,4 @@
- #include "agentiainfochange.h"
+#include "agentiainfochange.h"
 #include "ui_agentiainfochange.h"
 #include <QRegExp>
 #include <QValidator>
@@ -7,8 +7,8 @@
 #include <QDebug>
 #include <QDesktopWidget>
 
-AgentiaInfoChange::AgentiaInfoChange(QWidget *parent) :
-    QWidget(parent),
+AgentiaInfoChange::AgentiaInfoChange(QDialog *parent) :
+    QDialog(parent),
     ui(new Ui::AgentiaInfoChange)
 {
     ui->setupUi(this);
@@ -23,6 +23,9 @@ AgentiaInfoChange::AgentiaInfoChange(QWidget *parent) :
     QRegExp regx_dose("[0-9]+$");//"[a-zA-Z0-9]+$" 长度7纯数字输入3.3格式
     QValidator *validator_dose = new QRegExpValidator(regx_dose,ui->lineEdit_dose);
     ui->lineEdit_dose->setValidator(validator_dose);
+
+
+
 
     ui->dateEdit_expireDate->setCalendarPopup(true);
     ui->dateEdit_expireDate->setDisplayFormat("yyyy.M.d");//设置日期格式
