@@ -9,13 +9,13 @@ MainUI::MainUI(QWidget *parent) :
 
 
 
-    MainUi_http_Page = new http_GAndP;
+    MainUi_http_Page = new HttpGP;
     MainUi_operate_Page = new OperateWindow;
     MainUi_return_Page = new ReturnPage;
     readSTM = new ReadSTMInfo;
 
+    MainUi_http_Page->GetHttp();
 
-    MainUi_http_Page->getHttp();
     connect(MainUi_operate_Page,SIGNAL(OperateWindow_To_MainUI()),this,SLOT(closeOperatePage_Return_MainUi()));
     connect(MainUi_return_Page,SIGNAL(returnPage_To_MainUi()),this,SLOT(closeReturnPage_Return_MainUi()));
 
@@ -107,12 +107,12 @@ void MainUI::on_pBt_Return_clicked()
 
 void MainUI::on_pBt_getTest_clicked()
 {
-    MainUi_http_Page->getHttp();
+    MainUi_http_Page->GetHttp();
 }
 
 void MainUI::on_pBt_post_clicked()
 {
-    MainUi_http_Page->postHttp(0,"0");
+    MainUi_http_Page->JsonPostHttp();
 }
 
 void MainUI::on_pBt_leave_clicked()

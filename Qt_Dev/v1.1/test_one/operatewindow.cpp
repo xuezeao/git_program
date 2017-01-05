@@ -60,10 +60,7 @@ OperateWindow::OperateWindow(QWidget *parent) :
 
     connect(Sheet_Operate_execute_Page,SIGNAL(closePrevious()),this,SLOT(closePage()));
 
-    connect(http_GP,SIGNAL(sendError_To_Operate(int)),this,SLOT(OperateError_info(int)));//反馈信息
-
-
-
+    connect(http_GP,SIGNAL(sendError_To_Operate()),this,SLOT(OperateError_info()));//反馈信息
 
 }
 
@@ -150,19 +147,21 @@ void OperateWindow::on_Bt_execute_clicked()
     updateNo(1);
     if ((0 == T_table->executeCount) && (1 == T_table->dialog_model))
     {
-        if(checkSheet(2,0))//检查是否有未填写试剂信息
+        if(checkSheet(2))//检查是否有未填写试剂信息
         {
             requestPositionInfo();
         }
     }
     else
     {
-        if(checkSheet(2,0))//检查是否有未填写试剂信息
+        T_table->executeCount = 0;
+
+        if(checkSheet(2))//检查是否有未填写试剂信息
         {
             if(T_table->dialog_model == 1)
             {
-                  T_table->dialog_model = 0;
-                  checkSheet(1,0);
+
+                  checkSheet(1);
                   if(T_table->notDrawer != 0)
                   {
                       QMessageBox::StandardButton reply;
@@ -651,7 +650,7 @@ void OperateWindow::OperateError_info(void)//显示更新信息
 }
 
 
-int OperateWindow::checkSheet(int order ,int i)//检查数据表格关键位置信息是否完善
+int OperateWindow::checkSheet(int order)//检查数据表格关键位置信息是否完善
 // 0：检查size  1：检查position And drawer
 {
     QString getC_status = "" ;

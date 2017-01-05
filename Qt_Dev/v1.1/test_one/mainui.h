@@ -2,7 +2,7 @@
 #define MAINUI_H
 
 #include <QMainWindow>
-#include "http_gandp.h"
+#include "httpgp.h"
 #include "operatewindow.h"
 #include "returnpage.h"
 
@@ -58,7 +58,7 @@ signals:
 
 private:
     Ui::MainUI *ui;
-    http_GAndP *MainUi_http_Page;
+    HttpGP *MainUi_http_Page;
     OperateWindow *MainUi_operate_Page;
     ReturnPage *MainUi_return_Page;
 

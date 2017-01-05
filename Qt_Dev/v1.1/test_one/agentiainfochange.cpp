@@ -106,7 +106,7 @@ void AgentiaInfoChange::on_pBt_nextOperate_clicked()
         }
     }
 
-    qDebug()<<"AInfo_Sheet: "<<AInfo_sheetOrder;
+    qDebug()<<"AInfo_Sheet: "<<AInfo_sheetOrder << "指明修改的信息";
 }
 
 void AgentiaInfoChange::on_pBt_previousOperate_clicked()

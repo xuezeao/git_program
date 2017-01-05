@@ -48,7 +48,6 @@ void HttpGP::JuageOperatorStatus(int order)
     }
 }
 
-
 void HttpGP::JsonForSend(int model_json, QString T_tableName, int allTaskCount)
 {
     HttpInit();
@@ -87,16 +86,20 @@ void HttpGP::GetHttp(void)//get cabinet info
     accessManager->get(*request);//通过发送数据，返回值保存在reply指针里.
 
     http_info->http_modelChoice = 0;
-    http_info->http_modelChoice = 15;
+
 }
 
 void HttpGP::PostHttp(int postId_NO, QString postStr)
-//0:测试地址 1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息 5:请求空闲位置
+//0:测试地址 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂 5:请求空闲位置
 //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
 {
     QString address = "";
 
     switch (postId_NO){
+    case 0 :{
+        address="postTest";//测试地址
+        break;
+    }
     case 1 :{
         address = "availableAgentiaList";//获取在位试剂列表
         postStr = QString("{\"cabinetNo\":\"%1\"}").arg(CABINETNO);
@@ -108,10 +111,9 @@ void HttpGP::PostHttp(int postId_NO, QString postStr)
         http_info->http_modelChoice = 2;
         break;
     }
-    case 3 :{
+    case 4 :{
         address = "occupiedAgentiaList";//获取待归还试剂
-        postStr = QString("{\"userId\":%1,\"cabinetNo\":\"%2\"}").arg(user->user_id).arg(CABINETNO);
-        http_info->http_modelChoice = 3;
+        http_info->http_modelChoice = 4;
         break;
     }
     case 5 :{
@@ -186,10 +188,12 @@ void HttpGP::finished(QNetworkReply *reply)
          QString all = codec->toUnicode(reply->readAll());
          QJsonDocument all_info = QJsonDocument::fromJson(all.toUtf8());
 
-         qDebug() << all_info << "---------finished";
+         qDebug() << QDateTime::currentDateTime() << "starXIE";
 
          int currentRole = UnpackageJson(all_info, http_info->http_modelChoice);//解析
+         qDebug() << QDateTime::currentDateTime() << "JIEXIE";
          JuageOperatorStatus(currentRole);//判断
+         qDebug() << QDateTime::currentDateTime() << "xiayitiao";
      }
      else
      {
@@ -202,7 +206,7 @@ void HttpGP::finished(QNetworkReply *reply)
 }
 
 int HttpGP::UnpackageJson(QJsonDocument str, int t)
-// 0:测试地址 1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息
+// 0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
 //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验 13：报警14:任务列表
 {
     QString    s_str[11]    = {0};//save string
@@ -230,6 +234,8 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
     if (t == 0)
     {
+        query.exec(QString("DELETE from T_CabinetInfo"));//机柜信息
+
         s_json[0] = analyze_Z["cabinetName"].toString();
         s_str[0]  = s_json[0].toString();
 
@@ -293,9 +299,59 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
     {
         ;
     }
-    else if (t == 3)//获取待归还试剂
+    else if (t == 4)//获取待归还试剂
     {
-        ;
+        query.exec(QString("DELETE from T_AgentiaWaitSaving"));//带归还试剂信息
+
+        s_json[0] = analyze_Z["amount"].toInt();
+        s_int[0]  = s_json[0].toInt();
+
+        s_allInfoNum = s_int[0];
+
+        s_JA = analyze_Z["agentiaList"].toArray();
+
+        for (int i = 0; i < s_allInfoNum; i++)
+        {
+            analyze_C = s_JA[i].toObject();
+
+            s_json[0] = analyze_C["agentiaName"].toString();
+            s_str[0]  = s_json[0].toString();
+
+            s_json[1] = analyze_C["bottleCapacity"].toString();
+            s_str[1]  = s_json[1].toString();
+
+            s_json[2] = analyze_C["dose"].toString();
+            s_str[2]  = s_json[2].toString();
+
+            s_json[3] = analyze_C["expiryDate"].toString();
+            s_str[3]  = s_json[3].toString();
+
+            s_json[4] = analyze_C["drawerNo"].toInt();
+            s_int[4]  = s_json[4].toInt();
+
+            s_json[5] = analyze_C["positionNo"].toInt();
+            s_int[5]  = s_json[5].toInt();
+
+            s_json[6] = analyze_C["agentiaId"].toInt();
+            s_int[6]  = s_json[6].toInt();
+
+            s_json[7] = analyze_C["positionId"].toInt();
+            s_int[7]  = s_json[7].toInt();
+
+            query.prepare("insert into T_AgentiaWaitSaving (id,checkBox,agentiaName,bottleCapacity,dose,\
+                                                            expireDate,drawerNo,positionNo,agentiaId,positionId,judgeAttitude\
+                                                            ) values (?,?,?,?,?\
+                                                                      ?,?,?,?,?,?)");
+            query.addBindValue(s_str[0]);
+            query.addBindValue(s_int[1]);
+            query.addBindValue(s_str[2]);
+            query.addBindValue(s_int[3]);
+            query.exec();
+
+       }
+
+       return 0;
+
     }
     else if (t == 5)//入柜申请分配位置
     {
@@ -621,15 +677,22 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
     }
     else if (2 == model_json)
     {
-        ;
+;
     }
     else if (3 == model_json)
     {
-        ;
+;
     }
     else if (4 == model_json)
     {
-        ;
+        json_Ok.insert("cabinetNo",QString(CABINETNO));
+        json_Ok.insert("userId",user->user_id);
+
+        document.setObject(json_Ok);
+        byte_array=document.toJson(QJsonDocument::Compact);
+        QString json_str(byte_array);
+
+        PostHttp(4,json_str);//发送http
     }
     else if (5 == model_json)//分配位置
     {
@@ -640,7 +703,7 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         stash_J_Int[1] = query.value(10).toInt();//attribut
         stash_J_QString[2] = query.value(4).toString();//judgeAttitude
 
-        if ("已分配位置" == stash_J_QString[2])
+        if ("已分配位置" != stash_J_QString[2])
         {
             json_Ok.insert("cabinetNo",QString(CABINETNO));//生成JSON
             json_Ok.insert("drawerSize",stash_J_QString[0]);
@@ -896,8 +959,12 @@ void HttpGP::EmitSignal(int status, int order)
     if (0 == status)
     {
         switch (order) {
+        case 0:{
+            //获取机柜信息
+            break;
+        }
         case 5:{
-            emit sendError_To_Operate(1);//申请任务完成
+            emit sendError_To_Operate();//申请任务完成
             break;
         }
         case 6:{
@@ -935,8 +1002,12 @@ void HttpGP::EmitSignal(int status, int order)
     else if (-1 == status)
     {
         switch (order) {
+        case 0:{
+            //获取机柜信息
+            break;
+        }
         case 5:{
-            emit sendError_To_Operate(0);//,"没有空闲位置"
+            emit sendError_To_Operate();//,"没有空闲位置"
             break;
         }
         case 6:{

@@ -2,6 +2,8 @@
 #define ENTERPAGE_H
 
 #include <QWidget>
+#include <QPixmap>
+#include <QMessageBox>
 #include "mainui.h"
 #include "httpgp.h"
 
@@ -30,6 +32,7 @@ private:
     HttpGP *http_Page;
 
     void handleInfo();//处理输入框的信息
+    void updateCabinetInfo();//更新试剂信息
 };
 
 #endif // ENTERPAGE_H

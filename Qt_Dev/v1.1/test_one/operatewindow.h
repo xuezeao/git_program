@@ -104,7 +104,7 @@ private:
 
     void requestPositionInfo(void);//请求位置信息
 
-    int checkSheet(int order ,int i);// check sheet position for execute
+    int checkSheet(int order);// check sheet position for execute
     //检查数据表格关键位置信息是否完善
     // 0：检查size  1：检查position And drawer
 

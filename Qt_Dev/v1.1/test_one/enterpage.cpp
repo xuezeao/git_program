@@ -1,7 +1,6 @@
 #include "enterpage.h"
 #include "ui_enterpage.h"
-#include <QPixmap>
-#include <QMessageBox>
+
 
 EnterPage::EnterPage(QWidget *parent) :
     QWidget(parent),
@@ -26,6 +25,8 @@ EnterPage::EnterPage(QWidget *parent) :
 
     connect(http_Page,SIGNAL(sendInfo_To_Enter(int,int,int)),this,SLOT(receiverInfo_from_Http(int,int,int)));
     connect(mainUI_Page,SIGNAL(leaveOperate_To_enter()),this,SLOT(closePage()));
+
+
 
 }
 
@@ -85,3 +86,9 @@ void EnterPage::closePage()
 {
     this->show();
 }
+
+void EnterPage::updateCabinetInfo()
+{
+    ;
+}
+

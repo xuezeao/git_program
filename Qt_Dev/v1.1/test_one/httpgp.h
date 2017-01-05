@@ -41,7 +41,7 @@ public:
 
 signals:
 
-    void sendError_To_Operate(int status);//发送上传状态 0：ok 1:lose
+    void sendError_To_Operate();//发送上传状态 0：ok 1:lose
     void sendError_To_Execut(int error_status,QString errorInfo);//发送任务完成情况 0-error 1-OK
     void sendInfo_To_sheetPage(int status);//发送上传状态 0:OK 1:lose
     void sendFalse();
@@ -82,22 +82,23 @@ private:
 
     int taskHandleCount;
 
-    void PackageJson(int model_json, QString T_tableName, int T_tableNo);
-    //封装JSON信息
-    //1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息 5:请求空闲位置
+    void PostHttp(int postId_NO, QString postStr);//postName_NO用于选择接口名对应的序号，postStr用于装载需要发送内容
+    //0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂 5:请求空闲位置
     //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
 
-    void PostHttp(int postId_NO, QString postStr);//postName_NO用于选择接口名对应的序号，postStr用于装载需要发送内容
-    //0:测试地址 1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息 5:请求空闲位置
+    void PackageJson(int model_json, QString T_tableName, int T_tableNo);
+    //封装JSON信息
+    //1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
     //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
 
     int UnpackageJson(QJsonDocument str, int t);
     //解析JSON信息并存入数据库
+    // 0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
     //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验 13：报警14:任务列表
 
     void JuageOperatorStatus(int order);
     //-2:网络错误  -1：任务失败 0：任务完成
-    //1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息
+    //1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
     //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验
     //13：报警 14：任务列表 15：获取柜子信息
 

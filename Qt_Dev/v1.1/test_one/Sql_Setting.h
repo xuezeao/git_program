@@ -83,7 +83,7 @@ static bool createConnection()
                           [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,\
                           [drawerNo] int,[positionNo] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
         //还 存储数据表
-       query.exec(QString("insert into T_AgentiaWaitSaving values (1,'未选择','1酒精','600ml','300ml','2010.7.7',1,2,13,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaWaitSaving values (1,'未选择','1酒精','600ml','300ml','2010.7.7',1,2,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaWaitSaving values (2,'未选择','2酒精','400ml','300ml','2010.7.7',3,2,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaWaitSaving values (3,'未选择','3酒精','600ml','300ml','2010.7.7',4,2,123,2,'未摆放')"));
        query.exec(QString("insert into T_AgentiaWaitSaving values (4,'未选择','4酒精','400ml','300ml','2010.7.7',2,2,123,2,'未摆放')"));
