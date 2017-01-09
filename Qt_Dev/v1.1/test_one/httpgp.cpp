@@ -157,18 +157,22 @@ void HttpGP::PostHttp(int postId_NO, QString postStr)
     case 12 :{
         address = "check";//点验
         http_info->http_modelChoice = 12;
+        break;
     }
     case 13:{
         address = "warningLog";//报警
         http_info->http_modelChoice = 13;
+        break;
     }
     case 14:{
         address = "taskList";//获取任务列表
         http_info->http_modelChoice = 14;
+        break;
     }
     case 15:{
         address = "taskComplete";//申请任务完成 上报
         http_info->http_modelChoice = 15;
+        break;
     }
     default:
         break;
@@ -620,7 +624,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             s_json[0] = analyze_Z["amount"].toInt();
             s_allInfoNum = s_json[0].toInt();
 
-            s_JA = analyze_Z["agentiaList"].toArray();
+            s_JA = analyze_Z["taskList"].toArray();
             for (int i = 0; i < s_allInfoNum; i++)
             {
                 analyze_C = s_JA[i].toObject();
@@ -633,6 +637,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                 s_int[1]  = s_json[1].toInt();
                 s_taskStatus = s_int[1];
 
+                time = "0";
                 s_json[2] = analyze_C["expiryDate"].toString();
                 s_str[2]  = s_json[2].toString();
                 year = s_str[2].section("-",0,0);
@@ -659,6 +664,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                 s_json[8] = analyze_C["newAgentia_dose"].toString();
                 s_str[8]  = s_json[8].toString();
 
+                newTime = "0";
                 s_json[9] = analyze_C["newAgentia_expiryDate"].toString();
                 s_str[9]  = s_json[9].toString();
                 newYear = s_str[9].section("-",0,0);
@@ -718,7 +724,6 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                         query.addBindValue(QString(""));
                         query.addBindValue(QString(""));
                         query.addBindValue(QString(""));
-                        query.addBindValue(QString(""));
                         query.addBindValue(s_taskId);
                         query.addBindValue(s_int[5]);
                         query.addBindValue(s_int[6]);
@@ -760,9 +765,9 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                         query.addBindValue(QString(""));
                         query.addBindValue(s_str[4]);
                         query.addBindValue(time);
-                        query.addBindValue(QString(""));
-                        query.addBindValue(QString(""));
-                        query.addBindValue(QString(""));
+                        query.addBindValue(QString("1"));
+                        query.addBindValue(QString("1"));
+                        query.addBindValue(QString("1"));
                         query.addBindValue(s_int[5]);
                         query.addBindValue(s_int[6]);
                         query.addBindValue(3);
@@ -844,6 +849,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                     }
                 }
             }
+            return 0;
         }
         else
         {
@@ -1191,6 +1197,16 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         {
             JuageOperatorStatus(model_json);//未摆放
         }
+    }
+    else if (14 == model_json)
+    {
+        json_Ok.insert("userId",user->user_id);
+        json_Ok.insert("cabinetNo",QString(CABINETNO));
+
+        document.setObject(json_Ok);
+        byte_array = document.toJson(QJsonDocument::Compact);
+        QString json_str(byte_array);
+        PostHttp(14,json_str);
     }
 
 }

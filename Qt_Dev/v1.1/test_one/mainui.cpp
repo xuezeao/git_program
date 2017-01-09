@@ -14,7 +14,8 @@ MainUI::MainUI(QWidget *parent) :
     MainUi_return_Page = new ReturnPage;
     readSTM = new ReadSTMInfo;
 
-    MainUi_http_Page->GetHttp();
+//    MainUi_http_Page->GetHttp();
+    MainUi_http_Page->JsonForSend(14,"",1);
 
     connect(MainUi_operate_Page,SIGNAL(OperateWindow_To_MainUI()),this,SLOT(closeOperatePage_Return_MainUi()));
     connect(MainUi_return_Page,SIGNAL(returnPage_To_MainUi()),this,SLOT(closeReturnPage_Return_MainUi()));
