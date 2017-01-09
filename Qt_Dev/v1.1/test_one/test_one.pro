@@ -19,7 +19,6 @@ SOURCES += main.cpp \
     checkboxdelegate.cpp \
     execut_window.cpp \
     global_Vailable.cpp \
-    http_gandp.cpp \
     mainui.cpp \
     myqheaderview.cpp \
     operatewindow.cpp \
@@ -37,7 +36,6 @@ HEADERS  += \
     checkboxdelegate.h \
     execut_window.h \
     global_Vailable.h \
-    http_gandp.h \
     mainui.h \
     myqheaderview.h \
     operatewindow.h \

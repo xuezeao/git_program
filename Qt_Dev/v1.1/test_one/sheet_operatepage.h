@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QSqlTableModel>
-#include "http_gandp.h"
+#include "httpgp.h"
 #include "uart4stm.h"
 
 namespace Ui {
@@ -30,7 +30,7 @@ private slots:
 
     void on_pBt_OK_clicked();
 
-    void receivers_From_http(int status);//0:ok 1:post失败 2：未摆放
+    void receivers_From_http();
 
     void on_pBt_ignore_clicked();
 
@@ -38,7 +38,7 @@ private:
     Ui::Sheet_OperatePage *ui;
 
     QSqlTableModel *T_model_execute;
-    http_GAndP *http_GAndP_sheetOperate;
+    HttpGP *http_GAndP_sheetOperate;
 
     void sheetTableInit(int num);//选择模式
     //更改试剂信息 name 表格名 i 对应的行数 just 写入的状态值

@@ -43,9 +43,9 @@ signals:
 
     void sendError_To_Operate();//发送上传状态 0：ok 1:lose
     void sendError_To_Execut(int error_status,QString errorInfo);//发送任务完成情况 0-error 1-OK
-    void sendInfo_To_sheetPage(int status);//发送上传状态 0:OK 1:lose
+    void sendInfo_To_sheetPage();//发送上传状态 0:OK 1:lose
     void sendFalse();
-    void sendInfo_To_return_PutIn(int status);//0 成功 1 失败 2未操作
+    void sendInfo_To_executeOperate();//
     void sendInfo_To_Enter(int status,int userId,int userRole);//0 成功 1 失败
 
 public slots:

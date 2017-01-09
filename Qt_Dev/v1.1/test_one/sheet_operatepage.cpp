@@ -24,9 +24,9 @@ Sheet_OperatePage::Sheet_OperatePage(QDialog *parent) :
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
     T_model_execute = new QSqlTableModel;
-    http_GAndP_sheetOperate = new http_GAndP;
+    http_GAndP_sheetOperate = new HttpGP;
 
-    connect(http_GAndP_sheetOperate,SIGNAL(sendInfo_To_sheetPage(int)),this,SLOT(receivers_From_http(int)));//接收来自post讯号
+    connect(http_GAndP_sheetOperate,SIGNAL(sendInfo_To_sheetPage()),this,SLOT(receivers_From_http()));//接收来自post讯号
 }
 
 Sheet_OperatePage::~Sheet_OperatePage()
@@ -480,60 +480,29 @@ void Sheet_OperatePage::closeOperate()
 
 void Sheet_OperatePage::sendHttp()
 {
-    if(T_tableexecute->modelOperate == 2 || T_tableexecute->modelOperate == 5)
+    int rowAll = T_model_execute->rowCount();
+    ui->pBt_OK->setEnabled(false);
+    ui->pBt_return->setEnabled(false);
+    ui->pBt_ignore->setEnabled(false);
+
+    if(T_tableexecute->modelOperate == 2)
     {
-        int rowAll = T_model_execute->rowCount();
-        ui->pBt_OK->setEnabled(false);
-        ui->pBt_return->setEnabled(false);
-        ui->pBt_ignore->setEnabled(false);
+        http_GAndP_sheetOperate->JsonForSend(7, T_tableexecute->T_tablesheet, rowAll);
 
-
-        if(T_tableexecute->rowid < rowAll)
-        {
-            if(T_tableexecute->modelOperate == 2)
-            {
-                http_GAndP_sheetOperate->jsonForSend(7,T_tableexecute->T_tablesheet,T_tableexecute->rowid);
-            }
-            else if(T_tableexecute->modelOperate == 5)
-            {
-                http_GAndP_sheetOperate->jsonForSend(10,T_tableexecute->T_tablesheet,T_tableexecute->rowid);
-            }
-        }
-        else
-        {
-            ui->pBt_OK->setEnabled(true);
-            ui->pBt_return->setEnabled(true);
-            ui->pBt_ignore->setEnabled(true);
-        }
-
-
+    }
+    else if(T_tableexecute->modelOperate == 5)
+    {
+        http_GAndP_sheetOperate->JsonForSend(10, T_tableexecute->T_tablesheet, rowAll);
     }
 }
 
-void Sheet_OperatePage::receivers_From_http(int status)//0:ok 1:post失败 2：未摆放
+void Sheet_OperatePage::receivers_From_http()
 {
-    if(T_tableexecute->modelOperate == 2 || T_tableexecute->modelOperate == 5)
-    {
-        if(status == 0)//OK
-        {
-            changeInfo(1,T_tableexecute->rowid);
-
-        }
-        if(status == 1)//post 失败
-        {
-            savePostFalse(T_tableexecute->T_tablesheet,T_tableexecute->rowid);
-            changeInfo(2,T_tableexecute->rowid);
-
-        }
-        if(status == 2)//未摆放
-        {
-            changeInfo(3,T_tableexecute->rowid);
-        }
-        T_tableexecute->rowid++;
-        sendHttp();
-        sheetTableInit(0);
-        sheet_status = 3;
-    }
+    sheetTableInit(0);
+    ui->pBt_OK->setEnabled(true);
+    ui->pBt_return->setEnabled(true);
+    ui->pBt_ignore->setEnabled(true);
+    sheet_status = 3;//切换按钮功能 3：退出
 }
 
 void Sheet_OperatePage::delSheetInfo(int status,QString name ,int i)//0: 全部清除 1：选定删除内容

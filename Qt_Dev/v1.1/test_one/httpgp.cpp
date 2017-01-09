@@ -56,7 +56,7 @@ void HttpGP::JsonForSend(int model_json, QString T_tableName, int allTaskCount)
     http_info->tableName = T_tableName;
     http_info->allTaskCount = allTaskCount;
 
-    if (11 == model_json)
+    if (11 == model_json)//登入模式
     {
         taskHandleCount = allTaskCount;//存储用户信息
     }
@@ -195,7 +195,6 @@ void HttpGP::finished(QNetworkReply *reply)
          int currentRole = UnpackageJson(all_info, http_info->http_modelChoice);//解析
          qDebug() << QDateTime::currentDateTime() << "JIEXIE";
          JuageOperatorStatus(currentRole);//判断
-         qDebug() << QDateTime::currentDateTime() << "xiayitiao";
      }
      else
      {
@@ -222,6 +221,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
     int  s_positionNo = 0;
     int  s_drawerNO   = 0;
     int  s_positionId = 0;
+    int  s_taskCount  = 0;
     bool s_success    = false;
 
     QString month = "";
@@ -233,6 +233,9 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
     QString newYear = "";
     QString newDay = "";
     QString newTime = "";
+    /***************************/
+    s_taskCount = taskHandleCount + 1;
+    /*****************************/
 
     if (t == 0)
     {
@@ -387,17 +390,18 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             query.exec(QString("update %1 set positionId='%2',drawerNo='%3',positionNo='%4',\
                                judgeAttitude='%5' where id=%6")
                        .arg(http_info->tableName).arg(s_positionId).arg(s_drawerNO).arg(s_positionNo)
-                       .arg(QString("已分配位置")).arg(taskHandleCount+1));
+                       .arg(QString("已分配位置")).arg(s_taskCount));
 
 
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("缺乏相应位置")).arg(taskHandleCount+1));
+                       .arg(http_info->tableName).arg(QString("缺乏相应位置")).arg(s_taskCount));
             qDebug() << "error--request positionId";
         }
 
+        qDebug() << "position unpackage success";
         return t;
 
     }
@@ -409,16 +413,17 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
 
             qDebug() << "error--send putin ok";
         }
 
+        qDebug() << "PutIn operator unpackage success";
         return t;
     }
     else if (t == 7)//取 完成
@@ -429,15 +434,16 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
             qDebug() << "error--send Get ok";
         }
 
+        qDebug() << "get agentia unpackage success";
         return t;
     }
     else if (t == 8)//还 完成
@@ -448,16 +454,17 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
 
             qDebug() << "error--send give back ok";
         }
 
+        qDebug() << "give back agentia unpackage success";
         return t;
     }
     else if (t == 9)//替换完成
@@ -468,16 +475,17 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
 
             qDebug() << "error--send change ok";
         }
 
+        qDebug() << "chenge agentia unpackage success";
         return t;
     }
     else if (t == 10)//报废
@@ -488,16 +496,17 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
 
             qDebug() << "error--send remove ok";
         }
 
+        qDebug() << "scrape unpackage success";
         return t;
     }
     else if (t == 11)//登入
@@ -536,16 +545,17 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
         if (s_success)
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传成功")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
             query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
-                       .arg(http_info->tableName).arg(QString("上传失败")).arg(taskHandleCount));
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
 
             qDebug() << "error--send check ok";
         }
 
+        qDebug() << "check unpackage success";
         return t;
     }
     else if (t == 13)//报错
@@ -669,7 +679,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
 void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
 //封装JSON信息
-//2：获取试剂类型 3：获取待归还试剂 4：获取地址信息 5:请求空闲位置
+//0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
 //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
 {
     QJsonObject json_Ok;
@@ -682,7 +692,7 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
     QString stash_J_QString[10];
 /************/
     user->user_id=1;//暂时使用
-
+    qDebug() << QDateTime::currentDateTime() << "next task";
 /**************/
 
     if (1 == model_json)
@@ -968,6 +978,8 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
 
 void HttpGP::EmitSignal(int status, int order)
 {
+    //status 判断是否对错，order 选择发送模式
+    //0: 正确 —1：错误
     if (0 == status)
     {
         switch (order) {
@@ -985,23 +997,23 @@ void HttpGP::EmitSignal(int status, int order)
             break;
         }
         case 6:{
-            emit  sendInfo_To_return_PutIn(0);//0:OK 1:lose
+            emit  sendInfo_To_executeOperate();
             break;
         }
         case 7:{
-            emit sendInfo_To_sheetPage(0);//0:OK 1:lose
+            emit sendInfo_To_sheetPage();
             break;
         }
         case 8:{
-            emit sendInfo_To_return_PutIn(0);//0:OK 1:lose
+            emit sendInfo_To_executeOperate();
             break;
         }
         case 9:{
-            emit sendInfo_To_return_PutIn(0);//0：ok
+            emit sendInfo_To_executeOperate();
             break;
         }
         case 10:{
-            emit sendInfo_To_sheetPage(0);//0：ok
+            emit sendInfo_To_sheetPage();
             break;
         }
         case 11:{
@@ -1009,7 +1021,7 @@ void HttpGP::EmitSignal(int status, int order)
             break;
         }
         case 12:{
-            emit sendInfo_To_return_PutIn(0);//0：ok
+            emit sendInfo_To_executeOperate();
             break;
         }
         default:
@@ -1032,23 +1044,23 @@ void HttpGP::EmitSignal(int status, int order)
             break;
         }
         case 6:{
-            emit sendInfo_To_return_PutIn(1);//0:OK 1:lose
+            emit sendInfo_To_executeOperate();
             break;
         }
         case 7:{
-            emit sendInfo_To_sheetPage(1);//request save
+            emit sendInfo_To_sheetPage();
             break;
         }
         case 8:{
-            emit sendInfo_To_return_PutIn(1);//request save
+            emit sendInfo_To_executeOperate();
             break;
         }
         case 9:{
-            emit sendInfo_To_return_PutIn(1);//reques
+            emit sendInfo_To_executeOperate();
             break;
         }
         case 10:{
-            emit sendInfo_To_sheetPage(1);//request
+            emit sendInfo_To_sheetPage();
             break;
         }
         case 11:{
@@ -1056,7 +1068,7 @@ void HttpGP::EmitSignal(int status, int order)
             break;
         }
         case 12:{
-            emit sendInfo_To_return_PutIn(1);//reques
+            emit sendInfo_To_executeOperate();
             break;
         }
         default:

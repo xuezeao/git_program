@@ -13,7 +13,7 @@ Execut_window::Execut_window(QDialog *parent) :
 {
     ui->setupUi(this);
 
-    Execut_http_GAndP = new http_GAndP;
+    Execut_http_GAndP = new HttpGP;
     Show_Info = new ShowAllInfo;
     execute_V = new Execute_Variable;
 
@@ -25,7 +25,7 @@ Execut_window::Execut_window(QDialog *parent) :
     QValidator *validator_bottleCapacity = new QRegExpValidator(regx_bottleCapacity,ui->lineEdit_changeVolume);
     ui->lineEdit_changeVolume->setValidator(validator_bottleCapacity);
 
-    connect(Execut_http_GAndP,SIGNAL(sendInfo_To_return_PutIn(int)),this,SLOT(updateReturn(int)));
+    connect(Execut_http_GAndP,SIGNAL(sendInfo_To_executeOperate()),this,SLOT(updateReturn()));
     connect(Execut_http_GAndP,SIGNAL(sendFalse()),this,SLOT(NetworkError()));
     connect(Show_Info,SIGNAL(upStatus()),this,SIGNAL(upSheet_From_Execute()));//返回主界面
 
@@ -34,37 +34,9 @@ Execut_window::Execut_window(QDialog *parent) :
 
 
 
-void Execut_window::updateReturn(int status)//0 成功 1 失败 2 未放置
+void Execut_window::updateReturn()//0 成功 1 失败 2 未放置
 {
-    QSqlQuery query;
-    QString error;
-
-    if(status == 0)
-    {
-        error = "上传成功";
-    }
-    else if(status == 1)
-    {
-        error = "上传失败";
-    }
-    else if(status == 2)
-    {
-        error = "未放置";
-    }
-
-    execute_V->httpCount++;
-    query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")//update %1 set judgeAttitude='%2' where rowid=%3
-                   .arg(execute_V->T_executeTable).arg(QString(error)).arg(execute_V->httpCount));
-
-    if (execute_V->httpCount < execute_V->acountRow)
-    {
-        http_PG_AgentiaInfo(execute_V->execute_model,execute_V->httpCount);
-
-    }
-    else
-    {
-        closePage();
-    }
+    closePage();
 }
 
 /********************************************************************/
@@ -122,14 +94,14 @@ void Execut_window::on_pBt_cancal_clicked()
         ui->pBt_cancal->hide();
         ui->pBt_next->hide();
         ui->pBt_ignore->hide();
-        http_PG_AgentiaInfo(2,0);
+        http_PG_AgentiaInfo(2);
     }
     else if (execute_V->execute_model == 1)
     {
         ui->pBt_cancal->hide();
         ui->pBt_next->hide();
         ui->pBt_ignore->hide();
-        http_PG_AgentiaInfo(1,0);
+        http_PG_AgentiaInfo(1);
 
     }
     else if (execute_V->execute_model == 4)
@@ -137,14 +109,14 @@ void Execut_window::on_pBt_cancal_clicked()
         ui->pBt_cancal->hide();
         ui->pBt_ignore->hide();
         ui->pBt_next->hide();
-        http_PG_AgentiaInfo(4,0);
+        http_PG_AgentiaInfo(4);
     }
     else if (execute_V->execute_model == 6)
     {
         ui->pBt_cancal->hide();
         ui->pBt_ignore->hide();
         ui->pBt_next->hide();
-        http_PG_AgentiaInfo(6,0);
+        http_PG_AgentiaInfo(6);
     }
 }
 
@@ -252,7 +224,6 @@ void Execut_window::initVariable()
     execute_V->currentAcount = 1;
     execute_V->pBt_status = 1;
     execute_V->orderPosition = 1;
-    execute_V->httpCount = 0;
     execute_V->drawerAcount =1;
     execute_V->positionId = 0;
     execute_V->judgeStatus = 0;
@@ -446,23 +417,25 @@ void Execut_window::updateShowInfo(QString A_name, QString Volume, QString Posit
    ui->lineEdit_Volume->setText(Volume);
 }
 
-void Execut_window::http_PG_AgentiaInfo(int order, int i)// order 2：入柜上传 3：还上传
+void Execut_window::http_PG_AgentiaInfo(int order)
+  //1:入柜 2：归还 4:替换 6：点验
 {
+
     if (order == 1)
     {
-        Execut_http_GAndP->jsonForSend(6,execute_V->T_executeTable,i);//入柜
+        Execut_http_GAndP->JsonForSend(6,execute_V->T_executeTable,execute_V->acountRow);//入柜
     }
     else if (order == 2)
     {
-        Execut_http_GAndP->jsonForSend(8,execute_V->T_executeTable,i);//还
+        Execut_http_GAndP->JsonForSend(8,execute_V->T_executeTable,execute_V->acountRow);//还
     }
     else if (order == 4)
     {
-        Execut_http_GAndP->jsonForSend(9,execute_V->T_executeTable,i);//替换
+        Execut_http_GAndP->JsonForSend(9,execute_V->T_executeTable,execute_V->acountRow);//替换
     }
     else if (order == 6)
     {
-        Execut_http_GAndP->jsonForSend(12,execute_V->T_executeTable,i);//替换
+        Execut_http_GAndP->JsonForSend(12,execute_V->T_executeTable,execute_V->acountRow);//点验
     }
 }
 
@@ -510,7 +483,7 @@ void Execut_window::pBt_operate(int order)//0：下一步 1：查询
             ui->pBt_next->hide();
             ui->pBt_ignore->hide();
 
-            http_PG_AgentiaInfo(execute_V->execute_model,0);
+            http_PG_AgentiaInfo(execute_V->execute_model);
 
         }
 
