@@ -291,9 +291,10 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
         T_model_Other_Search->setHeaderData(5,Qt::Horizontal,QObject::tr("到期日期"));
         T_model_Other_Search->setHeaderData(6,Qt::Horizontal,QObject::tr("抽屉号"));
         T_model_Other_Search->setHeaderData(7,Qt::Horizontal,QObject::tr("位置"));
-        T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂ID"));
-        T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("位置ID"));
-        T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("状态"));
+        T_model_Other_Search->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
+        T_model_Other_Search->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Search->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));
 
         T_model_Other_Search->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
@@ -316,9 +317,10 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
         T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("报废"));
         T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("抽屉号"));
         T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("位置"));
-        T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("试剂ID"));
-        T_model_Other_Execut->setHeaderData(12,Qt::Horizontal,QObject::tr("位置ID"));
-        T_model_Other_Execut->setHeaderData(13,Qt::Horizontal,QObject::tr("状态"));
+        T_model_Other_Search->setHeaderData(11,Qt::Horizontal,QObject::tr("试剂类别"));
+        T_model_Other_Execut->setHeaderData(12,Qt::Horizontal,QObject::tr("试剂ID"));
+        T_model_Other_Execut->setHeaderData(13,Qt::Horizontal,QObject::tr("位置ID"));
+        T_model_Other_Execut->setHeaderData(14,Qt::Horizontal,QObject::tr("状态"));
 
         T_model_Other_Execut->setEditStrategy(QSqlTableModel::OnManualSubmit);//自动提交
 
@@ -366,9 +368,15 @@ void ReturnPage::addInfo_Search_To_Execute(int i, int rowNum)//将对应的信�
         QString getC_expireDate = T_model_Other_Search->data(T_model_Other_Search->index(i,5)).toString();
         int getC_drawerNo = T_model_Other_Search->data(T_model_Other_Search->index(i,6)).toInt();
         int getC_positionNo = T_model_Other_Search->data(T_model_Other_Search->index(i,7)).toInt();
-        int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,8)).toInt();
-        int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
+        int getC_attribute = T_model_Other_Search->data(T_model_Other_Search->index(i,8)).toInt();
+        int getC_AID = T_model_Other_Search->data(T_model_Other_Search->index(i,9)).toInt();
+        int getC_positionID = T_model_Other_Search->data(T_model_Other_Search->index(i,10)).toInt();
 //        QString getC_judgeA = T_model_Other_Search->data(T_model_Other_Search->index(i,11)).toString();
+
+        if (ALLOWOPERATE == getC_attribute)
+        {
+            return ;
+        }
 
         T_model_Other_Execut->insertRow(rowNum);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,0),getC_No);
@@ -382,9 +390,10 @@ void ReturnPage::addInfo_Search_To_Execute(int i, int rowNum)//将对应的信�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,8),QString("未"));
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,9),getC_drawerNo);
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,10),getC_positionNo);
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,11),getC_AID);
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,12),getC_positionID);
-        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),QString("未归还"));
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,11),getC_attribute);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,12),getC_AID);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,13),getC_positionID);
+        T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,14),QString("未归还"));
 
         T_model_Other_Search->removeRow(i);
     }
@@ -406,9 +415,15 @@ void ReturnPage::delInfo_Execute(int i)
 
         int getC_drawerNo = T_model_Other_Execut->data(T_model_Other_Execut->index(i,9)).toInt();
         int getC_positionNo = T_model_Other_Execut->data(T_model_Other_Execut->index(i,10)).toInt();
-        int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toInt();
-        int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,12)).toInt();
+        int getC_attribute = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toInt();
+        int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,12)).toInt();
+        int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,13)).toInt();
 //        QString getC_judgeA = T_model_Other_Execut->data(T_model_Other_Execut->index(i,10)).toString();
+
+        if (ALLOWOPERATE == getC_attribute)
+        {
+            return ;
+        }
 
         int rowNum = T_model_Other_Search->rowCount();
         T_model_Other_Search->insertRow(rowNum);
@@ -420,17 +435,14 @@ void ReturnPage::delInfo_Execute(int i)
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,5),getC_expireDate);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,6),getC_drawerNo);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,7),getC_positionNo);
-        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,8),getC_AID);
-        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,9),getC_positionID);
-        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),QString("未归还"));
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,9),getC_attribute);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,9),getC_AID);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,10),getC_positionID);
+        T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,11),QString("未归还"));
 
         T_model_Other_Execut->removeRow(i);
 
     }
-
-    T_model_Other_Execut->submitAll();
-    T_model_Other_Search->submitAll();
-
 }
 
 void ReturnPage::upSheet_PutInWindow()

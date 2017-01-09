@@ -476,7 +476,6 @@ void OperateWindow::addInfo_Search_To_Execute(int i, int rowNum)//将对应的�
         T_model_Other_Execut->setData(T_model_Other_Execut->index(rowNum,11),QString("未摆放"));
 
         T_model_Other_Search->removeRow(i);
-
     }
     else if((T_table->dialog_model == 4) || (T_table->dialog_model == 6))//替换  点验
     {
@@ -517,6 +516,12 @@ void OperateWindow::delInfo_Execute(int i)
 {
     if(T_table->dialog_model == 1)//删除信息
     {
+        int getC_attribute = T_model_Other_Execut->data(T_model_Other_Execut->index(i,9)).toInt();
+        if (ALLOWOPERATE == getC_attribute)
+        {
+            return ;
+        }
+
         T_model_Other_Execut->removeRow(i);
     }
     else if(T_table->dialog_model == 2 || T_table->dialog_model == 5)//取  删除添加到另一处
@@ -534,6 +539,11 @@ void OperateWindow::delInfo_Execute(int i)
         int getC_AID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,9)).toInt();
         int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,10)).toInt();
         QString getC_judgeA = T_model_Other_Execut->data(T_model_Other_Execut->index(i,11)).toString();
+
+        if (ALLOWOPERATE == getC_attribute)
+        {
+            return ;
+        }
 
         int rowNum = T_model_Other_Search->rowCount();
 
@@ -570,6 +580,11 @@ void OperateWindow::delInfo_Execute(int i)
         int getC_positionID = T_model_Other_Execut->data(T_model_Other_Execut->index(i,12)).toInt();
 
         int rowNum = T_model_Other_Search->rowCount();
+
+        if (ALLOWOPERATE == getC_attribute)
+        {
+            return ;
+        }
 
         T_model_Other_Search->insertRow(rowNum);
         T_model_Other_Search->setData(T_model_Other_Search->index(rowNum,0),getC_No);
@@ -695,7 +710,7 @@ int OperateWindow::checkSheet(int order)//检查数据表格关键位置信息�
                 getC_expireDate = T_model_Other_Execut->data(T_model_Other_Execut->index(i,8)).toString();
                 getC_status = T_model_Other_Execut->data(T_model_Other_Execut->index(i,4)).toString();
 
-                if (getC_status == "已分配位置")
+                if ((getC_status == "已分配位置") || (getC_status == "已审批"))
                 {
                     ;
                 }
@@ -818,7 +833,7 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         T_model_Other_Execut->setHeaderData(5,Qt::Horizontal,QObject::tr("抽屉号"));
         T_model_Other_Execut->setHeaderData(6,Qt::Horizontal,QObject::tr("位置"));
         T_model_Other_Execut->setHeaderData(7,Qt::Horizontal,QObject::tr("到期日期"));
-        T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("状态"));
+        T_model_Other_Execut->setHeaderData(8,Qt::Horizontal,QObject::tr("试剂类别"));
         T_model_Other_Execut->setHeaderData(9,Qt::Horizontal,QObject::tr("试剂ID"));
         T_model_Other_Execut->setHeaderData(10,Qt::Horizontal,QObject::tr("位置ID"));
         T_model_Other_Execut->setHeaderData(11,Qt::Horizontal,QObject::tr("状态"));

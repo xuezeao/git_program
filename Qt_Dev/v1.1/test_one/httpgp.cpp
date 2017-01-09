@@ -19,8 +19,8 @@ void HttpGP::JuageOperatorStatus(int order)
 //-2:网络错误 -1：任务失败 0：任务完成
 //1：获取在位试剂 2：获取试剂类型 3：获取待归还试剂 4：获取地址信息
 //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验
-//13：报警 14：任务列表
-//15:获取柜子信息
+//13：报警 14：任务列表 15：网络任务完成上报
+//16:获取柜子信息
 {
     taskHandleCount++;
     if (0 == order)
@@ -94,6 +94,7 @@ void HttpGP::GetHttp(void)//get cabinet info
 void HttpGP::PostHttp(int postId_NO, QString postStr)
 //0:测试地址 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂 5:请求空闲位置
 //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
+//15：网络任务完成上报
 {
     QString address = "";
 
@@ -165,6 +166,10 @@ void HttpGP::PostHttp(int postId_NO, QString postStr)
         address = "taskList";//获取任务列表
         http_info->http_modelChoice = 14;
     }
+    case 15:{
+        address = "taskComplete";//申请任务完成 上报
+        http_info->http_modelChoice = 15;
+    }
     default:
         break;
     }
@@ -208,7 +213,8 @@ void HttpGP::finished(QNetworkReply *reply)
 
 int HttpGP::UnpackageJson(QJsonDocument str, int t)
 // 0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
-//5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验 13：报警14:任务列表
+//5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：替换 10：报废 11：登入 12:点验 13：报警14:任务列表
+//15:网络任务完成上报
 {
     QString    s_str[11]    = {0};//save string
     int        s_int[11]    = {0};//save int value
@@ -222,6 +228,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
     int  s_drawerNO   = 0;
     int  s_positionId = 0;
     int  s_taskCount  = 0;
+    int  s_taskId     = 0;
     bool s_success    = false;
 
     QString month = "";
@@ -573,6 +580,21 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             qDebug() << "error--send check ok";
         }
     }
+    else if (15 == t)//task完成 上报
+    {
+        s_json[0] = analyze_Z["success"].toBool();
+        s_success = s_json[0].toBool();
+
+        if (s_success)
+        {
+            return http_info->model_json;
+        }
+        else
+        {
+            return -1;
+            qDebug() << "error--send check ok";
+        }
+    }
     else if (t == 14)//获取任务列表
     {
 
@@ -586,12 +608,12 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             /*******************初始化表格***********************/
 
             query.exec(QString("DELETE from Task_sheet"));//任务列表
-            query.exec(QString("DELETE from Task_sheet"));//入柜
-            query.exec(QString("DELETE from Task_sheet"));//归还
-            query.exec(QString("DELETE from Task_sheet"));//替换
-            query.exec(QString("DELETE from Task_sheet"));//报废
-            query.exec(QString("DELETE from Task_sheet"));//点验
-            query.exec(QString("DELETE from Task_sheet"));//取
+            query.exec(QString("DELETE from T_Task_PutIn"));//入柜
+            query.exec(QString("DELETE from T_AgentiaWaitExecute"));//归还
+            query.exec(QString("DELETE from T_AgentiaReplace"));//替换
+            query.exec(QString("DELETE from T_AgentiaScrap"));//报废
+            query.exec(QString("DELETE from T_AgentiaCheck"));//点验
+            query.exec(QString("DELETE from T_AgentiaExecute"));//取
 
             /*******************************************/
 
@@ -647,11 +669,12 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
                 s_json[10]= analyze_C["taskId"].toInt();
                 s_int[10] = s_json[10].toInt();
+                s_taskId = s_int[10];
 
                 /***************加入任务列表*************/
                 query.prepare("insert into Task_sheet (id,taskId,taskType,taskStatus,\
                               expiryDate,agentiaName,dose,positionNo,drawerNo,\
-                              cabinetNo,newAgentia_dose,newAgentia_expiryDate) values (?,?,?,?,?,?\
+                              cabinetNo,newAgentia_dose,newAgentia_expiryDate) values (?,?,?,?,?,?,\
                                                                                        ?,?,?,?,?,?)");
                 query.addBindValue(i+1);
                 query.addBindValue(s_int[10]);
@@ -667,6 +690,159 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
                 query.addBindValue(newTime);
                 query.exec();
 
+                /********************************将任务分别加入各自执行表格中去**************************/
+                if (1 == s_taskStatus)//审核通过
+                {
+                    if (0 == s_taskType)//入柜
+                    {
+                        query.prepare("insert into T_Task_PutIn (id,checkBox,changeInfo,agentiaName,judgeAttitude,\
+                                      bottleCapacity,dose,drawerSize,expireDate,roleStatus,\
+                                      attribute,agentiaTypeId,chemicalFormula,specification,\
+                                      factory,itemNo,positionId,drawerNo,positionNo) values (?,?,?,?,?,\
+                                                                                             ?,?,?,?,?,\
+                                                                                             ?,?,?,?,\
+                                                                                             ?,?,?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(QString("1"));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString("已审批"));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(time);
+                        query.addBindValue(0);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+
+                        query.exec();
+                    }
+                    else if (1 == s_taskType)//取用
+                    {
+                        query.prepare("insert into T_AgentiaExecute (id,checkBox,agentiaName,bottleCapacity,\
+                                      dose,drawerNo,positionNo,expireDate,attribute,\
+                                      agentiaId,positionId,judgeAttitude) values (?,?,?,?,\
+                                                                                  ?,?,?,?,?,\
+                                                                                  ?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+                        query.addBindValue(time);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(QString("已审批"));
+
+                        query.exec();
+                    }
+                    else if (2 == s_taskType)//归还
+                    {
+                        query.prepare("insert into T_AgentiaWaitExecute (id,checkBox,agentiaName,bottleCapacity,\
+                                      dose,expireDate,returnA,changeA,desertA,\
+                                      drawerNo,positionNo,attribute,agentiaId,positionId,judgeAttitude) values (?,?,?,?,\
+                                                                                  ?,?,?,?,?,?,\
+                                                                                  ?,?,?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(time);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(QString("已审批"));
+
+                        query.exec();
+                    }
+                    else if (3 == s_taskType)//替换
+                    {
+                        query.prepare("insert into T_AgentiaReplace (id,checkBox,changeInfo,agentiaName,bottleCapacity,\
+                                      dose,newdose,expireDate,drawerNo,positionNo,attribute,\
+                                      agentiaId,positionId,judgeAttitude) values (?,?,?,?,?,\
+                                                                                  ?,?,?,?,?,?,\
+                                                                                  ?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(s_str[8]);
+                        query.addBindValue(newTime);
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(QString("已审批"));
+
+                        query.exec();
+                    }
+                    else if (4 == s_taskType)//报废
+                    {
+                        query.prepare("insert into T_AgentiaScrap (id,checkBox,agentiaName,bottleCapacity,\
+                                      dose,drawerNo,positionNo,expireDate,attribute,\
+                                      agentiaId,positionId,judgeAttitude) values (?,?,?,?,\
+                                                                                  ?,?,?,?,?,\
+                                                                                  ?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+                        query.addBindValue(time);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(QString("已审批"));
+
+                        query.exec();
+                    }
+                    else if (5 == s_taskType)//点验
+                    {
+                        query.prepare("insert into T_AgentiaCheck (id,checkBox,changeInfo,agentiaName,bottleCapacity,\
+                                      dose,newdose,expireDate,drawerNo,positionNo,attribute,\
+                                      agentiaId,positionId,judgeAttitude) values (?,?,?,?,?,\
+                                                                                  ?,?,?,?,?,?,\
+                                                                                  ?,?,?)");
+                        query.addBindValue(i+1);
+                        query.addBindValue(QString("未选择"));
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[3]);
+                        query.addBindValue(QString(""));
+                        query.addBindValue(s_str[4]);
+                        query.addBindValue(s_str[8]);
+                        query.addBindValue(newTime);
+                        query.addBindValue(s_int[5]);
+                        query.addBindValue(s_int[6]);
+                        query.addBindValue(3);
+                        query.addBindValue(s_taskType);
+                        query.addBindValue(s_taskId);
+                        query.addBindValue(QString("已审批"));
+
+                        query.exec();
+                    }
+                }
             }
         }
         else
@@ -680,7 +856,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
 //封装JSON信息
 //0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
-//6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
+//6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表 15：网络任务完成上报
 {
     QJsonObject json_Ok;
     QJsonObject json_Two;
@@ -749,8 +925,9 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         query.exec(QString("select * from %1").arg(T_tableName));//从id=rownum中选中所有属性 '*' /也可指定 'name'
         query.seek(T_tableNo);
 
-        stash_J_Int[1] = query.value(16).toInt();//agentiaTypeId
-        stash_J_Int[0] = query.value(11).toInt();//PositionId
+        stash_J_Int[0] = query.value(11).toInt();//agentiaTypeId
+        stash_J_Int[1] = query.value(16).toInt();//PositionId
+        stash_J_Int[2] = query.value(10).toInt();//attribute
         stash_J_QString[0] = query.value(5).toString();//bottleCapacity
         stash_J_QString[1] = query.value(6).toString();//dose
         stash_J_QString[2] = query.value(8).toString();//expireDate
@@ -758,6 +935,13 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
 
         if(stash_J_QString[3] == "正确操作")
         {
+
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
+
             json_Ok.insert("userId",user->user_id);//生成JSON
             json_Ok.insert("agentiaTypeId",stash_J_Int[0]);
             json_Ok.insert("bottleCapacity",stash_J_QString[0]);
@@ -783,10 +967,17 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
 
         stash_J_Int[0] = query.value(9).toInt();//agentiaId
         stash_J_Int[1] = query.value(10).toInt();//positionId
+        stash_J_Int[2] = query.value(8).toInt();//attribute
         stash_J_QString[0] = query.value(11).toString();//judgeAttitude
 
         if (stash_J_QString[0] == "已摆放")
         {
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
+
             json_Ok.insert("userId",user->user_id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
             json_Ok.insert("positionId",stash_J_Int[1]);
@@ -808,13 +999,20 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         query.exec(QString("select * from %1").arg(T_tableName));
         query.seek(T_tableNo);
 
-        stash_J_Int[0] = query.value(11).toInt();//agentiaId
-        stash_J_Int[1] = query.value(12).toInt();//positionId
+        stash_J_Int[0] = query.value(12).toInt();//agentiaId
+        stash_J_Int[1] = query.value(13).toInt();//positionId
+        stash_J_Int[2] = query.value(11).toInt();//attribute
         stash_J_QString[0] = query.value(13).toString();//judgeAttitude
         stash_J_QString[1] = query.value(4).toString();
 
         if(stash_J_QString[0] == "正确操作")
         {
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
+
             json_Ok.insert("userId",user->user_id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
             json_Ok.insert("dose",stash_J_QString[1]);
@@ -840,12 +1038,19 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
        /**********/
         stash_J_Int[0] = query.value(11).toInt();//agentiaId
         stash_J_Int[1] = query.value(12).toInt();//positionId
+        stash_J_Int[2] = query.value(10).toInt();//attribute
         stash_J_QString[0] = query.value(13).toString();//judgeAttitude
         stash_J_QString[1] = query.value(6).toString();//newDose
         stash_J_QString[2] = query.value(7).toString();//expireDate
 
         if (stash_J_QString[0] == "正确操作")
         {
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
+
             json_Two.insert("dose",stash_J_QString[1]);
             json_Two.insert("expireDate",stash_J_QString[2]);
 
@@ -878,17 +1083,24 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
             JuageOperatorStatus(model_json);//未摆放
         }
     }
-    else if (10 == model_json)
+    else if (10 == model_json)//报废
     {
         query.exec(QString("select * from %1").arg(T_tableName));
         query.seek(T_tableNo);
        /**********/
         stash_J_Int[0] = query.value(9).toInt();//agentiaId
         stash_J_Int[1] = query.value(10).toInt();//positionId
+        stash_J_Int[2] = query.value(8).toInt();//attribute
         stash_J_QString[0] = query.value(11).toString();//judgeAttitude
 
         if (stash_J_QString[0] == "已摆放")
         {
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
+
             json_Ok.insert("userId",user->user_id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
             json_Ok.insert("positionId",stash_J_Int[1]);
@@ -935,12 +1147,19 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
        /**********/
         stash_J_Int[0] = query.value(11).toInt();//agentiaId
         stash_J_Int[1] = query.value(12).toInt();//positionId
+        stash_J_Int[2] = query.value(10).toInt();//attribute
         stash_J_QString[0] = query.value(13).toString();//judgeAttitude
         stash_J_QString[1] = query.value(6).toString();//newDose
         stash_J_QString[2] = query.value(7).toString();//expireDate
 
         if ((stash_J_QString[0] == "正确操作") || (stash_J_QString[0] == "报废操作") || (stash_J_QString[0] == "替换操作"))
         {
+
+            if (ALLOWOPERATE == stash_J_Int[2])
+            {
+                PackageJsonForTask(stash_J_Int[1]);
+                return ;
+            }
 
             json_Ok.insert("userId",user->user_id);
             json_Ok.insert("agentiaId",stash_J_Int[0]);
@@ -974,6 +1193,24 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         }
     }
 
+}
+
+void HttpGP::PackageJsonForTask(int taskId)
+{
+    QJsonObject json_Ok;
+    QJsonDocument document;
+    QByteArray byte_array;
+
+    json_Ok.insert("userId",user->user_id);
+    json_Ok.insert("taskId",taskId);
+
+    document.setObject(json_Ok);
+    byte_array=document.toJson(QJsonDocument::Compact);
+    QString json_str(byte_array);
+
+    qDebug() << "task任务";
+
+    PostHttp(15,json_str);
 }
 
 void HttpGP::EmitSignal(int status, int order)

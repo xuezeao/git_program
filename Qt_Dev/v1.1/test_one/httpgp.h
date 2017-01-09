@@ -56,6 +56,8 @@ private:
     QNetworkAccessManager *accessManager;
     QMessageBox *msgBox;
 
+    enum {ALLOWOPERATE = 3};
+
     struct User
     {
         int user_id;
@@ -72,8 +74,8 @@ private:
         int model_json;
         int tableNo;
         int taskRole;
-        //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废
-        //10：替换 11：登入 12:点验 13：报警 14:任务列表
+        //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：替换
+        //10：报废 11：登入 12:点验 13：报警 14:任务列表 15:网络任务完成上报
         int allTaskCount;
 
         QString tableName;
@@ -89,18 +91,23 @@ private:
     void PackageJson(int model_json, QString T_tableName, int T_tableNo);
     //封装JSON信息
     //0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂  5:请求空闲位置
-    //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表
+    //6:入柜完成 7：取完成  8：还完成  9：替换完成 10：报废完成 11：登入 12：点验 13：报警信息 14：任务列表 15：网络任务完成上报
+
+    void PackageJsonForTask(int taskId);
+    //封装JSON申请任务完成
+    //15:网络任务完成上报
 
     int UnpackageJson(QJsonDocument str, int t);
     //解析JSON信息并存入数据库
     // 0:获取机柜信息 1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
-    //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验 13：报警14:任务列表
+    //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：替换 10：报废 11：登入 12:点验 13：报警14:任务列表  15：网络任务完成上报
+
 
     void JuageOperatorStatus(int order);
     //-2:网络错误  -1：任务失败 0：任务完成
     //1：获取在位试剂 2：获取试剂类型 4：获取待归还试剂
-    //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报 9：报废 10：替换 11：登入 12:点验
-    //13：报警 14：任务列表 15：获取柜子信息
+    //5：分配位置 6：入柜完成上报 7：取完成上报 8：还上报  9：替换 10：报废 11：登入 12:点验
+    //13：报警 14：任务列表 15：网络任务完成上报 16：获取柜子信息
 
     void HttpInit(void);
     //初始化

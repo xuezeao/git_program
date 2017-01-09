@@ -85,6 +85,7 @@ private:
     DelNew *del_NewOperate;
     ChangeNew *change_NewOperate;
 
+    enum {ALLOWOPERATE = 3};
 
     void tableInit(char modelOption);//初始化表格 1:入柜 2：取 3：还
     void addInfo_Search_To_Execute(int i,int rowNum);

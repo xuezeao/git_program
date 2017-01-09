@@ -1,4 +1,10 @@
-       #ifndef SQL_SETTING_H
+/*
+ * task规则
+ * attribute 存储 3
+ * position 存储taskId
+ * agentiaId 存储 taskType
+ */
+#ifndef SQL_SETTING_H
 #define SQL_SETTING_H
 
 #include <QtSql/QSqlDatabase>
@@ -81,32 +87,32 @@ static bool createConnection()
 
        query.exec(QString("create table T_AgentiaWaitSaving (id int,[checkBox] varchar,[agentiaName] varchar,\
                           [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,\
-                          [drawerNo] int,[positionNo] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
+                          [drawerNo] int,[positionNo] int,[attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
         //还 存储数据表
-       query.exec(QString("insert into T_AgentiaWaitSaving values (1,'未选择','1酒精','600ml','300ml','2010.7.7',1,2,123,2,'未摆放')"));
-       query.exec(QString("insert into T_AgentiaWaitSaving values (2,'未选择','2酒精','400ml','300ml','2010.7.7',3,2,123,2,'未摆放')"));
-       query.exec(QString("insert into T_AgentiaWaitSaving values (3,'未选择','3酒精','600ml','300ml','2010.7.7',4,2,123,2,'未摆放')"));
-       query.exec(QString("insert into T_AgentiaWaitSaving values (4,'未选择','4酒精','400ml','300ml','2010.7.7',2,2,123,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaWaitSaving values (1,'未选择','1酒精','600ml','300ml','2010.7.7',1,2,1,123,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaWaitSaving values (2,'未选择','2酒精','400ml','300ml','2010.7.7',3,2,1,123,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaWaitSaving values (3,'未选择','3酒精','600ml','300ml','2010.7.7',4,2,1,123,2,'未摆放')"));
+       query.exec(QString("insert into T_AgentiaWaitSaving values (4,'未选择','4酒精','400ml','300ml','2010.7.7',2,2,1,123,2,'未摆放')"));
 
 
 
 
        query.exec(QString("create table T_AgentiaWaitExecute (id int,[checkBox] varchar,[agentiaName] varchar,\
                          [bottleCapacity] varchar,[dose] varchar,[expireDate] varchar,[returnA] varchar,[changeA] varchar,[desertA] varchar,\
-                         [drawerNo] int,[positionNo] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
+                         [drawerNo] int,[positionNo] int,[attribute] int,[agentiaId] int,[positionId] int,[judgeAttitude] varchar)"));
 
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (1,'未选择','1酒精','600ml','300ml','2010.7.7','归还','1','1',1,2,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (2,'未选择','2酒精','400ml','300ml','2010.7.7','归还','1','1',3,1,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (3,'未选择','3酒精','600ml','300ml','2010.7.7','归还','1','1',7,3,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (4,'未选择','4酒精','400ml','300ml','2010.7.7','归还','1','1',2,3,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (5,'未选择','5酒精','400ml','300ml','2010.7.7','归还','1','1',3,2,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (6,'未选择','6酒精','400ml','300ml','2010.7.7','归还','1','1',4,4,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (7,'未选择','7酒精','400ml','300ml','2010.7.7','归还','1','1',4,5,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (8,'未选择','8酒精','400ml','300ml','2010.7.7','归还','1','1',6,6,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (9,'未选择','9酒精','400ml','300ml','2010.7.7','归还','1','1',6,2,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (10,'未选择','10酒精','400ml','300ml','2010.7.7','归还','1','1',6,4,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (11,'未选择','11酒精','400ml','300ml','2010.7.7','归还','1','1',2,2,123,2,'未摆放')"));
-                  query.exec(QString("insert into T_AgentiaWaitExecute values (12,'未选择','12酒精','400ml','300ml','2010.7.7','归还','1','1',2,4,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (1,'未选择','1酒精','600ml','300ml','2010.7.7','归还','1','1',1,2,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (2,'未选择','2酒精','400ml','300ml','2010.7.7','归还','1','1',3,1,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (3,'未选择','3酒精','600ml','300ml','2010.7.7','归还','1','1',7,3,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (4,'未选择','4酒精','400ml','300ml','2010.7.7','归还','1','1',2,3,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (5,'未选择','5酒精','400ml','300ml','2010.7.7','归还','1','1',3,2,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (6,'未选择','6酒精','400ml','300ml','2010.7.7','归还','1','1',4,4,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (7,'未选择','7酒精','400ml','300ml','2010.7.7','归还','1','1',4,5,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (8,'未选择','8酒精','400ml','300ml','2010.7.7','归还','1','1',6,6,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (9,'未选择','9酒精','400ml','300ml','2010.7.7','归还','1','1',6,2,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (10,'未选择','10酒精','400ml','300ml','2010.7.7','归还','1','1',6,4,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (11,'未选择','11酒精','400ml','300ml','2010.7.7','归还','1','1',2,2,1,123,2,'未摆放')"));
+                  query.exec(QString("insert into T_AgentiaWaitExecute values (12,'未选择','12酒精','400ml','300ml','2010.7.7','归还','1','1',2,4,1,123,2,'未摆放')"));
 
 
 
