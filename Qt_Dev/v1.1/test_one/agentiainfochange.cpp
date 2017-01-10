@@ -13,8 +13,8 @@ AgentiaInfoChange::AgentiaInfoChange(QDialog *parent) :
 {
     ui->setupUi(this);
     //    this->showFullScreen();
-        showMaximized();
-        setWindowFlags(Qt::FramelessWindowHint);
+//        showMaximized();
+//        setWindowFlags(Qt::FramelessWindowHint);
 
     //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 

@@ -1,5 +1,6 @@
 #include "enterpage.h"
 #include "ui_enterpage.h"
+#include <QDesktopWidget>
 //#include "inputnew/frminputnew.h"
 
 EnterPage::EnterPage(QWidget *parent) :
@@ -29,9 +30,9 @@ EnterPage::EnterPage(QWidget *parent) :
 //                              "border-image:url(:/image/1.jpg);"
 //                              "}");
 
-    showMaximized();
-    setWindowFlags(Qt::FramelessWindowHint |Qt::Window);
-
+//    showMaximized();
+//    setWindowFlags(Qt::FramelessWindowHint |Qt::Window);
+    this->setGeometry(qApp->desktop()->availableGeometry());//最大化
     http_Page->GetHttp();//获取机柜消息
 
     connect(http_Page,SIGNAL(sendInfo_To_Enter(int,int,int)),this,SLOT(receiverInfo_from_Http(int,int,int)));

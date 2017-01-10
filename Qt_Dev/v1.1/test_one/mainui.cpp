@@ -9,8 +9,8 @@ MainUI::MainUI(QWidget *parent) :
     ui->setupUi(this);
 
 
-    showMaximized();
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+//    showMaximized();
+//    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     MainUi_http_Page = new HttpGP;
     MainUi_operate_Page = new OperateWindow;

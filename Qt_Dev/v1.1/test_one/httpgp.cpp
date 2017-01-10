@@ -362,9 +362,9 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
             query.addBindValue(s_str[0]);
             query.addBindValue(s_str[1]);
             query.addBindValue(s_str[2]);
-            query.addBindValue(time);
             query.addBindValue(s_int[4]);
             query.addBindValue(s_int[5]);
+            query.addBindValue(time);
             query.addBindValue(s_int[8]);
             query.addBindValue(s_int[6]);
             query.addBindValue(s_int[7]);

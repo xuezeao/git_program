@@ -9,8 +9,8 @@ OperateWindow::OperateWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //    this->showFullScreen();
-        showMaximized();
-        setWindowFlags(Qt::FramelessWindowHint);
+//        showMaximized();
+//        setWindowFlags(Qt::FramelessWindowHint);
 
     T_table = &T_TABLE;
     query                = new QSqlQuery;
@@ -288,7 +288,7 @@ void OperateWindow::on_Bt_add_clicked()
 
 void OperateWindow::on_Bt_changeInfo_A_clicked()//修改按钮
 {
-    AgentiaInfoChange_execute_Page->exec();
+
 
     if(T_table->dialog_model == 4)//替换
     {
@@ -304,6 +304,7 @@ void OperateWindow::on_Bt_changeInfo_A_clicked()//修改按钮
     }
 
      emit sendInfo_To_AgentiaInfoChange(0,2,0);//集体模式 status = 0, OK_Push = 2
+       AgentiaInfoChange_execute_Page->exec();
 }
 
 
