@@ -105,7 +105,6 @@ void HttpGP::PostHttp(int postId_NO, QString postStr)
     }
     case 1 :{
         address = "availableAgentiaList";//获取在位试剂列表
-        postStr = QString("{\"cabinetNo\":\"%1\"}").arg(CABINETNO);
         http_info->http_modelChoice = 1;
         break;
     }
@@ -257,6 +256,7 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
         s_json[1] = analyze_Z["groupId"].toInt();
         s_int[1]  = s_json[1].toInt();
+        user->user_groupId = s_int[1];
 
         s_json[2] = analyze_Z["groupName"].toString();
         s_str[2]  = s_json[2].toString();
@@ -309,11 +309,133 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
     }
     else if (t == 1)//获取在位试剂列表
     {
-        ;
+        query.exec(QString("DELETE from T_AgentiaSaving"));//获取在位试剂列表
+
+        s_json[0] = analyze_Z["amount"].toInt();
+        s_int[0]  = s_json[0].toInt();
+
+        s_allInfoNum = s_int[0];
+
+        s_JA = analyze_Z["agentiaList"].toArray();
+
+        for (int i = 0; i < s_allInfoNum; i++)
+        {
+            analyze_C = s_JA[i].toObject();
+
+            s_json[0] = analyze_C["agentiaName"].toString();
+            s_str[0]  = s_json[0].toString();
+
+            s_json[1] = analyze_C["bottleCapacity"].toString();
+            s_str[1]  = s_json[1].toString();
+
+            s_json[2] = analyze_C["dose"].toString();
+            s_str[2]  = s_json[2].toString();
+
+            s_json[3] = analyze_C["expiryDate"].toString();
+            s_str[3]  = s_json[3].toString();
+            year = s_str[3].section("-",0,0);
+            month = s_str[3].section("-",1,1);
+            day = s_str[3].section("-",2,2);
+            day = day.section("T",0,0);
+            time = QString("%1.%2.%3").arg(year).arg(month).arg(day);
+
+            s_json[4] = analyze_C["drawerNo"].toInt();
+            s_int[4]  = s_json[4].toInt();
+
+            s_json[5] = analyze_C["positionNo"].toInt();
+            s_int[5]  = s_json[5].toInt();
+
+            s_json[6] = analyze_C["agentiaId"].toInt();
+            s_int[6]  = s_json[6].toInt();
+
+            s_json[7] = analyze_C["positionId"].toInt();
+            s_int[7]  = s_json[7].toInt();
+
+            s_json[8] = analyze_C["attribute"].toInt();
+            s_int[8]  = s_json[8].toInt();
+
+            query.prepare("insert into T_AgentiaSaving (id,checkBox,agentiaName,bottleCapacity,dose,\
+                                                            drawerNo,positionNo,expireDate,attribute,agentiaId,positionId,judgeAttitude\
+                                                            ) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+            query.addBindValue(i+1);
+            query.addBindValue(QString("未选择"));
+            query.addBindValue(s_str[0]);
+            query.addBindValue(s_str[1]);
+            query.addBindValue(s_str[2]);
+            query.addBindValue(time);
+            query.addBindValue(s_int[4]);
+            query.addBindValue(s_int[5]);
+            query.addBindValue(s_int[8]);
+            query.addBindValue(s_int[6]);
+            query.addBindValue(s_int[7]);
+            query.addBindValue(QString("未归还"));
+            query.exec();
+
+       }
+
+       qDebug() << "获取在位试剂列表";
+       return 0;
     }
     else if (t == 2)//获取试剂类型
     {
-        ;
+        query.exec(QString("DELETE from T_AgentiaTypeList"));//获取试剂类型
+
+        s_json[0] = analyze_Z["amount"].toInt();
+        s_int[0]  = s_json[0].toInt();
+
+        s_allInfoNum = s_int[0];
+
+        s_JA = analyze_Z["agentiaTypeList"].toArray();
+
+        for (int i = 0; i < s_allInfoNum; i++)
+        {
+            analyze_C = s_JA[i].toObject();
+
+            s_json[0] = analyze_C["agentiaName"].toString();
+            s_str[0]  = s_json[0].toString();
+
+            s_json[1] = analyze_C["abbreviation"].toString();
+            s_str[1]  = s_json[1].toString();
+
+            s_json[2] = analyze_C["chemicalFormula"].toString();
+            s_str[2]  = s_json[2].toString();
+
+            s_json[3] = analyze_C["specification"].toString();
+            s_str[3]  = s_json[3].toString();
+
+            s_json[4] = analyze_C["factory"].toString();
+            s_str[4]  = s_json[4].toString();
+
+            s_json[5] = analyze_C["itemNo"].toString();
+            s_str[5]  = s_json[5].toString();
+
+            s_json[6] = analyze_C["attribute"].toInt();
+            s_int[6]  = s_json[6].toInt();
+
+            s_json[7] = analyze_C["agentiaTypeId"].toInt();
+            s_int[7]  = s_json[7].toInt();
+
+            query.prepare("insert into T_AgentiaTypeList (id,checkBox,agentiaName,abbreviation,chemicalFormula,\
+                                                            specification,factory,attribute,agentiaTypeId,itemNo\
+                                                            ) values (?,?,?,?,?,?,?,?,?,?)");
+            query.addBindValue(i+1);
+            query.addBindValue(QString("未选择"));
+            query.addBindValue(s_str[0]);
+            query.addBindValue(s_str[1]);
+            query.addBindValue(s_str[2]);
+            query.addBindValue(s_str[3]);
+            query.addBindValue(s_str[4]);
+            query.addBindValue(s_int[6]);
+            query.addBindValue(s_int[7]);
+            query.addBindValue(s_str[5]);
+
+            query.exec();
+
+       }
+
+       qDebug() << "获取试剂类型";
+       return 0;
+
     }
     else if (t == 4)//获取待归还试剂
     {
@@ -879,21 +1001,29 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
     int stash_J_Int[10];
     QString stash_J_QString[10];
 /************/
-    user->user_id=1;//暂时使用
+//    user->user_id=1;//暂时使用
     qDebug() << QDateTime::currentDateTime() << "next task";
 /**************/
 
-    if (1 == model_json)
+    if (1 == model_json)//1：获取在位试剂
     {
-        ;
+        json_Ok.insert("cabinetNo",QString(CABINETNO));
+
+        document.setObject(json_Ok);
+        byte_array=document.toJson(QJsonDocument::Compact);
+        QString json_str(byte_array);
+
+        PostHttp(1,json_str);//发送http
     }
-    else if (2 == model_json)
+    else if (2 == model_json)//获取试剂类型
     {
-;
-    }
-    else if (3 == model_json)
-    {
-;
+        json_Ok.insert("type",99);
+        json_Ok.insert("groupId",user->user_groupId);
+
+        document.setObject(json_Ok);
+        byte_array=document.toJson(QJsonDocument::Compact);
+        QString json_str(byte_array);
+        PostHttp(2,json_str);//发送http
     }
     else if (4 == model_json)
     {
@@ -1243,10 +1373,17 @@ void HttpGP::EmitSignal(int status, int order)
     {
         switch (order) {
         case 0:{
+            JsonForSend(1,"",1);//获取在位试剂列表
             //获取机柜信息
             break;
         }
+        case 1:{
+            JsonForSend(2,"",1);//获取试剂类型列表
+            break;
+        }
         case 4:{
+            msgBox->setText("正在更新数据，请稍候");
+            msgBox->exec();
             JsonForSend(14,"",1);//在获取待归还列表之后获取task列表
             //获取带归还试剂列表信息
             break;
@@ -1281,6 +1418,10 @@ void HttpGP::EmitSignal(int status, int order)
         }
         case 12:{
             emit sendInfo_To_executeOperate();
+            break;
+        }
+        case 14:{
+            msgBox->close();
             break;
         }
         default:

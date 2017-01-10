@@ -12,7 +12,9 @@ AgentiaInfoChange::AgentiaInfoChange(QDialog *parent) :
     ui(new Ui::AgentiaInfoChange)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+    //    this->showFullScreen();
+        showMaximized();
+        setWindowFlags(Qt::FramelessWindowHint);
 
     //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
@@ -65,7 +67,7 @@ void AgentiaInfoChange::sendUP_Info(int status ,int OK_Push, int sheetOrder)//�
     }
 
     /*************************************/
-    this->showFullScreen();
+
 }
 
 AgentiaInfoChange::~AgentiaInfoChange()

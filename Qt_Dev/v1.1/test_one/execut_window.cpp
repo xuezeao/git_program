@@ -17,7 +17,9 @@ Execut_window::Execut_window(QDialog *parent) :
     Show_Info = new ShowAllInfo;
     execute_V = new Execute_Variable;
 
-    this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+    //    this->showFullScreen();
+        showMaximized();
+        setWindowFlags(Qt::FramelessWindowHint);
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
 //    this->setWindowFlags(Qt::WindowStaysOnTopHint);//置顶
@@ -255,7 +257,7 @@ void Execut_window::initVariable()
 
     pBt_operate(0);
     /*************************************/
-    this->showFullScreen();
+
 
 }
 

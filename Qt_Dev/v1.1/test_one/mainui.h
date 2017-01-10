@@ -46,7 +46,6 @@ private slots:
     void on_pBt_post_clicked();
 
 
-
     void on_pBt_change_clicked();
 
     void on_pBt_inspect_clicked();
@@ -63,6 +62,7 @@ private:
     ReturnPage *MainUi_return_Page;
     DelayTime *delayTime;
     ReadSTMInfo *readSTM;
+
 
 
 };

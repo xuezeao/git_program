@@ -10,7 +10,9 @@ ShowAllInfo::ShowAllInfo(QDialog *parent) :
     ui(new Ui::ShowAllInfo)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);//去掉标题栏
+    //    this->showFullScreen();
+        showMaximized();
+        setWindowFlags(Qt::FramelessWindowHint);
 
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
@@ -252,7 +254,7 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
     }
 
     /*************************************/
-    this->showFullScreen();
+
 
 }
 

@@ -17,7 +17,9 @@ Sheet_OperatePage::Sheet_OperatePage(QDialog *parent) :
  /*   setWindowTitle(QString("操作界面"));//标题
     setWindowFlags(windowFlags()&~(Qt::WindowMinimizeButtonHint|Qt::WindowMaximizeButtonHint|Qt::WindowCloseButtonHint));
     //最大化等按钮无效化*/
-    this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+    //    this->showFullScreen();
+        showMaximized();
+        setWindowFlags(Qt::FramelessWindowHint);
 
     T_tableexecute = new T_table;
 
@@ -38,6 +40,7 @@ Sheet_OperatePage::~Sheet_OperatePage()
 
 void Sheet_OperatePage::on_pBt_return_clicked()
 {
+    sendHttp();
     closeOperate();
 }
 
@@ -80,10 +83,10 @@ void Sheet_OperatePage::modelOption(int order)
     default:
         break;
     }
-
+    InfoError(2,"请继续操作");
     sheetTableInit(1);
     /*************************************/
-    this->showFullScreen();
+
 }
 
 void Sheet_OperatePage::sheetTableInit(int num)
@@ -333,8 +336,8 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
 
        /**************查询指令******************/
 
-//        T_tableexecute->error = SCI_send(1);
-        T_tableexecute->error = 2;
+        T_tableexecute->error = SCI_send(1);
+//        T_tableexecute->error = 2;
 
         /**************************************/
 // Alarm_No[0]错误    Alarm_No[1] 移动    Alarm_No[2]未成
@@ -346,17 +349,21 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
             {
                 if(Alarm_No[0][i] != 0)//写入错误操作
                     printfInfo += QString("%1,").arg(Alarm_No[0][i]);
+
+
             }
             if(Alarm_No[0][0] != 0)
             {
                 qMbox.setText(QString("错误操作：%1").arg(printfInfo));
                 qMbox.exec();
+                InfoError(0,printfInfo);
             }
 
 
             ui->pBt_ignore->hide();
             ui->pBt_return->hide();
 
+            InfoError(0,printfInfo);
 
        }
        else if(T_tableexecute->error == 2)//正确
@@ -370,9 +377,14 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
             pBtStatus(1);
             ui->pBt_ignore->show();
             ui->pBt_return->show();
+            InfoError(1,"操作正确");
        }
        else if(T_tableexecute->error == 1)//无错未放置
        {
+            for(int i = 0 ; i < sheet_position[0]; i++)
+            {
+                getWriter(i,0);
+            }
             int Nod = 0;
             for(int i = 0; i < 32;i++)
             {
@@ -384,7 +396,6 @@ void Sheet_OperatePage::sendOrder_to_STM(int status)//status 0:success 2：query
                 }
                 else
                 {
-
                     specialWrite(0,0,Alarm_No[1][i]);
                 }
 
@@ -450,7 +461,7 @@ void Sheet_OperatePage::pBtStatus(int status)//正常发送 1:调用下发指令
 
             showNeedData(1,1);
             ui->pBt_OK->setText(QString("点击退出"));
-//            ui->label_error->setText(QString("完成"));
+            ui->label_error->setText(QString("完成"));
 
 
             sendHttp();
@@ -558,6 +569,7 @@ int Sheet_OperatePage::SCI_send(int order) //0:下发 1：查询 2：完成
 
 void Sheet_OperatePage::on_pBt_ignore_clicked()
 {
+
     if (SCI_send(1))
     {
         SCI_send(2);
@@ -567,6 +579,7 @@ void Sheet_OperatePage::on_pBt_ignore_clicked()
     {
         InfoError(0,"错误纠正");
     }
+    InfoError(1,"请继续操作");
 }
 
 
@@ -587,6 +600,6 @@ void Sheet_OperatePage::InfoError(int num, QString error)//输出任务状态并
         pe.setColor(QPalette::WindowText,Qt::blue);
     }
 
-//    ui->label_error->setPalette(pe);
-//    ui->label_error->setText(error);
+    ui->label_error->setPalette(pe);
+    ui->label_error->setText(error);
 }

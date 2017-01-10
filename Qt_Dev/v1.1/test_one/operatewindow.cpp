@@ -8,6 +8,10 @@ OperateWindow::OperateWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //    this->showFullScreen();
+        showMaximized();
+        setWindowFlags(Qt::FramelessWindowHint);
+
     T_table = &T_TABLE;
     query                = new QSqlQuery;
     T_model_Other_Execut = new QSqlTableModel;
@@ -61,6 +65,8 @@ OperateWindow::OperateWindow(QWidget *parent) :
     connect(Sheet_Operate_execute_Page,SIGNAL(closePrevious()),this,SLOT(closePage()));
 
     connect(http_GP,SIGNAL(sendError_To_Operate()),this,SLOT(OperateError_info()));//反馈信息
+
+
 
 }
 
@@ -357,7 +363,7 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
     T_table->executeCount = 0;
     updateNo(2);//更新表格序列号为之后的增减做准备
     /*************************************/
-    this->showFullScreen();
+
 }
 
 

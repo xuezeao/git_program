@@ -9,11 +9,13 @@ QT       += core sql
 
 QT       += network
 QT       += serialport
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = test_one
 TEMPLATE = app
 
+#include($$PWD/inputnew/inputnew.pri)
 
 SOURCES += main.cpp \
     checkboxdelegate.cpp \

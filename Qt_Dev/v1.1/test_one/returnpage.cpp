@@ -9,6 +9,11 @@ ReturnPage::ReturnPage(QWidget *parent) :
     ui->setupUi(this);
     T_table = &T_TABLE;
 
+    //  this->showFullScreen();
+      showMaximized();
+      setWindowFlags(Qt::FramelessWindowHint);
+
+
     query                = new QSqlQuery;
     T_model_Other_Execut = new QSqlTableModel;
     T_model_Other_Search = new QSqlTableModel;
@@ -275,7 +280,6 @@ void ReturnPage::ModelSelect(int num)//1:入柜 2：取 3：还
 
   updateNo(2);
   /*************************************/
-  this->showFullScreen();
 
 }
 

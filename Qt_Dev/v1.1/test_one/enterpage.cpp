@@ -1,6 +1,6 @@
 #include "enterpage.h"
 #include "ui_enterpage.h"
-
+//#include "inputnew/frminputnew.h"
 
 EnterPage::EnterPage(QWidget *parent) :
     QWidget(parent),
@@ -15,17 +15,28 @@ EnterPage::EnterPage(QWidget *parent) :
 //        postHttp(1,post_Info);//获取所有信息
 //        ModelOperate=1;
 
-    this->showFullScreen();//主屏幕最大化
+//    this->showFullScreen();//主屏幕最大化
+
+//    int width = QApplication::desktop()->width();
+//    int height = QApplication::desktop()->height();
+//    setGeometry(0, 0, width, height);
+
+//    setWindowFlags(/*Qt::Tool |*/ Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
 //    ui->widget->setObjectName("widget");
 //    ui->widget->setStyleSheet("#widget{"
 //                              "font-size:16px;"
 //                              "border-image:url(:/image/1.jpg);"
 //                              "}");
+
+    showMaximized();
+    setWindowFlags(Qt::FramelessWindowHint |Qt::Window);
+
     http_Page->GetHttp();//获取机柜消息
+
     connect(http_Page,SIGNAL(sendInfo_To_Enter(int,int,int)),this,SLOT(receiverInfo_from_Http(int,int,int)));
     connect(mainUI_Page,SIGNAL(leaveOperate_To_enter()),this,SLOT(closePage()));
-
+//    frmInputNew::Instance()->init("control", "black", 12, 10, 700, 230, 20, 20, 6, 45);
 
 
 }
@@ -43,7 +54,7 @@ void EnterPage::on_pushButton_sigin_clicked()
 
 void EnterPage::handleInfo()//处理输入框的信息
 {
-    ui->pushButton_sigin->setEnabled(false);
+//    ui->pushButton_sigin->setEnabled(false);
 
     QString username;
     QString password;

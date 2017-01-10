@@ -62,6 +62,7 @@ private:
     {
         int user_id;
         int user_role;//0-创建者,1-管理员,2-普通组员
+        int user_groupId;
         int positionId_allocPosition;//存储系统分配positionId
 
         QString userName;

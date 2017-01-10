@@ -1,6 +1,7 @@
 #include "mainui.h"
 #include "ui_mainui.h"
 
+
 MainUI::MainUI(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainUI)
@@ -8,6 +9,8 @@ MainUI::MainUI(QWidget *parent) :
     ui->setupUi(this);
 
 
+    showMaximized();
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     MainUi_http_Page = new HttpGP;
     MainUi_operate_Page = new OperateWindow;
@@ -17,7 +20,6 @@ MainUI::MainUI(QWidget *parent) :
 
     connect(MainUi_operate_Page,SIGNAL(OperateWindow_To_MainUI()),this,SLOT(closeOperatePage_Return_MainUi()));
     connect(MainUi_return_Page,SIGNAL(returnPage_To_MainUi()),this,SLOT(closeReturnPage_Return_MainUi()));
-
 
 }
 
@@ -49,9 +51,10 @@ void MainUI::initShow(int num,QString username)//0：创建者 1：管理者 2�
     }
 
     ui->label_usename->setText(username);
-    this->showFullScreen();//主屏幕最大化
-    MainUi_http_Page->JsonForSend(4, "", 0);//之后获取待归还试剂列表，之后获取task列表
 
+
+
+    MainUi_http_Page->JsonForSend(4, "", 0);//之后获取待归还试剂列表，之后获取task列表
 }
 
 void MainUI::closeOperatePage_Return_MainUi()
