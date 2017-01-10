@@ -374,7 +374,7 @@ int readData()
 {
     int i,j;
     QByteArray alldata;
-    for(j=0;j<20;j++)
+    for(j=0;j<30;j++)
     {
         waitTaskInfo(2);
         if(myCom->bytesAvailable()>=9)
@@ -415,19 +415,16 @@ int readData()
                         checkSum = 0;
                         while(myCom->bytesAvailable()>0)
                         {
-                            waitTaskInfo(1);
+                            waitTaskInfo(2);
                             alldata.append(myCom->readAll());
                         }
-                        if(alldata.count() < pHead+exDataLen+8)
+                        if(alldata.count() < pHead+exDataLen+9)
                         {
                             qDebug("CID ERROR1");
-                            alldata.clear();
-                            return STATE_ERROR;
+                            continue;
                         }
                         for(i = pHead+9;i<pHead+exDataLen+8;i++)
                             checkSum += alldata.at(i);
-                        if((alldata.size()-pHead) < exDataLen+9)
-                            continue;
                         if((unsigned char)(alldata.at(pHead+exDataLen+8)) == checkSum)
                         {
                             if(CID == CID_REQUEST_DRAWER_LOCK) //0x41
