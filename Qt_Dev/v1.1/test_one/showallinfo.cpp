@@ -15,6 +15,7 @@ ShowAllInfo::ShowAllInfo(QDialog *parent) :
 //    move((QApplication::desktop()->width()-this->width())/2,(QApplication::desktop()->height()-this->height())/2);//居中
 
     T_model_show = new QSqlTableModel;
+    delayTime = new DelayTime;
     ui->tableView_showInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
@@ -32,6 +33,7 @@ void ShowAllInfo::on_pBt_close_clicked()
 
     /********************************/
     emit upStatus();
+    delayTime->waitTaskInfo(100);
     this->close();
 }
 
@@ -248,6 +250,9 @@ void ShowAllInfo::showInfo(int order)//0：入柜 1：还 2:替换 3:点验
         ui->tableView_showInfo->setColumnHidden(17,true);
         ui->tableView_showInfo->setColumnHidden(18,true);
     }
+
+    /*************************************/
+    this->showFullScreen();
 
 }
 

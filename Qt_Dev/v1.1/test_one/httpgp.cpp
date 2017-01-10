@@ -591,13 +591,19 @@ int HttpGP::UnpackageJson(QJsonDocument str, int t)
 
         if (s_success)
         {
-            return http_info->model_json;
+            query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
+                       .arg(http_info->tableName).arg(QString("上传成功")).arg(s_taskCount));
         }
         else
         {
-            return -1;
+            query.exec(QString("update %1 set judgeAttitude='%2' where id=%3")
+                       .arg(http_info->tableName).arg(QString("上传失败")).arg(s_taskCount));
+
             qDebug() << "error--send check ok";
         }
+
+        qDebug() << "tasklist unpackage success";
+        return http_info->model_json;
     }
     else if (t == 14)//获取任务列表
     {
@@ -909,7 +915,11 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
         stash_J_Int[1] = query.value(10).toInt();//attribut
         stash_J_QString[2] = query.value(4).toString();//judgeAttitude
 
-        if ("已分配位置" != stash_J_QString[2])
+        if (("已分配位置" == stash_J_QString[2]) || ("已审批" == stash_J_QString[2]))
+        {
+            JuageOperatorStatus(model_json);
+        }
+        else
         {
             json_Ok.insert("cabinetNo",QString(CABINETNO));//生成JSON
             json_Ok.insert("drawerSize",stash_J_QString[0]);
@@ -920,10 +930,6 @@ void HttpGP::PackageJson(int model_json, QString T_tableName, int T_tableNo)
             QString json_str(byte_array);
 
             PostHttp(5,json_str);//发送http
-        }
-        else
-        {
-            JuageOperatorStatus(model_json);
         }
     }
     else if (6 == model_json)//入柜完成上报
@@ -1237,11 +1243,11 @@ void HttpGP::EmitSignal(int status, int order)
     {
         switch (order) {
         case 0:{
-            JsonForSend(4, "", 0);
             //获取机柜信息
             break;
         }
         case 4:{
+            JsonForSend(14,"",1);//在获取待归还列表之后获取task列表
             //获取带归还试剂列表信息
             break;
         }

@@ -82,6 +82,8 @@ void Sheet_OperatePage::modelOption(int order)
     }
 
     sheetTableInit(1);
+    /*************************************/
+    this->showFullScreen();
 }
 
 void Sheet_OperatePage::sheetTableInit(int num)
@@ -448,7 +450,7 @@ void Sheet_OperatePage::pBtStatus(int status)//正常发送 1:调用下发指令
 
             showNeedData(1,1);
             ui->pBt_OK->setText(QString("点击退出"));
-            ui->label_error->setText(QString("完成"));
+//            ui->label_error->setText(QString("完成"));
 
 
             sendHttp();
@@ -474,6 +476,7 @@ void Sheet_OperatePage::pBtStatus(int status)//正常发送 1:调用下发指令
 void Sheet_OperatePage::closeOperate()
 {
     emit closePrevious();
+    waitTaskInfo(100);
     this->close();
 
 }
@@ -584,6 +587,6 @@ void Sheet_OperatePage::InfoError(int num, QString error)//输出任务状态并
         pe.setColor(QPalette::WindowText,Qt::blue);
     }
 
-    ui->label_error->setPalette(pe);
-    ui->label_error->setText(error);
+//    ui->label_error->setPalette(pe);
+//    ui->label_error->setText(error);
 }

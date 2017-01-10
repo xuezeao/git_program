@@ -15,14 +15,14 @@ EnterPage::EnterPage(QWidget *parent) :
 //        postHttp(1,post_Info);//获取所有信息
 //        ModelOperate=1;
 
-//    this->showFullScreen();//主屏幕最大化
+    this->showFullScreen();//主屏幕最大化
 
 //    ui->widget->setObjectName("widget");
 //    ui->widget->setStyleSheet("#widget{"
 //                              "font-size:16px;"
 //                              "border-image:url(:/image/1.jpg);"
 //                              "}");
-
+    http_Page->GetHttp();//获取机柜消息
     connect(http_Page,SIGNAL(sendInfo_To_Enter(int,int,int)),this,SLOT(receiverInfo_from_Http(int,int,int)));
     connect(mainUI_Page,SIGNAL(leaveOperate_To_enter()),this,SLOT(closePage()));
 

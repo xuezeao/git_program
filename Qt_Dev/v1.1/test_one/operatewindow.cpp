@@ -13,7 +13,7 @@ OperateWindow::OperateWindow(QWidget *parent) :
     T_model_Other_Execut = new QSqlTableModel;
     T_model_Other_Search = new QSqlTableModel;
 
-
+    delayTime = new DelayTime;
     http_GP = new HttpGP;
     Operate_execut_Page  = new Execut_window;
     AgentiaInfoChange_execute_Page = new AgentiaInfoChange;
@@ -356,7 +356,8 @@ void OperateWindow::ModelSelect(int num)//1:入柜 2：取 3：还 4:替换 5:�
 
     T_table->executeCount = 0;
     updateNo(2);//更新表格序列号为之后的增减做准备
-
+    /*************************************/
+    this->showFullScreen();
 }
 
 
@@ -377,7 +378,6 @@ void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修
     else if(option == 3)
     {
         currentRow = ui->tableView_showExecuteInfo->currentIndex().row();
-        AgentiaInfoChange_execute_Page->exec();
 
         if(T_table->dialog_model == 4)//替换 注销部分输入框编辑功能
         {
@@ -393,6 +393,7 @@ void OperateWindow::receiveAddNew(int option)//1：添加；2：删除；3：修
         }
 
         emit sendInfo_To_AgentiaInfoChange(1,1,currentRow);//单个模式
+        AgentiaInfoChange_execute_Page->exec();
     }
 
     if(T_model_Other_Execut->submitAll());
@@ -614,6 +615,7 @@ void OperateWindow::upSheet_PutInWindow()
 void OperateWindow::closePage()
 {
     emit OperateWindow_To_MainUI();
+    delayTime->waitTaskInfo(100);
     this->close();
 }
 
@@ -896,7 +898,4 @@ void OperateWindow::tableInit(char modelOption)//1:入柜 2：取 4：替换 5:�
         ui->tableView_showExecuteInfo->setItemDelegateForColumn(1,checkBoxDelegate);
 
     }
-
-//       this->showFullScreen();//主屏幕最大化
-
 }

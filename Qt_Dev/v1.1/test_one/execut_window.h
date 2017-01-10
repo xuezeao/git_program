@@ -36,9 +36,6 @@ private slots:
 
     void on_pBt_ignore_clicked();
 
-    void on_pushButton_clicked();
-
-
 private:
     Ui::Execut_window *ui;
     HttpGP *Execut_http_GAndP;
@@ -55,7 +52,6 @@ private:
     //更新试剂显示状态 just 1：上传成功 2：上传失败 3：未操作 4：正确操作 5：错误操作 6:报废操作
     void getAgentiaPositionInfo(int i);//获取要求位置 //1：入柜 尺寸 2：还 位置
     void updateShowInfo(QString A_name,QString Volume,QString Position);//更改显示信息
-    void savePostFalseInfo();//保存上传失败的指令
 
     int  SCI_send(int order);//0:下发包含开锁 1：查询 2：完成 3:查锁 int Error;//0: 错误 1：未完成 2：正确
     void searchPositionInfo(QString name, int i);//检索药剂位置

@@ -22,6 +22,7 @@
 #include "pbtdelegate.h"
 #include "sheet_operatepage.h"
 #include "httpgp.h"
+#include "delaytime.h"
 
 namespace Ui {
 class OperateWindow;
@@ -78,6 +79,7 @@ private:
     AgentiaInfoChange *AgentiaInfoChange_execute_Page;
     Sheet_OperatePage *Sheet_Operate_execute_Page;
     HttpGP *http_GP;
+    DelayTime *delayTime;
 
 
     QSqlTableModel *T_model_Other_Search;

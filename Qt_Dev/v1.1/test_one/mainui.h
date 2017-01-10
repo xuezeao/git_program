@@ -7,7 +7,7 @@
 #include "returnpage.h"
 
 #include "readstminfo.h"
-
+#include "delaytime.h"
 
 
 #include <QtDebug>
@@ -61,7 +61,7 @@ private:
     HttpGP *MainUi_http_Page;
     OperateWindow *MainUi_operate_Page;
     ReturnPage *MainUi_return_Page;
-
+    DelayTime *delayTime;
     ReadSTMInfo *readSTM;
 
 

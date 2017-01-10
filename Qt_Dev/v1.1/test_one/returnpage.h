@@ -16,6 +16,7 @@
 #include "checkboxdelegate.h"
 #include "pbtdelegate.h"
 #include "showallinfo.h"
+#include "delaytime.h"
 
 
 
@@ -69,6 +70,7 @@ private:
     Ui::ReturnPage *ui;
     Execut_window *Operate_execut_Page;
     ShowAllInfo *show_Info_Page;
+    DelayTime *delayTime;
 
 
     QSqlTableModel *T_model_Other_Search;

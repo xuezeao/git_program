@@ -15,6 +15,7 @@ ReturnPage::ReturnPage(QWidget *parent) :
 
     Operate_execut_Page  = new Execut_window;
     show_Info_Page       = new ShowAllInfo;
+    delayTime = new DelayTime;
 
     pHeader = new MyQHeaderView(Qt::Horizontal,this);
     RHeader = new ExecuteSheet_R(Qt::Horizontal,this);
@@ -273,6 +274,8 @@ void ReturnPage::ModelSelect(int num)//1:入柜 2：取 3：还
     }
 
   updateNo(2);
+  /*************************************/
+  this->showFullScreen();
 
 }
 
@@ -330,8 +333,6 @@ void ReturnPage::tableInit(char modelOption)//1:入柜
         ui->tableView_showExecuteInfo->setItemDelegate(returnAgentiaChechBoxDelegate);
 
     }
-
-//        this->showFullScreen();//主屏幕最大化
 
 }
 
@@ -453,6 +454,7 @@ void ReturnPage::upSheet_PutInWindow()
 void ReturnPage::closePage()
 {
     emit returnPage_To_MainUi();
+    delayTime->waitTaskInfo(50);
     this->close();
 }
 

@@ -254,6 +254,8 @@ void Execut_window::initVariable()
     }
 
     pBt_operate(0);
+    /*************************************/
+    this->showFullScreen();
 
 }
 
@@ -680,47 +682,6 @@ void Execut_window::executeInfoError(int num, QString error)//输出任务状态
     ui->label_RoleStatus->setText(error);
 }
 
-void Execut_window::savePostFalseInfo()//保存上传失败的试剂
-{
-    int getC_agentiaId;
-    int getC_positionId;
-    QSqlQuery query;
-
-    if (execute_V->execute_model == 1)
-    {
-        query.exec(QString("select * from %1").arg(execute_V->T_executeTable));
-        query.seek(execute_V->currentAcount);
-        getC_agentiaId = query.value(10).toInt();//试剂ID
-        getC_positionId = execute_V->positionId;//位置ID
-    }
-    else if (execute_V->execute_model ==2 )
-    {
-        query.exec(QString("select * from %1").arg(execute_V->T_executeTable));
-        query.seek(execute_V->currentAcount);
-        getC_agentiaId = query.value(11).toInt();//试剂ID
-        getC_positionId = query.value(12).toInt();//位置ID
-    }
-
-    query.exec(QString("select * from T_UserInfo"));
-    query.seek(0);
-    int getC_userId = query.value(0).toInt();//获取用户ID
-
-    query.exec(QString("select * from T_WaitPostInfo"));
-    query.last();
-    int getC_all = query.at();//获取数据表格row
-
-    query.prepare("insert into T_WaitPostInfo (id,userId,agentiaId,\
-                  positionId,dose,judgeAttitude) values (?,?,?,?,?,?)");
-    query.addBindValue(getC_all+1);
-    query.addBindValue(getC_userId);
-    query.addBindValue(getC_agentiaId);
-    query.addBindValue(getC_positionId);
-    query.addBindValue("0");
-    query.addBindValue("取");
-    query.exec();
-
-}
-
 void Execut_window::operateNext(void)//执行下一步操作
 {
     if (execute_V->execute_model == 2 || execute_V->execute_model == 1)
@@ -763,27 +724,13 @@ void Execut_window::NetworkError()//网络连接错误
 
 void Execut_window::closePage()
 {
-    this->close();
-
     Show_Info->showInfo(execute_V->execute_model);
     Show_Info->exec();
+    waitTaskInfo(200);
+    this->close();
 }
 
 /*****************************************/
-void Execut_window::on_pushButton_clicked()
-{
-    if (execute_V->test == 2)
-    {
-        execute_V->test = 0;
-    }
-    else
-    {
-        execute_V->test++;
-    }
-
-    qDebug()<<"OK  -----";
-}
-
 void Execut_window::waitTaskInfo(int tim)//延时ms
 {
     QElapsedTimer t;

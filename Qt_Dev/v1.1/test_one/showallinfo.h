@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlTableModel>
+#include "delaytime.h"
 
 namespace Ui {
 class ShowAllInfo;
@@ -29,7 +30,7 @@ private:
     Ui::ShowAllInfo *ui;
 
     QSqlTableModel *T_model_show;
-
+    DelayTime *delayTime;
     QString T_name;
 
     void saveNotPostInfo(int order);//保存未上传但是正确操作的试剂信息

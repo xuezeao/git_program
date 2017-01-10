@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 //        qMbox.exec();
 //    }
 
-    MainUI w;
-//    EnterPage w;
+//    MainUI w;
+    EnterPage w;
     w.show();
 
 

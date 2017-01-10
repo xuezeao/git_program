@@ -63,6 +63,9 @@ void AgentiaInfoChange::sendUP_Info(int status ,int OK_Push, int sheetOrder)//�
 
         changeShowInfo(0);//从第一条开始执行
     }
+
+    /*************************************/
+    this->showFullScreen();
 }
 
 AgentiaInfoChange::~AgentiaInfoChange()
